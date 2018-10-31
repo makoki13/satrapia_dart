@@ -1,11 +1,10 @@
 import 'planificador/test.dart';
-
-void imprimeAlgo() {
-  print("Algo");
-}
+import 'planificador/clase_ejemplo.dart';
 
 void main() {
-  //runApp(new MyApp());
-  new Scheduler(imprimeAlgo, const Duration(milliseconds: 1000), 2);
-  print("Fin....");
+  
+  Ejemplo ejemplo = new Ejemplo();
+
+  new Scheduler(ejemplo.imprimeAlgo, const Duration(milliseconds: 1000), 1);
+  print("Fin.... total de Monedas ${ejemplo.getMonedas()}");
 }

@@ -9,11 +9,7 @@ class Scheduler {
   int iteraciones;
 
   Scheduler (this.f, this.d, this.iteraciones) {
-    if (iteraciones<2)
-      this._timer = new Timer(this.d, this.f);
-    else {
-      this._timer = new Timer.periodic(this.d, (_timer) => monitor());
-    }
+    this._timer = new Timer.periodic(this.d, (_timer) => monitor());
   }
 
   monitor() {
@@ -22,9 +18,11 @@ class Scheduler {
       print("Ticker finalizando: ");
       this._timer.cancel();
       print("Ticker ya finalizado: ");
+      this.f(true);
     }
     else {
-      this.f();
+      print("Ejecutando...");
+      this.f(false);
     }
   }
 }
