@@ -4,15 +4,16 @@
 
 import 'test/principal.dart';
 
-import "dart:async";
+//import "dart:async";
 
-void main() async {
+void main() {
   //bool debuga = true;
 
   //if (debuga) {
     print("HOLA POLLO, EPA!!!");
 
     Principal miPrincipal = new Principal();
+    miPrincipal.mostrar_info();
 
   /*
     num i = 0;
