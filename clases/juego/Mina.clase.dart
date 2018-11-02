@@ -6,33 +6,41 @@ import './Capital.clase.dart';
 import './Dispatcher.clase.dart';
 import './Recurso.clase.dart';
 import './Transporte.clase.dart';
+import './Punto.clase.dart';
 
 class Mina extends Edificio {
-  static num costeConstruccion = 250;
-  static num tiempoContruccion = 5;
+  num _costeConstruccion;
+  num _tiempoConstruccion;
 
   Extractor mineros;
   Productor filon;
   Almacen almacen;
 
   num id;
-  String nombre;
-  Capital capital;
-  Dispatcher disp;
-  TipoEdificio tipoEdificio;
-  Recurso recurso;
+  String _nombre;
+  Capital capital;  
+  TipoEdificio _tipoEdificio;
+  Recurso _recurso;
   Almacen almacenDestino;
+  Capital _capital;
+  Dispatcher _disp;
+  Punto _posicion;
 
-  Mina (this.id, this.nombre, this.capital, this.disp, this.tipoEdificio, this.recurso, this.almacenDestino) : super (id, nombre, tipoEdificio, capital.getPosicion(), 100, 10) {
-    this.filon = new Productor ( null, recurso, 20000, 20, 1);
-    this.almacen = new Almacen ( 67, 'Filón de ' + recurso.getNombre() , recurso, this.capital.getPosicion(), 100);
+  Mina (this.id, this._nombre, this._tipoEdificio, this._recurso, this._posicion, this._capital, this._disp, this._costeConstruccion, this._tiempoConstruccion) : 
+    super (id, _nombre, _tipoEdificio, _posicion, _costeConstruccion, _tiempoConstruccion) {
+    this.filon = new Productor ( null, this._recurso, 20000, 20, 1);
+    this.almacen = new Almacen ( 67, 'Filón de ' + this._recurso.getNombre() , this._recurso, _posicion, 100);
     const cantidadInicial = 20;
     this.mineros = new Extractor (this.filon, this.almacen, cantidadInicial);
-    this.disp.addTareaRepetitiva(this, 'extrae', 1, almacenDestino);
+    this._disp.addTareaRepetitiva(extrae, 1);
     this.setStatus ('Sin envios actuales');
+
+    this.almacenDestino = this._capital.getSilos().getAlmacenHierro(); if (this._recurso == ORO) this.almacenDestino =  this._capital.getPalacio().getAlmacen();
   }
 
-  extrae(almacenDestino) {
+  String toString() { return this._nombre;}
+
+  extrae() {
     num cantidad = this.mineros.getCantidad();
     this.almacen.addCantidad (cantidad);
 
@@ -47,19 +55,18 @@ class Mina extends Edificio {
 
   enviaRecursosHaciaPalacio(almacenDestino) {
     num cantidad = this.almacen.restaCantidad(this.almacen.getCantidad());
-    Transporte transporteDeRecurso = new Transporte (this.almacen, almacenDestino, this.recurso, cantidad, this );
+    Transporte transporteDeRecurso = new Transporte (this.almacen, almacenDestino, this._recurso, cantidad, this );
 
     transporteDeRecurso.calculaViaje();
-    this.setStatus ('Enviando ' + this.recurso.getNombre() + '...');
-    this.disp.addTareaRepetitiva(transporteDeRecurso, 'envia', 1);
+    this.setStatus ('Enviando ' + this._recurso.getNombre() + '...');
+    this._disp.addTareaRepetitiva(transporteDeRecurso.envia, 1);
   }
 
   num getCantidadAlmacenActual() { return this.almacen.getCantidad(); }
   num getMaxAlmacen() { return this.almacen.getMaxCantidad(); }
 
   String getStatus() { return this.status; }
-  //public setStatus( mensaje: string ) { super.setStatus(mensaje); }
-
+  
   bool estaActiva() { return (this.filon.getStock() > 0); }
 }
 
@@ -72,11 +79,10 @@ class MinaDeOro extends Mina {
 
   num id;
   String nombre;
-  Capital capital;
-  Dispatcher disp;
-
-  MinaDeOro (this.id, this.nombre, this.capital, this.disp) : super (id, nombre, capital, disp, TipoEdificio.MINA_DE_ORO, ORO, capital.getPalacio().getAlmacen()) {
-    this.capital.addMinaDeOro(this);
+  
+  MinaDeOro (this.id, this.nombre, Punto posicion, Capital capital, Dispatcher disp) : super (id, nombre, TipoEdificio.MINA_DE_ORO, ORO, posicion, capital, disp, 
+    MinaDeOro.costeConstruccion, MinaDeOro.tiempoContruccion) {
+    capital.addMinaDeOro(this);
   }
 
   num getOroActual() { return this.almacen.getCantidad(); }
@@ -92,11 +98,10 @@ class MinaDeHierro extends Mina {
 
   num id;
   String nombre;
-  Capital capital;
-  Dispatcher disp;
-
-  MinaDeHierro (this.id, this.nombre, this.capital, this.disp) : super (id, nombre, capital, disp, TipoEdificio.MINA_DE_HIERRO, HIERRO, capital.getPalacio().getAlmacen()) {
-    this.capital.addMinaDeHierro(this);
+  
+  MinaDeHierro (this.id, this.nombre, Punto posicion, Capital capital, Dispatcher disp) : super (id, nombre, TipoEdificio.MINA_DE_HIERRO, HIERRO, posicion, capital, disp,
+    MinaDeHierro.costeConstruccion, MinaDeHierro.tiempoContruccion) {
+    capital.addMinaDeHierro(this);
   }
 
   num getHierroActual() { return this.almacen.getCantidad(); }

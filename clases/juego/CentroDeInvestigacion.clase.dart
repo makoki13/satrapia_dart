@@ -346,6 +346,8 @@ class CentroDeInvestigacion extends Edificio {
     return item[0];
   }
 
+  num _idTipo; num _idSubtipo; num _idItem; Capital _ciudad; 
+
   iniciaInvestigacion(num idTipo, num idSubtipo, num idItem, Capital ciudad) {
     TipoItemInvestigacion item = this.getItem (idTipo, idSubtipo, idItem);
 
@@ -358,17 +360,19 @@ class CentroDeInvestigacion extends Edificio {
     }
 
     item.setInvestigada (true);
-    List<dynamic> parametros = [idTipo, idSubtipo, idItem, ciudad];
-    this._disp.addTareaRepetitiva(this, 'compraInvestigacion', item.getTiempo(), parametros );
+    this._idTipo = idTipo; this._idSubtipo = idSubtipo; this._idItem = idItem; this._ciudad = ciudad;
+    this._disp.addTareaRepetitiva(compraInvestigacion, item.getTiempo() );
     this.setStatus ('Investigando');
   }
-
-  num compraInvestigacion([ List<dynamic> v]) {
+  
+  num compraInvestigacion() {
     Capital ciudad;
 
-    dynamic idTipo = v[0]; dynamic idSubtipo = v[1]; dynamic idItem = v[2]; if (v.length == 4) { ciudad = v[3]; }
+    //dynamic idTipo = v[0]; dynamic idSubtipo = v[1]; dynamic idItem = v[2]; if (v.length == 4) { ciudad = v[3]; }
 
-    TipoItemInvestigacion item = this.getItem (idTipo, idSubtipo, idItem);
+    if (this._ciudad!=null) ciudad = this._ciudad;
+
+    TipoItemInvestigacion item = this.getItem (this._idTipo, this._idSubtipo, this._idItem);
     item.setconseguido();
     this.setStatus ('Sin actividad');
     if (item.getNombre() == 'Construir mercado') {

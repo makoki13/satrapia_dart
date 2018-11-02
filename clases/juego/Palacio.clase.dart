@@ -26,19 +26,21 @@ class Palacio extends Edificio {
     this._capital.setPalacio(this);
 
     num cantidadInicial = 2;
-    this._impuestos = new Productor ( null, ORO, 10, 10, 1);
+    this._impuestos = new Productor ( null, ORO, 10, Parametros.MAX_ENTERO, 1);
     this.almacen = new Almacen ( 66, 'Deposito de oro', ORO, _capital.getPosicion(), Parametros.MAX_ENTERO);
 
     this.almacen.addCantidad(Parametros.oroInicial);
     this._recaudador = new Extractor (this._impuestos, this.almacen, cantidadInicial);
-    this._disp.addTareaRepetitiva(this, 'recaudaImpuestos', 1);
+    this._disp.addTareaRepetitiva(recaudaImpuestos, 1);
 
     cantidadInicial = 50; const cantidadMaxima = 1000;
     this._alojamientos = new Productor ( null, POBLACION, cantidadInicial, cantidadMaxima, 1);
     this.poblacion = new Almacen ( 67, 'Población', POBLACION, _capital.getPosicion(), cantidadMaxima);
     this._crecimientoDemografico = new Extractor (this._alojamientos, this.poblacion, cantidadInicial);
-    this._disp.addTareaRepetitiva(this, 'realizaCenso', 1);
+    this._disp.addTareaRepetitiva(realizaCenso, 1);
   }
+
+  String toString() { return this._nombre;}
 
   recaudaImpuestos ( ) {
     num cantidad = this._recaudador.getCantidad();

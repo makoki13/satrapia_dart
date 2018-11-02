@@ -19,8 +19,11 @@ class Cuartel extends Edificio {
 
   List<Unidades> getTropas() { return this._unidades; }
 
-  addUnidades (List<dynamic>v) {
-    UnidadMilitar tipo = v[0]; num cantidad = v[1];
+  UnidadMilitar _tipoUnidad;
+  num _cantidad;
+
+  addUnidades () {
+    UnidadMilitar tipo = this._tipoUnidad; num cantidad = this._cantidad;
     num indiceElemento = -1;
     num indice = 0;
     this._unidades.forEach( (x) {
@@ -103,10 +106,10 @@ class Cuartel extends Edificio {
 
       if (esCorrecto == false) return -1;
 
-      List<dynamic> parametros = new List<dynamic>();
-      parametros[0] = tipoUnidad;
-      parametros[1] = cantidad;
-      this._disp.addTareaRepetitiva(this, 'addUnidades', 5, parametros);
+      this._tipoUnidad = tipoUnidad;
+      this._cantidad = cantidad;
+
+      this._disp.addTareaRepetitiva(addUnidades, 5);
     } else {
       // console.log(' No se puede entrenar "Civiles con honda". La investigación no está realizada.');
     }
@@ -139,10 +142,10 @@ class Cuartel extends Edificio {
 
       if (esCorrecto == false) return -1;
 
-      List<dynamic> parametros = new List<dynamic>();
-      parametros[0] = tipoUnidad;
-      parametros[1] = cantidad;
-      this._disp.addTareaRepetitiva(this, 'addUnidades', 5, parametros);
+      this._tipoUnidad = tipoUnidad;
+      this._cantidad = cantidad;
+
+      this._disp.addTareaRepetitiva(addUnidades, 5);
     } else {
       // console.log(' No se puede entrenar "Soldados". La investigación no está realizada.');
     }

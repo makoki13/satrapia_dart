@@ -14,7 +14,10 @@ class Almacen {
   }
 
   addCantidad (num cantidad) {
-    this._cantidad = this._cantidad + cantidad;
+    if (this._cantidad + cantidad > this._maxCantidad)
+      this._cantidad = this._maxCantidad;
+    else
+      this._cantidad = this._cantidad + cantidad;
   }
 
   restaCantidad ( num cantidad) {

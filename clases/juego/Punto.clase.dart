@@ -8,7 +8,7 @@ class Punto {
   num _provincia; // Geografia politica
   TipoEdificio _edificio;
 
-  static sonIguales(Punto p, Punto q)  {
+  static sonIguales(Punto p, Punto q)  {    
     return ( (p.getX() == q.getX()) && (p.getY() == q.getY()) );
   }
 

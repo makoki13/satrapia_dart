@@ -20,7 +20,7 @@ class Transporte {
   Edificio _origen;
 
   Transporte (this._almacenOrigen, this._almacenDestino, this._recurso, this._cantidad, this._origen) {
-    print(this._almacenDestino.toString());
+    //print(this._almacenDestino.toString());
 
     this.posicionActual = this._almacenOrigen.getPosicion();
     this.posicionFinal = this._almacenDestino.getPosicion();
@@ -37,21 +37,22 @@ class Transporte {
     this.ruta = TomTom.calculaViaje (this.posicionActual, this.posicionFinal );
   }
 
-  envia() {
-    print("Envia ${this._cantidad}");
+  int envia() {
+    //print("Envia ${this._cantidad}");
     this.modificaPosicionActual();
-    print('Pos: ${this.posicionActual.getX()} , ${this.posicionActual.getY()}');
+    //print('Pos: ${this.posicionActual.getX()} , ${this.posicionActual.getY()} quedan ${this.ruta.length}');
     if ( (this.ruta.length == 0) && (Punto.sonIguales(this.posicionActual, this.posicionFinal)) ) {
-      // console.log ('descarga en palacio');
-      print("Descarga ${this._cantidad}");
+      // console.log ('descarga en palacio');      
       this._almacenDestino.addCantidad(this._cantidad);
       this._origen.setStatus('Envio finalizado');
       this._origen.hayEnvioEnMarcha = false;
+      //print("Descarga y suicido ${this._cantidad} has ${this._almacenDestino.getCantidad()} en destino");
       return -1; // suicidio
     }
+    else return 0;
   }
 
   modificaPosicionActual() {
-    this.posicionActual = this.ruta.removeAt(0);
+    if (this.ruta.length > 0) this.posicionActual = this.ruta.removeAt(0);
   }
 }
