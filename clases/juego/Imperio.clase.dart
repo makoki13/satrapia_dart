@@ -17,7 +17,7 @@ class Imperio {
 }
 
 class Provincia extends Imperio {
-  num _id;
+  int _id;
   String _nombre;
   Jugador _lider;
   bool _esTribu;
@@ -31,15 +31,17 @@ class Provincia extends Imperio {
 class Localidad {
   Productor _demografia;
   Almacen _poblacion;
-  num _id;
+  int _id;
   String _nombre;
   bool _esCapital;
   Provincia _provincia;
-  num _numeroDeHabitantes;
+  int _numeroDeHabitantes;
   Punto _posicion;
 
   Localidad (this._id, this._nombre, this._esCapital, this._provincia, this._numeroDeHabitantes, this._posicion) {}
 
+  int getID() { return this._id; }
   Punto getPosicion() { return this._posicion; }
   String getNombre() { return this._nombre; }
+  int getNumeroHabitantes() { return this._numeroDeHabitantes; }
 }

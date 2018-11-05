@@ -10,48 +10,53 @@ Recurso HIERRO = new Recurso (5, 'HIERRO', TipoRecurso.NATURAL);
 
 class Recurso {
   String _nombre;
-  num id;
+  int _id;
   TipoRecurso _tipo;
 
-  Recurso (this.id, this._nombre, this._tipo) {}
+  Recurso (this._id, this._nombre, this._tipo) {}
 
   String getNombre() { return this._nombre; }
+  int getID() { return this._id; }
+  TipoRecurso getTipo() { return this._tipo; }
 }
 
 class UnidadMilitar extends Recurso {
-  num _danyoRecibido = 0;
+  int _danyoRecibido = 0;
+  
+  int _vidaInicial;
+  int _danyoInflingido;
+  int _fuerza;
+  int _moral;
+  int _costeUnitario;
+  int maxUnidadesEnEntrenamiento;
 
-  num id;
-  String nombre;
-  num _vidaInicial;
-  num _danyoInflingido;
-  num _fuerza;
-  num _moral;
-  num _costeUnitario;
-  num maxUnidadesEnEntrenamiento;
-
-  UnidadMilitar (this.id, this.nombre, this._vidaInicial, this._danyoInflingido, this._fuerza, this._moral, this._costeUnitario, this.maxUnidadesEnEntrenamiento) :
+  UnidadMilitar (int id, String nombre, this._vidaInicial, this._danyoInflingido, this._fuerza, this._moral, this._costeUnitario, this.maxUnidadesEnEntrenamiento) :
         super (id, nombre, TipoRecurso.MILITAR) {
   }
 
-  num getID() { return super.id; }
-  String getNombre() { return super.getNombre(); }
-  num getCosteUnitario() { return this._costeUnitario; }
-  num getMaxUnidadesEnEntrenamiento() { return this.maxUnidadesEnEntrenamiento; }
+  int getVidaInicial() { return this._vidaInicial; }
+  int getDanyoInflingido() { return this._danyoInflingido; }
+  int getFuerza() { return this._fuerza; }
+  int getMoral() { return this._moral; }
+
+  int getCosteUnitario() { return this._costeUnitario; }
+  int getMaxUnidadesEnEntrenamiento() { return this.maxUnidadesEnEntrenamiento; }
+
+  void aumentaDanyoRecibido (int aumento) { this._danyoRecibido += aumento; }
 }
 
 class CivilConHonda extends UnidadMilitar {
-  CivilConHonda (num vidaInicial, num danyoInflingido, num fuerza, num moral) :  super ( 1001, 'Civil con honda', vidaInicial, danyoInflingido, fuerza, moral, 1, 10) {}
+  CivilConHonda (int vidaInicial, int danyoInflingido, int fuerza, int moral) :  super ( 1001, 'Civil con honda', vidaInicial, danyoInflingido, fuerza, moral, 1, 10) {}
 }
 
 class Soldado extends UnidadMilitar {
-  Soldado (num vidaInicial, num danyoInflingido, num fuerza, num moral) : super ( 1002, 'Soldado', vidaInicial, danyoInflingido, fuerza, moral, 10, 10) {}
+  Soldado (int vidaInicial, int danyoInflingido, int fuerza, int moral) : super ( 1002, 'Soldado', vidaInicial, danyoInflingido, fuerza, moral, 10, 10) {}
 }
 
 class Arquero extends UnidadMilitar {
-  Arquero (num vidaInicial, num danyoInflingido, num fuerza, num moral) : super ( 1003, 'Arquero', vidaInicial, danyoInflingido, fuerza, moral, 5, 10) {}
+  Arquero (int vidaInicial, int danyoInflingido, int fuerza, int moral) : super ( 1003, 'Arquero', vidaInicial, danyoInflingido, fuerza, moral, 5, 10) {}
 }
 
 class Lancero extends UnidadMilitar {
-  Lancero (num vidaInicial, num danyoInflingido, num fuerza, num moral) : super ( 1002, 'Soldado', vidaInicial, danyoInflingido, fuerza, moral, 10, 10) {}
+  Lancero (int vidaInicial, int danyoInflingido, int fuerza, int moral) : super ( 1002, 'Soldado', vidaInicial, danyoInflingido, fuerza, moral, 10, 10) {}
 }

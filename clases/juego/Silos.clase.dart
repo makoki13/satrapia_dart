@@ -27,7 +27,7 @@ class Silos extends Edificio {
     Almacen a = null;
     this.almacenes.forEach( (almacen) {
         //print("iteracion almacen comida: "+almacen.toString());
-        if (almacen.getTipoRecurso().id == COMIDA.id) {
+        if (almacen.getTipoRecurso().getID() == COMIDA.getID()) {
           a = almacen;
         }
     });

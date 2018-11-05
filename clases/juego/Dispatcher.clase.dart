@@ -4,7 +4,7 @@ class Tarea {
   Function _funcion;
   DateTime _vencimiento;
   num _delta;
-  bool eliminada = false;
+  bool _eliminada = false;
 
   Tarea (this._funcion, this._vencimiento, this._delta) {}
 
@@ -50,13 +50,13 @@ class Dispatcher {
 
     if (numTareas > 0) {      
       lista.forEach((tarea) {
-        if (tarea.eliminada == false) {
+        if (tarea._eliminada == false) {
           if (tarea.getVencimiento().isBefore(horaActual)) {
             tarea.setVencimiento();
             num rt = tarea.execFuncion();
             if (rt == -1) {
               //print("Eliminamos tarea ${tarea.getNombreFuncion()}");
-              tarea.eliminada = true;
+              tarea._eliminada = true;
             }            
           }
         }

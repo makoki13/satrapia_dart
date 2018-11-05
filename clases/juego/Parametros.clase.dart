@@ -1,6 +1,6 @@
 //import 'package:sembast/sembast.dart';
 
-import './../tools/Persistencia.clase.dart';
+//import './../tools/Persistencia.clase.dart';
 
 class Parametros {
   static final num MAX_ENTERO = 1000000000000;
@@ -46,10 +46,6 @@ class Parametros {
   static num oroInicial = 5000;
 
   static num IDpartida = null;
-
-  //static DBlocal _db = new DBlocal('parametros');
-
-  //static Record _doc;
 
   Parametros() {
 
