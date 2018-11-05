@@ -27,7 +27,7 @@ class Capital extends Localidad {
   List<Cantera> canteras;
   List<MinaDeHierro> minasDeHierro;
 
-  num _id;
+  int _id;
   String _nombre;
   Provincia _provincia;
   Punto _posicion;
