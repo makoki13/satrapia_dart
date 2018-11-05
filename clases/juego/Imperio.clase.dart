@@ -4,13 +4,16 @@ import './Punto.clase.dart';
 import './Productor.clase.dart';
 
 class Imperio {
-  num _id;
+  int _id;
   String _nombre;
   Jugador _lider;
   bool _esTribu;
   Imperio (this._id, this._nombre, this._lider, this._esTribu) {}
 
   String getNombre() { return this._nombre; }
+  int getID() { return this._id; }
+  Jugador getJugador() { return this._lider;}
+  bool esTribu() { return this._esTribu;}
 }
 
 class Provincia extends Imperio {
@@ -21,6 +24,8 @@ class Provincia extends Imperio {
   bool _esSatrapia;
 
   Provincia (this._id, this._nombre, this._lider, this._esTribu, this._esSatrapia) : super (_id, _nombre, _lider, _esTribu) {}
+
+  bool esSatrapia() { return this._esSatrapia;}
 }
 
 class Localidad {

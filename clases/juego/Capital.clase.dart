@@ -40,6 +40,11 @@ class Capital extends Localidad {
     this.minasDeHierro = new List<MinaDeHierro>();
   }
 
+  int getID() { return this._id; }
+  String getNombre() { return this._nombre; }
+  Provincia getProvincia() { return this._provincia; }
+  Punto getPosicion() { return this._posicion; }
+
   setPalacio (Palacio p) { this.palacio = p; }
   Palacio getPalacio () { return this.palacio; }
 
