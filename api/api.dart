@@ -205,4 +205,9 @@ class API {
   static void invadeMinaDeHierro(int id) {} //Se cambia el jugador propietario
   static int  numMinasDeHierro() { return Estructura.canteras.length;}
   static List<MinaDeHierro> listaMinasDeHierro() { return Estructura.minasDeHierro;}
+
+  /* INVESTIGACIONES */
+  static List<TipoInvestigacion> getListaInvestigaciones() {
+    return Estructura._centroDeInvestigacion.getLista();
+  }
 }

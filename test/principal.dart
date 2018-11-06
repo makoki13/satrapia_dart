@@ -6,6 +6,7 @@ import '../clases/juego/Granja.clase.dart';
 import '../clases/juego/Serreria.clase.dart';
 import '../clases/juego/Cantera.clase.dart';
 import '../clases/juego/Mina.clase.dart';
+import '../clases/juego/CentroDeInvestigacion.clase.dart';
 
 class Principal {
   Dispatcher miDispatcher;
@@ -36,6 +37,24 @@ class Principal {
     i = listaMinasDeHierro.iterator;
     while (i.moveNext()) { print("   - ${i.current.getNombre()}"); }
     print("............................................................");
+    print("............................................................");
+    print(" INVESTIGACIONES");
+    List<TipoInvestigacion> investigaciones = API.getListaInvestigaciones();
+    i = investigaciones.iterator;
+    Iterator j; Iterator k;
+    while (i.moveNext()) { 
+      print("   - ${i.current.getNombre()}");       
+      List<TipoSubInvestigacion> listaSubinvestigaciones = i.current.getLista();
+      j = listaSubinvestigaciones.iterator;
+      while (j.moveNext()) { 
+        print("      - ${j.current.getNombre()}");
+        List <TipoItemInvestigacion> listaItems = j.current.getLista();
+        k = listaItems.iterator;
+        while (k.moveNext()) { 
+          print("         - ${k.current.getNombre()}");
+        }
+      }
+    }
   }
 
   Principal() {
