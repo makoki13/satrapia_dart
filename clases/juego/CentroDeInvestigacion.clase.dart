@@ -9,7 +9,7 @@ import './Embajada.clase.dart';
 class TipoInvestigacion {
   List<TipoSubInvestigacion> listaDeSubinvestigaciones;
 
-  num _id;
+  int _id;
   String _nombre;
 
   TipoInvestigacion (this._id, this._nombre) {
@@ -20,7 +20,7 @@ class TipoInvestigacion {
     this.listaDeSubinvestigaciones.add(subinvestigacion);
   }
 
-  num getID() { return this._id; }
+  int getID() { return this._id; }
   String getNombre() { return this._nombre; }
 
   List<TipoSubInvestigacion> getSubinvestigacionesConseguidos() {
@@ -39,7 +39,7 @@ class TipoInvestigacion {
 class TipoSubInvestigacion {
   List<TipoItemInvestigacion> listaDeItems;
 
-  num _id;
+  int _id;
   String _nombre;
   TipoInvestigacion _investigacion;
 
@@ -51,7 +51,7 @@ class TipoSubInvestigacion {
     this.listaDeItems.add(item);
   }
 
-  num getID() { return this._id; }
+  int getID() { return this._id; }
   String getNombre() { return this._nombre; }
 
   TipoInvestigacion getTipo() { return this._investigacion; }
@@ -73,7 +73,7 @@ class TipoSubInvestigacion {
 class TipoItemInvestigacion {
   bool _siendoInvestigada = false;
 
-  num _id;
+  int _id;
   String _nombre;
   num _precio;
   num _tiempo;
@@ -339,30 +339,33 @@ class CentroDeInvestigacion extends Edificio {
     return listaElementos;
   }
 
-  TipoItemInvestigacion getItem (num idTipo, num idSubtipo, num idItem) {
-    List<TipoInvestigacion> investigacion =  this.listaInvestigaciones.where( (x) => x.getID() == idTipo);
-    List<TipoSubInvestigacion> subinvestigacion = investigacion[0].listaDeSubinvestigaciones.where( (x) => x.getID() == idSubtipo);
-    List<TipoItemInvestigacion> item = subinvestigacion[0].listaDeItems.where( (x) => x.getID() == idItem);
-    return item[0];
+  TipoItemInvestigacion getItem (num idTipo, num idSubtipo, num idItem) {    
+    List<TipoInvestigacion> investigacion =  new List<TipoInvestigacion>.from(listaInvestigaciones.where( (x) => x.getID() == idTipo));
+    List<TipoSubInvestigacion> subinvestigacion = new List<TipoSubInvestigacion>.from(investigacion[0].listaDeSubinvestigaciones.where( (x) => x.getID() == idSubtipo));
+    List<TipoItemInvestigacion> item = new List<TipoItemInvestigacion>.from(subinvestigacion[0].listaDeItems.where( (x) => x.getID() == idItem));    
+    return item[0];    
   }
 
   num _idTipo; num _idSubtipo; num _idItem; Capital _ciudad; 
 
-  iniciaInvestigacion(num idTipo, num idSubtipo, num idItem, Capital ciudad) {
+  iniciaInvestigacion(int idTipo, int idSubtipo, int idItem, Capital ciudad) {
+    
     TipoItemInvestigacion item = this.getItem (idTipo, idSubtipo, idItem);
-
+    
     num precio = item.getPrecio();
     num cantidadObtenida = this._capital.getPalacio().gastaOro(precio);
     if (cantidadObtenida < precio ) {
+      print("No se puede pagar $precio con $cantidadObtenida por investigar ${item.getNombre()}");
       this._capital.getPalacio().entraOro(cantidadObtenida);
       this.setStatus (' Se aborta la investigación ' + item.getNombre() + ': Oro insuficiente');
       return false;
     }
 
     item.setInvestigada (true);
+    print("Se inicia investigar ${item.getNombre()}");
     this._idTipo = idTipo; this._idSubtipo = idSubtipo; this._idItem = idItem; this._ciudad = ciudad;
     this._disp.addTareaRepetitiva(compraInvestigacion, item.getTiempo() );
-    this.setStatus ('Investigando');
+    this.setStatus ('Investigando');    
   }
   
   num compraInvestigacion() {

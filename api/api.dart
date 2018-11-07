@@ -81,6 +81,8 @@ class API {
 
   static Estructura cargaImperio(int jugador) { return null;}
 
+  static Capital getCapital() { return Estructura._capital;}
+
   static int getPoblacionActual() {
     return Estructura._palacio.getPoblacionActual();
   }
@@ -209,5 +211,26 @@ class API {
   /* INVESTIGACIONES */
   static List<TipoInvestigacion> getListaInvestigaciones() {
     return Estructura._centroDeInvestigacion.getLista();
+  }
+
+  static void investiga(int idTipo, int idSubtipo, int idItem, Capital ciudad) {
+    Estructura._centroDeInvestigacion.iniciaInvestigacion(idTipo, idSubtipo, idItem, ciudad);
+  }
+
+  /* TROPAS */
+  static List<Unidades> getListaTropas() {
+    return Estructura._cuartel.getTropas();
+  }
+
+  static void entrenaCivilesConHonda(int cantidad) {
+    CivilConHonda leva = new CivilConHonda(1, 10, 10, 80);
+    Unidades unidad = new Unidades(leva, cantidad);
+    Estructura._cuartel.entrena(unidad);
+  }
+
+  static void entrenaSoldados(int cantidad) {
+    Soldado leva = new Soldado(3, 20, 20, 100);
+    Unidades unidad = new Unidades(leva, cantidad);
+    Estructura._cuartel.entrena(unidad);
   }
 }
