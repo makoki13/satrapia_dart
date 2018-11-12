@@ -19,11 +19,12 @@ class Cuartel extends Edificio {
 
   List<Unidades> getTropas() { return this._unidades; }
 
-  UnidadMilitar _tipoUnidad;
-  num _cantidad;
+  UnidadMilitar _tipoUnidad, _tipoUnidadCivilConHonda;
+  num _cantidad, _cantidadCivilConHonda;
 
   addUnidades () {
     UnidadMilitar tipo = this._tipoUnidad; num cantidad = this._cantidad;
+    print ("${tipo.getNombre()}");
     num indiceElemento = -1;
     num indice = 0;
     this._unidades.forEach( (x) {
@@ -43,6 +44,28 @@ class Cuartel extends Edificio {
     return -1;
   }
 
+  addUnidadesCivilesConHonda () {
+    UnidadMilitar tipo = _tipoUnidadCivilConHonda; num cantidad = this._cantidadCivilConHonda;
+    print ("${tipo.getNombre()}");
+    num indiceElemento = -1;
+    num indice = 0;
+    this._unidades.forEach( (x) {
+      if (x.unidad.getID() == tipo.getID()) {indiceElemento = indice; }
+      indice++;
+    });
+
+    if ( indiceElemento == -1) {
+      Unidades nuevaUnidad = new Unidades(tipo, cantidad);
+      this._unidades.add (nuevaUnidad);
+    } else {
+      this._unidades[indiceElemento].cantidad += cantidad;
+    }
+
+    this.setStatus ('Sin actividad');
+
+    return -1;
+  }
+  
   List<Unidades> getTipoUnidadesPermitidas() {
     List<Unidades> lista = new List< Unidades >();
     // let unidadItem: UnidadMilitar;
@@ -82,7 +105,7 @@ class Cuartel extends Edificio {
     return lista;
   }
 
-  num _entrenaCivilesConHonda([num cantidad = 0]) {
+  num _entrenaCivilesConHonda([num cantidad = 0]) {    
     CivilConHonda tipoUnidad = new CivilConHonda(100, 1, 1, 100);
     num maxUnidadesEnEntrenamiento = tipoUnidad.getMaxUnidadesEnEntrenamiento();
     if (cantidad == 0) { cantidad = maxUnidadesEnEntrenamiento; }
@@ -91,25 +114,20 @@ class Cuartel extends Edificio {
     if (myCI.estaComprada(2, 1, 1)) {
       this.setStatus ('Entrenando');
       bool esCorrecto = true;
-      this._unidades.forEach( (x) {
-        if (x.unidad.getID() == 1001) {
-          num precio = x.unidad.getCosteUnitario();
-          num importeTotal = precio * cantidad;
-          num cantidadObtenida = this._capital.getPalacio().gastaOro(importeTotal);
-          if (cantidadObtenida < importeTotal ) {
+      num precio = tipoUnidad.getCosteUnitario();
+      num importeTotal = precio * cantidad;
+      num cantidadObtenida = this._capital.getPalacio().gastaOro(importeTotal);
+      if (cantidadObtenida < importeTotal ) {
             this._capital.getPalacio().entraOro(cantidadObtenida);
-            esCorrecto = false;
-            return; // (' Se aborta el reclutamiento de ' + cantidad + x.unidad.getNombre() + ': Oro insuficiente');
+            esCorrecto = false;            
           }
-        }
-      });
 
       if (esCorrecto == false) return -1;
 
-      this._tipoUnidad = tipoUnidad;
-      this._cantidad = cantidad;
+      this._tipoUnidadCivilConHonda = tipoUnidad;
+      this._cantidadCivilConHonda = cantidad;
 
-      this._disp.addTareaRepetitiva(addUnidades, 5);
+      this._disp.addTareaRepetitiva(addUnidadesCivilesConHonda, 5);
     } else {
       // console.log(' No se puede entrenar "Civiles con honda". La investigación no está realizada.');
     }
@@ -117,37 +135,35 @@ class Cuartel extends Edificio {
     return 0;
   }
 
-  num _entrenaSoldados([num cantidad = 0]) {
+  num _entrenaSoldados([num cantidad = 0]) {    
+    if (this.getStatus=='Entrenando') return -1;
     Soldado tipoUnidad = new Soldado(100, 1, 100, 100);
     num maxUnidadesEnEntrenamiento = tipoUnidad.getMaxUnidadesEnEntrenamiento();
     if (cantidad == 0) { cantidad = maxUnidadesEnEntrenamiento; }
     if (cantidad > maxUnidadesEnEntrenamiento) { cantidad = maxUnidadesEnEntrenamiento; }
     CentroDeInvestigacion myCI = this._capital.getCentroDeInvestigacion();
-    if (myCI.estaComprada(2, 1, 2)) {
-      // console.log(' Se inicia reclutamiento de unidades de infanteria: "Civiles con honda".');
+    if (myCI.estaComprada(2, 1, 2)) {      
       this.setStatus ('Entrenando');
       bool esCorrecto = true;
-      this._unidades.forEach( (x) {
-        if (x.unidad.getID() == 1002) {
-          num precio = x.unidad.getCosteUnitario();
-          num importeTotal = precio * cantidad;
-          num cantidadObtenida = this._capital.getPalacio().gastaOro(importeTotal);
-          if (cantidadObtenida < importeTotal ) {
-            this._capital.getPalacio().entraOro(cantidadObtenida);
-            esCorrecto = false;
-            return; //alert (' Se aborta el reclutamiento de ' + cantidad + x.unidad.getNombre() + ': Oro insuficiente');
-          }
-        }
-      });
 
+      num precio = tipoUnidad.getCosteUnitario();
+      num importeTotal = precio * cantidad;
+      num cantidadObtenida = this._capital.getPalacio().gastaOro(importeTotal);
+      if (cantidadObtenida < importeTotal ) {
+        print("No hay pasta");
+        this._capital.getPalacio().entraOro(cantidadObtenida);
+        esCorrecto = false;        
+      }
+      
       if (esCorrecto == false) return -1;
 
       this._tipoUnidad = tipoUnidad;
       this._cantidad = cantidad;
 
       this._disp.addTareaRepetitiva(addUnidades, 5);
-    } else {
-      // console.log(' No se puede entrenar "Soldados". La investigación no está realizada.');
+    } 
+    else {
+        print(' No se puede entrenar "Soldados". La investigación no está realizada.');
     }
 
     return 0;

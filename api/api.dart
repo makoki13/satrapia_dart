@@ -228,9 +228,9 @@ class API {
     Estructura._cuartel.entrena(unidad);
   }
 
-  static void entrenaSoldados(int cantidad) {
+  static int entrenaSoldados(int cantidad) {
     Soldado leva = new Soldado(3, 20, 20, 100);
     Unidades unidad = new Unidades(leva, cantidad);
-    Estructura._cuartel.entrena(unidad);
+    return Estructura._cuartel.entrena(unidad);
   }
 }

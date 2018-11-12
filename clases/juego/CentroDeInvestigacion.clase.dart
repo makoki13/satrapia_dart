@@ -397,7 +397,8 @@ class CentroDeInvestigacion extends Edificio {
   // para la 2.0 :-D
   }
 
-  estaComprada(idTipo, idSubtipo, idItem) {
+  bool estaComprada(idTipo, idSubtipo, idItem) {
+    return true;
     TipoItemInvestigacion item = this.getItem (idTipo, idSubtipo, idItem);
     return item.getConseguido();
   }

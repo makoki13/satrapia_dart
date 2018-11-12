@@ -11,6 +11,7 @@ import '../clases/juego/Cuartel.clase.dart';
 
 class Principal {
   Dispatcher miDispatcher;
+  bool primeraVez = true;
 
   void visualizador() {        
     print("\x1B[2J\x1B[0;0H");
@@ -42,7 +43,7 @@ class Principal {
     while (i.moveNext()) { print("   - ${i.current.getNombre()}"); }
     print("............................................................");
     print("............................................................");
-    
+    /*
     print(" INVESTIGACIONES");
     List<TipoInvestigacion> investigaciones = API.getListaInvestigaciones();
     i = investigaciones.iterator;
@@ -78,13 +79,16 @@ class Principal {
         }
       }
     }
-
+    */
     print("............................................................");
     print("............................................................");
     print(" EJERCITO ");
-
-    API.entrenaSoldados(10);  
-    API.entrenaCivilesConHonda(20);
+    
+    if (primeraVez == true) {
+      API.entrenaCivilesConHonda(20);
+      API.entrenaSoldados(10); 
+      primeraVez = false;
+    } 
 
     List<Unidades> listaUnidades = API.getListaTropas();
     i = listaUnidades.iterator;    
