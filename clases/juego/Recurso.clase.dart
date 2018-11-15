@@ -46,15 +46,15 @@ class UnidadMilitar extends Recurso {
 }
 
 class CivilConHonda extends UnidadMilitar {
-  CivilConHonda (int vidaInicial, int danyoInflingido, int fuerza, int moral) :  super ( 1001, 'Civil con honda', vidaInicial, danyoInflingido, fuerza, moral, 1, 10) {}
+  CivilConHonda (int vidaInicial, int danyoInflingido, int fuerza, int moral) :  super ( 1001, 'Civil con honda', vidaInicial, danyoInflingido, fuerza, moral, 1, 100) {}
 }
 
 class Soldado extends UnidadMilitar {
-  Soldado (int vidaInicial, int danyoInflingido, int fuerza, int moral) : super ( 1002, 'Soldado', vidaInicial, danyoInflingido, fuerza, moral, 10, 10) {}
+  Soldado (int vidaInicial, int danyoInflingido, int fuerza, int moral) : super ( 1002, 'Soldado', vidaInicial, danyoInflingido, fuerza, moral, 10, 100) {}
 }
 
 class Arquero extends UnidadMilitar {
-  Arquero (int vidaInicial, int danyoInflingido, int fuerza, int moral) : super ( 1003, 'Arquero', vidaInicial, danyoInflingido, fuerza, moral, 5, 10) {}
+  Arquero (int vidaInicial, int danyoInflingido, int fuerza, int moral) : super ( 1003, 'Arquero', vidaInicial, danyoInflingido, fuerza, moral, 5, 100) {}
 }
 
 class Lancero extends UnidadMilitar {

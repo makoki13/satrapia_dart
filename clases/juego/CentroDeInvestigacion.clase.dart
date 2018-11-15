@@ -64,7 +64,7 @@ class TipoSubInvestigacion {
     }).toList();
   }
 
-  bool estaInvestigada (num indice) { return this.listaDeItems[indice].getConseguido(); }
+  bool estaInvestigada (int indice) { return this.listaDeItems[indice].getConseguido(); }
 
   List < TipoItemInvestigacion > getLista() { return this.listaDeItems; }
 
@@ -75,8 +75,8 @@ class TipoItemInvestigacion {
 
   int _id;
   String _nombre;
-  num _precio;
-  num _tiempo;
+  int _precio;
+  int _tiempo;
   bool _conseguido;
   TipoSubInvestigacion _subtipo;
   TipoEdificio _edificio;
@@ -88,7 +88,7 @@ class TipoItemInvestigacion {
     return this._edificio;
   }
 
-  num getPrecio() {
+  int getPrecio() {
     return this._precio;
   }
 
@@ -112,7 +112,7 @@ class TipoItemInvestigacion {
     return this._nombre;
   }
 
-  num getTiempo() {
+  int getTiempo() {
     return this._tiempo;
   }
 
@@ -134,7 +134,7 @@ class CentroDeInvestigacion extends Edificio {
 
   List<TipoInvestigacion> listaInvestigaciones;
 
-  num _id;
+  int _id;
   String _nombre;
   Capital _capital;
   Dispatcher _disp;
@@ -339,21 +339,21 @@ class CentroDeInvestigacion extends Edificio {
     return listaElementos;
   }
 
-  TipoItemInvestigacion getItem (num idTipo, num idSubtipo, num idItem) {    
+  TipoItemInvestigacion getItem (int idTipo, int idSubtipo, int idItem) {    
     List<TipoInvestigacion> investigacion =  new List<TipoInvestigacion>.from(listaInvestigaciones.where( (x) => x.getID() == idTipo));
     List<TipoSubInvestigacion> subinvestigacion = new List<TipoSubInvestigacion>.from(investigacion[0].listaDeSubinvestigaciones.where( (x) => x.getID() == idSubtipo));
     List<TipoItemInvestigacion> item = new List<TipoItemInvestigacion>.from(subinvestigacion[0].listaDeItems.where( (x) => x.getID() == idItem));    
     return item[0];    
   }
 
-  num _idTipo; num _idSubtipo; num _idItem; Capital _ciudad; 
+  int _idTipo; int _idSubtipo; int _idItem; Capital _ciudad; 
 
   iniciaInvestigacion(int idTipo, int idSubtipo, int idItem, Capital ciudad) {
     
     TipoItemInvestigacion item = this.getItem (idTipo, idSubtipo, idItem);
     
-    num precio = item.getPrecio();
-    num cantidadObtenida = this._capital.getPalacio().gastaOro(precio);
+    int precio = item.getPrecio();
+    int cantidadObtenida = this._capital.getPalacio().gastaOro(precio);
     if (cantidadObtenida < precio ) {
       print("No se puede pagar $precio con $cantidadObtenida por investigar ${item.getNombre()}");
       this._capital.getPalacio().entraOro(cantidadObtenida);
@@ -368,7 +368,7 @@ class CentroDeInvestigacion extends Edificio {
     this.setStatus ('Investigando');    
   }
   
-  num compraInvestigacion() {
+  int compraInvestigacion() {
     Capital ciudad;
 
     //dynamic idTipo = v[0]; dynamic idSubtipo = v[1]; dynamic idItem = v[2]; if (v.length == 4) { ciudad = v[3]; }

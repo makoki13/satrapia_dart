@@ -3,30 +3,57 @@ import './Recurso.clase.dart';
 import './CentroDeInvestigacion.clase.dart';
 import './Capital.clase.dart';
 import './Dispatcher.clase.dart';
+import './Ejercito.clase.dart';
 
 class Cuartel extends Edificio {
   List<Unidades> _unidades;
 
-  num id;
+  int id;
   String nombre;
   Capital _capital;
   Dispatcher _disp;
+  Ejercito _ejercito;
 
   Cuartel (this.id, this.nombre, this._capital, this._disp) : super (id, nombre, TipoEdificio.CUARTEL, _capital.getPosicion(), 0, 0) {
     this._capital.setCuartel(this);
     this._unidades = new  List< Unidades >();
+    this._ejercito = new Ejercito(1, 'Ejercito de la ciudad de ${this._capital.getNombre()}', _capital.getPosicion(), this._capital, this._disp);
   }
 
   List<Unidades> getTropas() { return this._unidades; }
 
+  Ejercito getEjercito() {
+    return this._ejercito;
+  }
+
   UnidadMilitar _tipoUnidad, _tipoUnidadCivilConHonda;
-  num _cantidad, _cantidadCivilConHonda;
+  int _cantidad, _cantidadCivilConHonda;
+
+  void transfiere(UnidadMilitar tipo, int cantidad) {
+    int indiceElemento = -1;
+    int indice = 0;
+    this._unidades.forEach( (x) {
+      if (x.unidad.getID() == tipo.getID()) {indiceElemento = indice; }      
+      indice++;
+    });
+    
+    if ( indiceElemento != -1) {      
+      print ("${tipo.getNombre()} : ${this._unidades[indiceElemento].cantidad} : $cantidad");
+      if (this._unidades[indiceElemento].cantidad <= cantidad) {
+        this._ejercito.addUnidades(tipo, this._unidades[indiceElemento].cantidad);
+        this._unidades[indiceElemento].cantidad = 0;
+      }
+      else {        
+        this._ejercito.addUnidades(tipo, cantidad);
+        this._unidades[indiceElemento].cantidad -= cantidad;
+      }
+    }    
+  }
 
   addUnidades () {
-    UnidadMilitar tipo = this._tipoUnidad; num cantidad = this._cantidad;
-    print ("${tipo.getNombre()}");
-    num indiceElemento = -1;
-    num indice = 0;
+    UnidadMilitar tipo = this._tipoUnidad; int cantidad = this._cantidad;
+    int indiceElemento = -1;
+    int indice = 0;
     this._unidades.forEach( (x) {
       if (x.unidad.getID() == tipo.getID()) {indiceElemento = indice; }
       indice++;
@@ -45,10 +72,9 @@ class Cuartel extends Edificio {
   }
 
   addUnidadesCivilesConHonda () {
-    UnidadMilitar tipo = _tipoUnidadCivilConHonda; num cantidad = this._cantidadCivilConHonda;
-    print ("${tipo.getNombre()}");
-    num indiceElemento = -1;
-    num indice = 0;
+    UnidadMilitar tipo = _tipoUnidadCivilConHonda; int cantidad = this._cantidadCivilConHonda;
+    int indiceElemento = -1;
+    int indice = 0;
     this._unidades.forEach( (x) {
       if (x.unidad.getID() == tipo.getID()) {indiceElemento = indice; }
       indice++;
@@ -67,12 +93,11 @@ class Cuartel extends Edificio {
   }
   
   List<Unidades> getTipoUnidadesPermitidas() {
-    List<Unidades> lista = new List< Unidades >();
-    // let unidadItem: UnidadMilitar;
+    List<Unidades> lista = new List< Unidades >();    
     CentroDeInvestigacion myCI = this._capital.getCentroDeInvestigacion();
 
     myCI.getListaUnidadesMilitaresConseguidas().forEach ( (item) {
-      num indice = item.getID();
+      int indice = item.getID();
       bool existe = false;
       switch (indice) {
         case 1:
@@ -105,18 +130,18 @@ class Cuartel extends Edificio {
     return lista;
   }
 
-  num _entrenaCivilesConHonda([num cantidad = 0]) {    
+  int _entrenaCivilesConHonda([int cantidad = 100]) {    
     CivilConHonda tipoUnidad = new CivilConHonda(100, 1, 1, 100);
-    num maxUnidadesEnEntrenamiento = tipoUnidad.getMaxUnidadesEnEntrenamiento();
+    int maxUnidadesEnEntrenamiento = tipoUnidad.getMaxUnidadesEnEntrenamiento();
     if (cantidad == 0) { cantidad = maxUnidadesEnEntrenamiento; }
     if (cantidad > maxUnidadesEnEntrenamiento) { cantidad = maxUnidadesEnEntrenamiento; }
     CentroDeInvestigacion myCI = this._capital.getCentroDeInvestigacion();
     if (myCI.estaComprada(2, 1, 1)) {
       this.setStatus ('Entrenando');
       bool esCorrecto = true;
-      num precio = tipoUnidad.getCosteUnitario();
-      num importeTotal = precio * cantidad;
-      num cantidadObtenida = this._capital.getPalacio().gastaOro(importeTotal);
+      int precio = tipoUnidad.getCosteUnitario();
+      int importeTotal = precio * cantidad;
+      int cantidadObtenida = this._capital.getPalacio().gastaOro(importeTotal);
       if (cantidadObtenida < importeTotal ) {
             this._capital.getPalacio().entraOro(cantidadObtenida);
             esCorrecto = false;            
@@ -135,10 +160,10 @@ class Cuartel extends Edificio {
     return 0;
   }
 
-  num _entrenaSoldados([num cantidad = 0]) {    
+  int _entrenaSoldados([int cantidad = 0]) {    
     if (this.getStatus=='Entrenando') return -1;
     Soldado tipoUnidad = new Soldado(100, 1, 100, 100);
-    num maxUnidadesEnEntrenamiento = tipoUnidad.getMaxUnidadesEnEntrenamiento();
+    int maxUnidadesEnEntrenamiento = tipoUnidad.getMaxUnidadesEnEntrenamiento();
     if (cantidad == 0) { cantidad = maxUnidadesEnEntrenamiento; }
     if (cantidad > maxUnidadesEnEntrenamiento) { cantidad = maxUnidadesEnEntrenamiento; }
     CentroDeInvestigacion myCI = this._capital.getCentroDeInvestigacion();
@@ -146,9 +171,9 @@ class Cuartel extends Edificio {
       this.setStatus ('Entrenando');
       bool esCorrecto = true;
 
-      num precio = tipoUnidad.getCosteUnitario();
-      num importeTotal = precio * cantidad;
-      num cantidadObtenida = this._capital.getPalacio().gastaOro(importeTotal);
+      int precio = tipoUnidad.getCosteUnitario();
+      int importeTotal = precio * cantidad;
+      int cantidadObtenida = this._capital.getPalacio().gastaOro(importeTotal);
       if (cantidadObtenida < importeTotal ) {
         print("No hay pasta");
         this._capital.getPalacio().entraOro(cantidadObtenida);
@@ -169,24 +194,17 @@ class Cuartel extends Edificio {
     return 0;
   }
 
-  num entrena( Unidades tipoUnidad) {
-    num resp;
+  int entrena( Unidades tipoUnidad, int cantidad) {
+    int resp;
     switch (tipoUnidad.unidad.getID()) {
       case 1001:
-        resp = this._entrenaCivilesConHonda();
+        resp = this._entrenaCivilesConHonda(cantidad);
         break;
       case 1002:
-        resp = this._entrenaSoldados();
+        resp = this._entrenaSoldados(cantidad);
         break;
     }
 
     return resp;
   }
-}
-
-class Unidades {
-  UnidadMilitar unidad;
-  num cantidad;
-
-  Unidades (this.unidad, this.cantidad);
 }

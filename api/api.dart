@@ -12,6 +12,7 @@ import '../clases/juego/Capital.clase.dart';
 import '../clases/juego/Palacio.clase.dart';
 import '../clases/juego/Silos.clase.dart';
 import '../clases/juego/Cuartel.clase.dart';
+import '../clases/juego/Ejercito.clase.dart';
 import '../clases/juego/CentroDeInvestigacion.clase.dart';
 
 
@@ -225,12 +226,26 @@ class API {
   static void entrenaCivilesConHonda(int cantidad) {
     CivilConHonda leva = new CivilConHonda(1, 10, 10, 80);
     Unidades unidad = new Unidades(leva, cantidad);
-    Estructura._cuartel.entrena(unidad);
+    Estructura._cuartel.entrena(unidad, cantidad);
   }
 
   static int entrenaSoldados(int cantidad) {
     Soldado leva = new Soldado(3, 20, 20, 100);
     Unidades unidad = new Unidades(leva, cantidad);
-    return Estructura._cuartel.entrena(unidad);
+    return Estructura._cuartel.entrena(unidad, cantidad);
+  }
+
+  static List<Unidades> getListaEjercito() {
+    return Estructura._cuartel.getEjercito().getTropas();
+  }
+
+  static void traspasaCivilesConHondaAlEjercito(cantidad) {
+    CivilConHonda leva = new CivilConHonda(3, 20, 20, 100);
+    Estructura._cuartel.transfiere(leva, cantidad);
+  }
+
+  static void traspasaSoldadosAlEjercito(cantidad) {
+    Soldado leva = new Soldado(3, 20, 20, 100);
+    Estructura._cuartel.transfiere(leva, cantidad);
   }
 }

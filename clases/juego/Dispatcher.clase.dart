@@ -3,7 +3,7 @@ import 'dart:async';
 class Tarea {  
   Function _funcion;
   DateTime _vencimiento;
-  num _delta;
+  int _delta;
   bool _eliminada = false;
 
   Tarea (this._funcion, this._vencimiento, this._delta) {}
@@ -25,12 +25,12 @@ class Tarea {
 class Dispatcher {
   List<Tarea> listaDeTareas = new List<Tarea>();
 
-  Dispatcher() {
-    const oneSec = const Duration(seconds:1);
+  Dispatcher() {    
+    const oneSec = const Duration(microseconds: 500000);
     new Timer.periodic(oneSec, (Timer t) => this.ejecuta(this.listaDeTareas.toList()));
   }
 
-  addTareaRepetitiva(Function f, num tiempo) {
+  addTareaRepetitiva(Function f, int tiempo) {
     DateTime nuevoVencimiento;
     Tarea t;
 
@@ -46,16 +46,15 @@ class Dispatcher {
 
   ejecuta(List<Tarea> lista) {    
     DateTime horaActual = new DateTime.now();
-    num numTareas = lista.length;
+    int cantidadTareas = lista.length;
 
-    if (numTareas > 0) {      
+    if (cantidadTareas > 0) {      
       lista.forEach((tarea) {
         if (tarea._eliminada == false) {
           if (tarea.getVencimiento().isBefore(horaActual)) {
             tarea.setVencimiento();
-            num rt = tarea.execFuncion();
-            if (rt == -1) {
-              //print("Eliminamos tarea ${tarea.getNombreFuncion()}");
+            int rt = tarea.execFuncion();
+            if (rt == -1) {              
               tarea._eliminada = true;
             }            
           }

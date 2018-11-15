@@ -42,6 +42,7 @@ class Cantera extends Edificio {
 
   String getNombre() { return this._nombre; }
 
+  Almacen getAlmacen() { return this._almacen;}
 
   String toString() { return this._nombre;}
 
@@ -75,3 +76,5 @@ class Cantera extends Edificio {
 
   bool estaActiva() { return (this._filon.getStock() > Parametros.Filon_Vacio); }
 }
+
+

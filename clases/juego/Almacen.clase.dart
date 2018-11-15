@@ -17,7 +17,7 @@ class Almacen {
 
   String getNombre() { return this._nombre; }
 
-  addCantidad (int cantidad) {
+  addCantidad (int cantidad) {    
     if (this._cantidad + cantidad > this._maxCantidad)
       this._cantidad = this._maxCantidad;
     else

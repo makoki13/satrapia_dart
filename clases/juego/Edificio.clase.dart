@@ -7,12 +7,12 @@ enum TipoEdificio {
 }
 
 class Edificio {
-  num _id;
+  int _id;
   String nombre;
   TipoEdificio tipo;
   Punto posicion;
-  num _costeConstruccion;
-  num _tiempoConstruccion;
+  int _costeConstruccion;
+  int _tiempoConstruccion;
 
   String status = 'Sin actividad';
   bool hayEnvioEnMarcha = false;
@@ -23,12 +23,12 @@ class Edificio {
   }
 
   /* Es posible que no se usen */
-  setCosteConstruccion(num cantidad) { this._costeConstruccion = cantidad; }
-  setTiempoConstruccion(num cantidad) { this._tiempoConstruccion = cantidad; }
-  num getCosteConstruccion() { return this._costeConstruccion; }
-  num getTiempoConstruccion() { return this._tiempoConstruccion; }
+  setCosteConstruccion(int cantidad) { this._costeConstruccion = cantidad; }
+  setTiempoConstruccion(int cantidad) { this._tiempoConstruccion = cantidad; }
+  int getCosteConstruccion() { return this._costeConstruccion; }
+  int getTiempoConstruccion() { return this._tiempoConstruccion; }
 
-  num getID() { return this._id; }
+  int getID() { return this._id; }
   TipoEdificio getTipo() { return this.tipo; }
   Punto getPosicion() { return this.posicion; }
   setStatus( String mensaje ) { this.status = mensaje; }

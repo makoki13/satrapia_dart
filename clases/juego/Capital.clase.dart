@@ -13,8 +13,8 @@ import './Taberna.clase.dart';
 import './Punto.clase.dart';
 
 class Capital extends Localidad {
-  Palacio palacio;
-  CentroDeInvestigacion centroDeInvestigacion;
+  Palacio _palacio;
+  CentroDeInvestigacion _centroDeInvestigacion;
   Silos silos;
   Cuartel cuartel;
   Mercado mercado;
@@ -45,11 +45,11 @@ class Capital extends Localidad {
   Provincia getProvincia() { return this._provincia; }
   Punto getPosicion() { return this._posicion; }
 
-  setPalacio (Palacio p) { this.palacio = p; }
-  Palacio getPalacio () { return this.palacio; }
+  setPalacio (Palacio p) { this._palacio = p; }
+  Palacio getPalacio () { return this._palacio; }
 
-  setCentroDeInvestigacion (CentroDeInvestigacion c) { this.centroDeInvestigacion = c; }
-  CentroDeInvestigacion getCentroDeInvestigacion () { return this.centroDeInvestigacion; }
+  setCentroDeInvestigacion (CentroDeInvestigacion c) { this._centroDeInvestigacion = c; }
+  CentroDeInvestigacion getCentroDeInvestigacion () { return this._centroDeInvestigacion; }
 
   setSilos (Silos s) { this.silos = s; }
   Silos getSilos () { return this.silos; }

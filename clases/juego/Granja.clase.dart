@@ -45,6 +45,8 @@ class Granja extends Edificio {
 
   String toString() { return this._nombre;}
 
+  Almacen getAlmacen() { return this._almacen;}
+
   extrae() {
     num cantidad = this._granjeros.getCantidad();
 

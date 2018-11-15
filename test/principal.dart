@@ -6,8 +6,9 @@ import '../clases/juego/Granja.clase.dart';
 import '../clases/juego/Serreria.clase.dart';
 import '../clases/juego/Cantera.clase.dart';
 import '../clases/juego/Mina.clase.dart';
-import '../clases/juego/CentroDeInvestigacion.clase.dart';
+//import '../clases/juego/CentroDeInvestigacion.clase.dart';
 import '../clases/juego/Cuartel.clase.dart';
+import '../clases/juego/Ejercito.clase.dart';
 
 class Principal {
   Dispatcher miDispatcher;
@@ -25,22 +26,22 @@ class Principal {
     print(" * Granjas: ${API.numGranjas()}");
     List<Granja> listaGranjas = API.listaGranjas();
     Iterator i = listaGranjas.iterator;
-    while (i.moveNext()) { print("   - ${i.current.getNombre()}"); }
+    while (i.moveNext()) { print("   - ${i.current.getNombre()} : ${i.current.getComidaActual()} : ${i.current.getAlmacen().getMaxCantidad()}"); }
 
     print(" * Serrerias: ${API.numSerrerias()}");
     List<Serreria> listaSerrerias = API.listaSerrerias();
     i = listaSerrerias.iterator;
-    while (i.moveNext()) { print("   - ${i.current.getNombre()}"); }
+    while (i.moveNext()) { print("   - ${i.current.getNombre()} : ${i.current.getMaderaActual()} : ${i.current.getAlmacen().getMaxCantidad()}"); }
 
-    print(" * Canteras: ${API.numCanteras()}");
+    print(" * Canteras: ${API.numCanteras()}}");
     List<Cantera> listaCanteras = API.listaCanteras();
     i = listaCanteras.iterator;
-    while (i.moveNext()) { print("   - ${i.current.getNombre()}"); }
+    while (i.moveNext()) { print("   - ${i.current.getNombre()} : ${i.current.getPiedraActual()} : ${i.current.getAlmacen().getMaxCantidad()}"); }
 
     print(" * Minas de hierro: ${API.numMinasDeHierro()}");
     List<MinaDeHierro> listaMinasDeHierro = API.listaMinasDeHierro();
     i = listaMinasDeHierro.iterator;
-    while (i.moveNext()) { print("   - ${i.current.getNombre()}"); }
+    while (i.moveNext()) { print("   - ${i.current.getNombre()} : ${i.current.getCantidadAlmacenActual()} : ${i.current.getAlmacen().getMaxCantidad()}"); }
     print("............................................................");
     print("............................................................");
     /*
@@ -80,22 +81,29 @@ class Principal {
       }
     }
     */
-    print("............................................................");
-    print("............................................................");
-    print(" EJERCITO ");
+
     
+    print("............................................................");
+    print("............................................................");
+    print(" SOLDADESCA ");
     if (primeraVez == true) {
-      API.entrenaCivilesConHonda(20);
-      API.entrenaSoldados(10); 
+      API.entrenaCivilesConHonda(30);
+      API.entrenaSoldados(20); 
+      
       primeraVez = false;
     } 
+
+    API.traspasaCivilesConHondaAlEjercito(5);
+    API.traspasaSoldadosAlEjercito(5);
 
     List<Unidades> listaUnidades = API.getListaTropas();
     i = listaUnidades.iterator;    
     while (i.moveNext()) { print("   - ${i.current.unidad.getNombre()} Cantidad: ${i.current.cantidad}"); }
-    print("............................................................");
-    print("............................................................");
-
+    print("............................................................");        
+    print(" EJERCITO ");
+    List<Unidades> listaUnidadesEjercito = API.getListaEjercito();
+    if (listaUnidadesEjercito != null) i = listaUnidadesEjercito.iterator;
+    while (i.moveNext()) { print("   - ${i.current.unidad.getNombre()} Cantidad: ${i.current.cantidad}"); }
   }
 
   Principal() {
