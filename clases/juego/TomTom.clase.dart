@@ -2,7 +2,7 @@ import './Punto.clase.dart';
 
 class TomTom {
   static List<Punto> calculaViaje (Punto origen, Punto destino) {
-    List<Punto> ruta = new List<Punto>();
+    List<Punto> ruta = [];
 
     num x_actual = origen.getX();
     num y_actual = origen.getY();

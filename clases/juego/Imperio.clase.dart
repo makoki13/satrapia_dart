@@ -8,12 +8,23 @@ class Imperio {
   String _nombre;
   Jugador _lider;
   bool _esTribu;
-  Imperio (this._id, this._nombre, this._lider, this._esTribu) {}
+  Imperio(this._id, this._nombre, this._lider, this._esTribu) {}
 
-  String getNombre() { return this._nombre; }
-  int getID() { return this._id; }
-  Jugador getJugador() { return this._lider;}
-  bool esTribu() { return this._esTribu;}
+  String getNombre() {
+    return this._nombre;
+  }
+
+  int getID() {
+    return this._id;
+  }
+
+  Jugador getJugador() {
+    return this._lider;
+  }
+
+  bool esTribu() {
+    return this._esTribu;
+  }
 }
 
 class Provincia extends Imperio {
@@ -23,14 +34,18 @@ class Provincia extends Imperio {
   bool _esTribu;
   bool _esSatrapia;
 
-  Provincia (this._id, this._nombre, this._lider, this._esTribu, this._esSatrapia) : super (_id, _nombre, _lider, _esTribu) {}
+  Provincia(
+      this._id, this._nombre, this._lider, this._esTribu, this._esSatrapia)
+      : super(_id, _nombre, _lider, _esTribu) {}
 
-  bool esSatrapia() { return this._esSatrapia;}
+  bool esSatrapia() {
+    return this._esSatrapia;
+  }
 }
 
 class Localidad {
-  Productor _demografia;
-  Almacen _poblacion;
+  late Productor _demografia;
+  late Almacen _poblacion;
   int _id;
   String _nombre;
   bool _esCapital;
@@ -38,10 +53,38 @@ class Localidad {
   int _numeroDeHabitantes;
   Punto _posicion;
 
-  Localidad (this._id, this._nombre, this._esCapital, this._provincia, this._numeroDeHabitantes, this._posicion) {}
+  Localidad(this._id, this._nombre, this._esCapital, this._provincia,
+      this._numeroDeHabitantes, this._posicion) {}
 
-  int getID() { return this._id; }
-  Punto getPosicion() { return this._posicion; }
-  String getNombre() { return this._nombre; }
-  int getNumeroHabitantes() { return this._numeroDeHabitantes; }
+  int getID() {
+    return this._id;
+  }
+
+  Punto getPosicion() {
+    return this._posicion;
+  }
+
+  String getNombre() {
+    return this._nombre;
+  }
+
+  int getNumeroHabitantes() {
+    return this._numeroDeHabitantes;
+  }
+
+  Productor get_productor() {
+    return this._demografia;
+  }
+
+  Almacen get_almacen() {
+    return this._poblacion;
+  }
+
+  bool esCapital() {
+    return this._esCapital;
+  }
+
+  Provincia get_provincia() {
+    return this._provincia;
+  }
 }

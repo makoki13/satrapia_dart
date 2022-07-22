@@ -17,10 +17,10 @@ class Ejercito {
   Localidad ciudad;
   Dispatcher disp;
 
-  List<Unidades> _unidades;
+  late List<Unidades> _unidades;
 
   Ejercito (this.id, this.nombre, this._posicion, this.ciudad, this.disp) {
-    this._unidades = new List<Unidades>();
+    this._unidades = [];
   }
 
   List<Unidades> getTropas() { return this._unidades; }

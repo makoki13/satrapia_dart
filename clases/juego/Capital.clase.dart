@@ -13,71 +13,143 @@ import './Taberna.clase.dart';
 import './Punto.clase.dart';
 
 class Capital extends Localidad {
-  Palacio _palacio;
-  CentroDeInvestigacion _centroDeInvestigacion;
-  Silos silos;
-  Cuartel cuartel;
-  Mercado mercado;
-  Embajada embajada;
-  Taberna taberna;
+  late Palacio _palacio;
+  late CentroDeInvestigacion _centroDeInvestigacion;
+  late Silos silos;
+  late Cuartel cuartel;
+  late Mercado mercado;
+  late Embajada embajada;
+  late Taberna taberna;
 
-  List<MinaDeOro> minasDeOro;
-  List<Granja>granjas;
-  List<Serreria> serrerias;
-  List<Cantera> canteras;
-  List<MinaDeHierro> minasDeHierro;
+  late List<MinaDeOro> minasDeOro;
+  late List<Granja> granjas;
+  late List<Serreria> serrerias;
+  late List<Cantera> canteras;
+  late List<MinaDeHierro> minasDeHierro;
 
   int _id;
   String _nombre;
   Provincia _provincia;
   Punto _posicion;
 
-  Capital(this._id, this._nombre, this._provincia, this._posicion) :  super(_id, _nombre, true, _provincia, 50, _posicion) {
-    this.minasDeOro = new List<MinaDeOro>();
-    this.granjas = new List<Granja>();
-    this.serrerias = new List<Serreria>();
-    this.canteras = new List<Cantera>();
-    this.minasDeHierro = new List<MinaDeHierro>();
+  Capital(this._id, this._nombre, this._provincia, this._posicion)
+      : super(_id, _nombre, true, _provincia, 50, _posicion) {
+    this.minasDeOro = [];
+    this.granjas = [];
+    this.serrerias = [];
+    this.canteras = [];
+    this.minasDeHierro = [];
   }
 
-  int getID() { return this._id; }
-  String getNombre() { return this._nombre; }
-  Provincia getProvincia() { return this._provincia; }
-  Punto getPosicion() { return this._posicion; }
+  int getID() {
+    return this._id;
+  }
 
-  setPalacio (Palacio p) { this._palacio = p; }
-  Palacio getPalacio () { return this._palacio; }
+  String getNombre() {
+    return this._nombre;
+  }
 
-  setCentroDeInvestigacion (CentroDeInvestigacion c) { this._centroDeInvestigacion = c; }
-  CentroDeInvestigacion getCentroDeInvestigacion () { return this._centroDeInvestigacion; }
+  Provincia getProvincia() {
+    return this._provincia;
+  }
 
-  setSilos (Silos s) { this.silos = s; }
-  Silos getSilos () { return this.silos; }
+  Punto getPosicion() {
+    return this._posicion;
+  }
 
-  setCuartel (Cuartel c) { this.cuartel = c; }
-  Cuartel getCuartel () { return this.cuartel; }
+  setPalacio(Palacio p) {
+    this._palacio = p;
+  }
 
-  setMercado (Mercado m) { this.mercado = m; }
-  getMercado () { return this.mercado; }
+  Palacio getPalacio() {
+    return this._palacio;
+  }
 
-  setEmbajada (Embajada e) { this.embajada = e; }
-  Embajada getEmbajada () { return this.embajada; }
+  setCentroDeInvestigacion(CentroDeInvestigacion c) {
+    this._centroDeInvestigacion = c;
+  }
 
-  setTaberna (Taberna t) { this.taberna = t; }
-  Taberna getTaberna () { return this.taberna; }
+  CentroDeInvestigacion getCentroDeInvestigacion() {
+    return this._centroDeInvestigacion;
+  }
 
-  addMinaDeOro(MinaDeOro m) { this.minasDeOro.add(m); }
-  List<MinaDeOro> getMinasDeOro() { return this.minasDeOro; }
+  setSilos(Silos s) {
+    this.silos = s;
+  }
 
-  addGranja(Granja g) { this.granjas.add(g); }
-  List<Granja> getGranjas() { return this.granjas; }
+  Silos getSilos() {
+    return this.silos;
+  }
 
-  addSerreria(Serreria s) { this.serrerias.add(s); }
-  List<Serreria> getSerrerias() { return this.serrerias; }
+  setCuartel(Cuartel c) {
+    this.cuartel = c;
+  }
 
-  addCantera(Cantera c) { this.canteras.add(c); }
-  List<Cantera> getCanteras() { return this.canteras; }
+  Cuartel getCuartel() {
+    return this.cuartel;
+  }
 
-  addMinaDeHierro(MinaDeHierro m) { this.minasDeHierro.add(m); }
-  List<MinaDeHierro> getMinasDeHierro() { return this.minasDeHierro; }
+  setMercado(Mercado m) {
+    this.mercado = m;
+  }
+
+  getMercado() {
+    return this.mercado;
+  }
+
+  setEmbajada(Embajada e) {
+    this.embajada = e;
+  }
+
+  Embajada getEmbajada() {
+    return this.embajada;
+  }
+
+  setTaberna(Taberna t) {
+    this.taberna = t;
+  }
+
+  Taberna getTaberna() {
+    return this.taberna;
+  }
+
+  addMinaDeOro(MinaDeOro m) {
+    this.minasDeOro.add(m);
+  }
+
+  List<MinaDeOro> getMinasDeOro() {
+    return this.minasDeOro;
+  }
+
+  addGranja(Granja g) {
+    this.granjas.add(g);
+  }
+
+  List<Granja> getGranjas() {
+    return this.granjas;
+  }
+
+  addSerreria(Serreria s) {
+    this.serrerias.add(s);
+  }
+
+  List<Serreria> getSerrerias() {
+    return this.serrerias;
+  }
+
+  addCantera(Cantera c) {
+    this.canteras.add(c);
+  }
+
+  List<Cantera> getCanteras() {
+    return this.canteras;
+  }
+
+  addMinaDeHierro(MinaDeHierro m) {
+    this.minasDeHierro.add(m);
+  }
+
+  List<MinaDeHierro> getMinasDeHierro() {
+    return this.minasDeHierro;
+  }
 }

@@ -3,53 +3,51 @@
 //import './../tools/Persistencia.clase.dart';
 
 class Parametros {
-  static final num MAX_ENTERO = 1000000000000;
+  static final int MAX_ENTERO = 1000000000000;
   static final MinaDeOro_Num_Total = 10;
 
-  static num Granja_Construccion_Coste = 50;
-  static num Granja_Construccion_Tiempo = 10;
-  static num Granja_Productor_CantidadInicial = 0;
-  static num Granja_Productor_CantidadMaxima = 0; // Ilimitado
-  static num Granja_Productor_Ratio = 1;
-  static num Granja_Almacen_Capacidad = 3;
-  static num Granja_Cosecha_Tamanyo = 1;
-  static num Granja_Cosecha_Frecuencia = 1;
-  static num Granja_Num_Total = 10;
+  static int Granja_Construccion_Coste = 50;
+  static int Granja_Construccion_Tiempo = 10;
+  static int Granja_Productor_CantidadInicial = 0;
+  static int Granja_Productor_CantidadMaxima = 0; // Ilimitado
+  static double Granja_Productor_Ratio = 1;
+  static int Granja_Almacen_Capacidad = 3;
+  static int Granja_Cosecha_Tamanyo = 1;
+  static int Granja_Cosecha_Frecuencia = 1;
+  static int Granja_Num_Total = 10;
 
-  static num Serreria_Construccion_Coste = 110;
-  static num Serreria_Construccion_Tiempo = 10;
-  static num Serreria_Productor_CantidadInicial = 0;
-  static num Serreria_Productor_CantidadMaxima = 0; // Ilimitado
-  static num Serreria_Productor_Ratio = 1;
-  static num Serreria_Almacen_Capacidad = 5;
-  static num Serreria_Cosecha_Tamanyo = 1;
-  static num Serreria_Cosecha_Frecuencia = 1;
-  static num Serreria_Num_Total = 10;
+  static int Serreria_Construccion_Coste = 110;
+  static int Serreria_Construccion_Tiempo = 10;
+  static int Serreria_Productor_CantidadInicial = 0;
+  static int Serreria_Productor_CantidadMaxima = 0; // Ilimitado
+  static double Serreria_Productor_Ratio = 1;
+  static int Serreria_Almacen_Capacidad = 5;
+  static int Serreria_Cosecha_Tamanyo = 1;
+  static int Serreria_Cosecha_Frecuencia = 1;
+  static int Serreria_Num_Total = 10;
 
-  static num Cantera_Construccion_Coste = 110;
-  static num Cantera_Construccion_Tiempo = 10;
-  static num Cantera_Productor_CantidadInicial = 10000;
-  static num Cantera_Productor_CantidadMaxima = 10000;
-  static num Cantera_Productor_Ratio = 1;
-  static num Cantera_Almacen_Capacidad = 5;
-  static num Cantera_Cosecha_Tamanyo = 1;
-  static num Cantera_Cosecha_Frecuencia = 1;
-  static num Cantera_Num_Total = 10;
+  static int Cantera_Construccion_Coste = 110;
+  static int Cantera_Construccion_Tiempo = 10;
+  static int Cantera_Productor_CantidadInicial = 10000;
+  static int Cantera_Productor_CantidadMaxima = 10000;
+  static double Cantera_Productor_Ratio = 1;
+  static int Cantera_Almacen_Capacidad = 5;
+  static int Cantera_Cosecha_Tamanyo = 1;
+  static int Cantera_Cosecha_Frecuencia = 1;
+  static int Cantera_Num_Total = 10;
 
-  static num MinaDeHierro_Num_Total = 10;
+  static int MinaDeHierro_Num_Total = 10;
 
-  static num Transporte_Tiempo_Recalculo_Ruta = 1;
-  static num Transporte_Velocidad = 0.83; // m/s
+  static int Transporte_Tiempo_Recalculo_Ruta = 1;
+  static double Transporte_Velocidad = 0.83; // m/s
 
-  static num Filon_Vacio = 0;
+  static int Filon_Vacio = 0;
 
-  static num oroInicial = 5000;
+  static int oroInicial = 5000;
 
-  static num IDpartida = null;
+  static int IDpartida = 0;
 
-  Parametros() {
-
-  }
+  Parametros() {}
 
   inicializa() {
     /*
@@ -71,44 +69,52 @@ class Parametros {
   }
 
   /** getters */
-  static num getGranjaConstruccionCoste() {
+  static int getGranjaConstruccionCoste() {
     return Parametros.Granja_Construccion_Coste;
   }
-  static num getGranjaConstruccionTiempo() {
+
+  static int getGranjaConstruccionTiempo() {
     return Parametros.Granja_Construccion_Tiempo;
   }
-  static num getGranjaProductorCantidadInicial() {
+
+  static int getGranjaProductorCantidadInicial() {
     return Parametros.Granja_Productor_CantidadInicial;
   }
-  static num getGranjaProductorCantidadMaxima() {
+
+  static int getGranjaProductorCantidadMaxima() {
     return Parametros.Granja_Productor_CantidadMaxima;
   }
-  static num getGranjaProductorRatio() {
+
+  static double getGranjaProductorRatio() {
     return Parametros.Granja_Productor_Ratio;
   }
-  static num getGranjaAlmacenCapacidad() {
+
+  static int getGranjaAlmacenCapacidad() {
     return Parametros.Granja_Almacen_Capacidad;
   }
-  static num getGranjaCosechaTamanyo() {
+
+  static int getGranjaCosechaTamanyo() {
     return Parametros.Granja_Cosecha_Tamanyo;
   }
-  static num getGranjaCosechaFrecuencia() {
+
+  static int getGranjaCosechaFrecuencia() {
     return Parametros.Granja_Cosecha_Frecuencia;
   }
-  static num getGranjaNumTotal() {
+
+  static int getGranjaNumTotal() {
     return Parametros.Granja_Num_Total;
   }
 
-  static num getSerreriaNumTotal() {
+  static int getSerreriaNumTotal() {
     return Parametros.Serreria_Num_Total;
   }
 
-  static num getOroInicial() {
+  static int getOroInicial() {
     return Parametros.oroInicial;
   }
 
   /** setters */
-  setGranjaConstruccionCoste(num valor) {
+  setGranjaConstruccionCoste(int valor) {
     Parametros.Granja_Construccion_Coste = valor;
     /*
     _doc['Granja_Construccion_Coste'] = valor;
@@ -116,7 +122,7 @@ class Parametros {
     */
   }
 
-  static setGranjaConstruccionTiempo(num valor) {
+  static setGranjaConstruccionTiempo(int valor) {
     Parametros.Granja_Construccion_Tiempo = valor;
     /*
     _doc['Granja_Construccion_Tiempo'] = valor;
@@ -124,7 +130,7 @@ class Parametros {
     */
   }
 
-  static setGranjaProductorCantidadInicial(num valor) {
+  static setGranjaProductorCantidadInicial(int valor) {
     Parametros.Granja_Productor_CantidadInicial = valor;
     /*
     _doc['Granja_Productor_CantidadInicial'] = valor;
@@ -132,7 +138,7 @@ class Parametros {
     */
   }
 
-  static setGranjaProductorCantidadMaxima(num valor) {
+  static setGranjaProductorCantidadMaxima(int valor) {
     Parametros.Granja_Productor_CantidadMaxima = valor;
     /*
     _doc['Granja_Productor_CantidadMaxima'] = valor;
@@ -140,7 +146,7 @@ class Parametros {
     */
   }
 
-  static setGranjaProductorRatio(num valor) {
+  static setGranjaProductorRatio(double valor) {
     Parametros.Granja_Productor_Ratio = valor;
     /*
     _doc['Granja_Productor_Ratio'] = valor;
@@ -148,7 +154,7 @@ class Parametros {
     */
   }
 
-  static setGranjaAlmacenCapacidad(num valor) {
+  static setGranjaAlmacenCapacidad(int valor) {
     Parametros.Granja_Almacen_Capacidad = valor;
     /*
     _doc['Granja_Almacen_Capacidad'] = valor;
@@ -156,7 +162,7 @@ class Parametros {
     */
   }
 
-  static setGranjaCosechaTamanyo(num valor) {
+  static setGranjaCosechaTamanyo(int valor) {
     Parametros.Granja_Cosecha_Tamanyo = valor;
     /*
     _doc['Granja_Cosecha_Tamanyo'] = valor;
@@ -164,7 +170,7 @@ class Parametros {
     */
   }
 
-  static setGranjaCosechaFrecuencia(num valor) {
+  static setGranjaCosechaFrecuencia(int valor) {
     Parametros.Granja_Cosecha_Frecuencia = valor;
     /*
     _doc['Granja_Cosecha_Frecuencia'] = valor;
@@ -172,7 +178,7 @@ class Parametros {
     */
   }
 
-  static setGranjaNumTotal(num valor) {
+  static setGranjaNumTotal(int valor) {
     Parametros.Granja_Num_Total = valor;
     /*
     _doc['Granja_Num_Total'] = valor;
@@ -180,7 +186,7 @@ class Parametros {
     */
   }
 
-  static setSerreriaNumTotal(num valor) {
+  static setSerreriaNumTotal(int valor) {
     Parametros.Serreria_Num_Total = valor;
     /*
     _doc['Serreria_Num_Total'] = valor;
@@ -188,7 +194,7 @@ class Parametros {
     */
   }
 
-  static setOroInicial(num valor) {
+  static setOroInicial(int valor) {
     Parametros.oroInicial = valor;
     /*
     _doc['Oro_Inicial'] = valor;

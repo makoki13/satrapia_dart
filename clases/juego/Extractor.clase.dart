@@ -4,12 +4,16 @@ import './Almacen.clase.dart';
 class Extractor {
   Productor _productor;
   Almacen _almacen;
-  num _cantidad;
+  int _cantidad;
 
   Extractor (this._productor, this._almacen, this._cantidad) {}
 
+  Almacen get_almacen() {
+    return this._almacen;
+  }
+
   getCantidad( ) {
-    num cantidad = this._cantidad;
+    int cantidad = this._cantidad;
     return this._productor.extrae(cantidad);
   }
 }

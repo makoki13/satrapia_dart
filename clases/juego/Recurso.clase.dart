@@ -1,5 +1,5 @@
 ///TODO
-enum TipoRecurso { NATURAL, FABRICADO, MILITAR }
+enum TipoRecurso { NATURAL, FABRICADO, MILITAR, OTROS }
 
 Recurso ORO = new Recurso (1, 'ORO', TipoRecurso.NATURAL);
 Recurso POBLACION = new Recurso (2, 'POBLACION', TipoRecurso.MILITAR);
@@ -7,6 +7,7 @@ Recurso COMIDA = new Recurso (3, 'COMIDA', TipoRecurso.NATURAL);
 Recurso MADERA = new Recurso (4, 'MADERA', TipoRecurso.NATURAL);
 Recurso PIEDRA = new Recurso (4, 'PIEDRA', TipoRecurso.NATURAL);
 Recurso HIERRO = new Recurso (5, 'HIERRO', TipoRecurso.NATURAL);
+Recurso NINGUNO = new Recurso (-1, '', TipoRecurso.OTROS);
 
 class Recurso {
   String _nombre;
