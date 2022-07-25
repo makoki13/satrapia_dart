@@ -42,7 +42,7 @@ class Silos extends Edificio {
     dynamic a;
     this.almacenes.forEach((almacen) {
       //print("iteracion almacen comida: "+almacen.toString());
-      if (almacen.getTipoRecurso().getID() == COMIDA.getID()) {
+      if (almacen.get_tipo_recurso().getID() == COMIDA.getID()) {
         a = almacen;
       }
     });
@@ -52,7 +52,7 @@ class Silos extends Edificio {
   Almacen getAlmacenMadera() {
     dynamic al = null;
     this.almacenes.forEach((almacen) {
-      if (almacen.getTipoRecurso() == MADERA) {
+      if (almacen.get_tipo_recurso() == MADERA) {
         al = almacen;
         return;
       }
@@ -63,7 +63,7 @@ class Silos extends Edificio {
   Almacen getAlmacenPiedra() {
     dynamic al = null;
     this.almacenes.forEach((almacen) {
-      if (almacen.getTipoRecurso() == PIEDRA) {
+      if (almacen.get_tipo_recurso() == PIEDRA) {
         al = almacen;
         return;
       }
@@ -74,7 +74,7 @@ class Silos extends Edificio {
   Almacen getAlmacenHierro() {
     dynamic al = null;
     this.almacenes.forEach((almacen) {
-      if (almacen.getTipoRecurso() == HIERRO) {
+      if (almacen.get_tipo_recurso() == HIERRO) {
         al = almacen;
         return;
       }

@@ -44,6 +44,7 @@ class Parametros {
   static int Filon_Vacio = 0;
 
   static int oroInicial = 5000;
+  static int poblacion_inicial = 50;
 
   static int IDpartida = 0;
 

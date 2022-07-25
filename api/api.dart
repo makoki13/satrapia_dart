@@ -42,6 +42,10 @@ class Estructura {
 class API {
   static void generaImperio(int jugador) {
     Estructura._dispatcher = new Dispatcher();
+
+    print("api dispatcher id: " +
+        Estructura._dispatcher.get_instancia().toString());
+
     Estructura._jugador =
         new Jugador(jugador, 1, 'Makoki', TipoJugador.EMPERADOR);
     Estructura._imperio =
@@ -118,19 +122,19 @@ class API {
   }
 
   static int getStockComida() {
-    return Estructura._silo.getAlmacenComida().getCantidad();
+    return Estructura._silo.getAlmacenComida().get_cantidad();
   }
 
   static int getStockMadera() {
-    return Estructura._silo.getAlmacenMadera().getCantidad();
+    return Estructura._silo.getAlmacenMadera().get_cantidad();
   }
 
   static int getStockPiedra() {
-    return Estructura._silo.getAlmacenPiedra().getCantidad();
+    return Estructura._silo.getAlmacenPiedra().get_cantidad();
   }
 
   static int getStockHierro() {
-    return Estructura._silo.getAlmacenHierro().getCantidad();
+    return Estructura._silo.getAlmacenHierro().get_cantidad();
   }
 
   /* GRANJAS */

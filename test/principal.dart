@@ -6,13 +6,15 @@ import '../clases/juego/Granja.clase.dart';
 import '../clases/juego/Serreria.clase.dart';
 import '../clases/juego/Cantera.clase.dart';
 import '../clases/juego/Mina.clase.dart';
-import '../clases/juego/Ejercito.clase.dart';
+//import '../clases/juego/Ejercito.clase.dart';
+
+import '../clases/juego/CentroDeInvestigacion.clase.dart';
 
 class Principal {
   late Dispatcher miDispatcher;
   bool primeraVez = true;
 
-  void visualizador() {
+  int visualizador() {
     print("\x1B[2J\x1B[0;0H");
     print(
         "--------------------- S·A·T·R·A·P·I·A  V.0.0 ----------------------------------");
@@ -28,7 +30,7 @@ class Principal {
     Iterator i = listaGranjas.iterator;
     while (i.moveNext()) {
       print(
-          "   - ${i.current.getNombre()} : ${i.current.getComidaActual()} : ${i.current.getAlmacen().getMaxCantidad()}");
+          "   - ${i.current.getNombre()} : comida actual ${i.current.getComidaActual()} : maxima cantidad ${i.current.getAlmacen().get_max_cantidad()}");
     }
 
     print(" * Serrerias: ${API.numSerrerias()}");
@@ -36,7 +38,7 @@ class Principal {
     i = listaSerrerias.iterator;
     while (i.moveNext()) {
       print(
-          "   - ${i.current.getNombre()} : ${i.current.getMaderaActual()} : ${i.current.getAlmacen().getMaxCantidad()}");
+          "   - ${i.current.getNombre()} : ${i.current.getMaderaActual()} : ${i.current.getAlmacen().get_max_cantidad()}");
     }
 
     print(" * Canteras: ${API.numCanteras()}}");
@@ -44,57 +46,59 @@ class Principal {
     i = listaCanteras.iterator;
     while (i.moveNext()) {
       print(
-          "   - ${i.current.getNombre()} : ${i.current.getPiedraActual()} : ${i.current.getAlmacen().getMaxCantidad()}");
+          "   - ${i.current.getNombre()} : ${i.current.getPiedraActual()} : ${i.current.getAlmacen().get_max_cantidad()}");
     }
 
     print(" * Minas de hierro: ${API.numMinasDeHierro()}");
     List<MinaDeHierro> listaMinasDeHierro = API.listaMinasDeHierro();
     i = listaMinasDeHierro.iterator;
     while (i.moveNext()) {
-      print(
-          "   - ${i.current.getNombre()} : ${i.current.getCantidadAlmacenActual()} : ${i.current.getAlmacen().getMaxCantidad()}");
+      print("   - ${i.current.getNombre()} : ${i.current.getCantidadAlmacenActual()} : ${i.current.getAlmacen().get_max_cantidad()} : " +
+          "stock inicial filon ${i.current.get_cantidad_filon()} : stock actual filon: ${i.current.get_stock_filon()}");
     }
+
     print("............................................................");
     print("............................................................");
-    /*
+
     print(" INVESTIGACIONES");
     List<TipoInvestigacion> investigaciones = API.getListaInvestigaciones();
     i = investigaciones.iterator;
-    Iterator j; Iterator k;
-    while (i.moveNext()) { 
-      print("   - ${i.current.getNombre()}");       
+    Iterator j;
+    Iterator k;
+    while (i.moveNext()) {
+      print("   - ${i.current.getNombre()}");
       List<TipoSubInvestigacion> listaSubinvestigaciones = i.current.getLista();
       j = listaSubinvestigaciones.iterator;
-      while (j.moveNext()) { 
+      while (j.moveNext()) {
         print("      - ${j.current.getNombre()}");
-        List <TipoItemInvestigacion> listaItems = j.current.getLista();
+        List<TipoItemInvestigacion> listaItems = j.current.getLista();
         k = listaItems.iterator;
-        while (k.moveNext()) { 
-          print("         - ${k.current.getNombre()} Investigada: ${k.current.getConseguido()}");
+        while (k.moveNext()) {
+          print(
+              "         - ${k.current.getNombre()} Investigada: ${k.current.getConseguido()}");
         }
       }
     }
- 
+
     i = investigaciones.iterator;
-    while (i.moveNext()) { 
+    while (i.moveNext()) {
       List<TipoSubInvestigacion> listaSubinvestigaciones = i.current.getLista();
       j = listaSubinvestigaciones.iterator;
-      while (j.moveNext()) { 
-        List <TipoItemInvestigacion> listaItems = j.current.getLista();
+      while (j.moveNext()) {
+        List<TipoItemInvestigacion> listaItems = j.current.getLista();
         k = listaItems.iterator;
-        while (k.moveNext()) { 
+        while (k.moveNext()) {
           //print("Investigando: ${k.current.getNombre()}");
           if (k.current.getConseguido() == false) {
             print("Investigando: ${k.current.getNombre()}");
-            API.investiga(i.current.getID(),j.current.getID(),k.current.getID(), API.getCapital());            
-            return;
+            API.investiga(i.current.getID(), j.current.getID(),
+                k.current.getID(), API.getCapital());
           }
         }
       }
     }
-    */
 
-    print("............................................................");
+    /* print("............................................................");
     print("............................................................");
     print(" SOLDADESCA ");
     if (primeraVez == true) {
@@ -116,15 +120,25 @@ class Principal {
     print("............................................................");
     print(" EJERCITO ");
     List<Unidades> listaUnidadesEjercito = API.getListaEjercito();
-    if (listaUnidadesEjercito != null) i = listaUnidadesEjercito.iterator;
+    if (listaUnidadesEjercito.isNotEmpty) i = listaUnidadesEjercito.iterator;
     while (i.moveNext()) {
       print(
           "   - ${i.current.unidad.getNombre()} Cantidad: ${i.current.cantidad}");
-    }
+    } */
+
+    print("............................................................");
+    print(
+        " Población : ${API.getPoblacionActual()}  ---- Oro : ${API.getOroActual()}");
+    print("............................................................");
+
+    return 1;
   }
 
   Principal() {
     this.miDispatcher = new Dispatcher();
+
+    print("principal id dispatcher" +
+        this.miDispatcher.get_instancia().toString());
 
     API.generaImperio(0);
 

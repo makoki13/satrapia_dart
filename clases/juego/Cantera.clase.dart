@@ -11,8 +11,7 @@ import './Punto.clase.dart';
 
 class Cantera extends Edificio {
   int costeConstruccion = Parametros.Cantera_Construccion_Coste;
-  int tiempoConstruccion = Parametros.Cantera_Construccion_Tiempo;
-  int cantidadInicial = Parametros.Cantera_Productor_CantidadInicial;
+  int tiempoConstruccion = Parametros.Cantera_Construccion_Tiempo;  
   int cantidadMaxima = Parametros.Cantera_Productor_CantidadMaxima;
 
   int _id;
@@ -36,8 +35,7 @@ class Cantera extends Edificio {
 
     this._filon = new Productor(
         new Punto(0, 0, -1),
-        PIEDRA,
-        this.cantidadInicial,
+        PIEDRA,        
         this.cantidadMaxima,
         Parametros.Cantera_Productor_Ratio);
     this._almacen = new Almacen(68, 'Cantera de piedra', PIEDRA, this._posicion,
@@ -68,10 +66,10 @@ class Cantera extends Edificio {
 
   extrae() {
     int cantidad = this._canteros.getCantidad();
-    this._almacen.addCantidad(cantidad);
+    this._almacen.add_cantidad(cantidad);
 
     /* Si el almacen alcanza el tope enviar un transporte de piedra a palacio */
-    if (this._almacen.getCantidad() >= this._almacen.getMaxCantidad()) {
+    if (this._almacen.get_cantidad() >= this._almacen.get_max_cantidad()) {
       if (this.hayEnvioEnMarcha == false) {
         this.hayEnvioEnMarcha = true;
         this.enviaPiedraHaciaCiudad();
@@ -80,7 +78,7 @@ class Cantera extends Edificio {
   }
 
   enviaPiedraHaciaCiudad() {
-    int cantidad = this._almacen.restaCantidad(this._almacen.getCantidad());
+    int cantidad = this._almacen.resta_cantidad(this._almacen.get_cantidad());
     Transporte transporteDePiedra = new Transporte(this._almacen,
         this._capital.getSilos().getAlmacenPiedra(), PIEDRA, cantidad, this);
 
@@ -91,11 +89,11 @@ class Cantera extends Edificio {
   }
 
   int getPiedraActual() {
-    return this._almacen.getCantidad();
+    return this._almacen.get_cantidad();
   }
 
   int getMaxAlmacen() {
-    return this._almacen.getMaxCantidad();
+    return this._almacen.get_max_cantidad();
   }
 
   String getStatus() {

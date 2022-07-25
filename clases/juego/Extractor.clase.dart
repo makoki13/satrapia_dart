@@ -6,13 +6,13 @@ class Extractor {
   Almacen _almacen;
   int _cantidad;
 
-  Extractor (this._productor, this._almacen, this._cantidad) {}
+  Extractor(this._productor, this._almacen, this._cantidad) {}
 
   Almacen get_almacen() {
     return this._almacen;
   }
 
-  getCantidad( ) {
+  getCantidad() {
     int cantidad = this._cantidad;
     return this._productor.extrae(cantidad);
   }

@@ -7,29 +7,29 @@ class Almacen {
   String _nombre;
   Recurso _tipo;
   Punto _posicion;
-  int _maxCantidad;
+  int _max_cantidad;
 
   Almacen(
-      this._id, this._nombre, this._tipo, this._posicion, this._maxCantidad) {
+      this._id, this._nombre, this._tipo, this._posicion, this._max_cantidad) {
     this._cantidad = 0;
   }
 
-  int getID() {
+  int get_id() {
     return this._id;
   }
 
-  String getNombre() {
+  String get_nombre() {
     return this._nombre;
   }
 
-  addCantidad(int cantidad) {
-    if (this._cantidad + cantidad > this._maxCantidad)
-      this._cantidad = this._maxCantidad;
+  add_cantidad(int cantidad) {
+    if (this._cantidad + cantidad > this._max_cantidad)
+      this._cantidad = this._max_cantidad;
     else
       this._cantidad = this._cantidad + cantidad;
   }
 
-  restaCantidad(int cantidad) {
+  resta_cantidad(int cantidad) {
     if (cantidad > this._cantidad) {
       cantidad = this._cantidad;
       this._cantidad = 0;
@@ -39,19 +39,19 @@ class Almacen {
     return cantidad;
   }
 
-  Recurso getTipoRecurso() {
+  Recurso get_tipo_recurso() {
     return this._tipo;
   }
 
-  int getCantidad() {
+  int get_cantidad() {
     return this._cantidad;
   }
 
-  Punto getPosicion() {
+  Punto get_posicion() {
     return this._posicion;
   }
 
-  int getMaxCantidad() {
-    return this._maxCantidad;
+  int get_max_cantidad() {
+    return this._max_cantidad;
   }
 }

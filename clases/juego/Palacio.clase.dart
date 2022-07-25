@@ -28,25 +28,31 @@ class Palacio extends Edificio {
             _id, _nombre, TipoEdificio.PALACIO, _capital.getPosicion(), 0, 0) {
     this._capital.setPalacio(this);
 
+    //esto debería ser incremento
     int cantidadInicial = 2;
-    this._impuestos = new Productor(new Punto(0,0,-1), ORO, 10, Parametros.MAX_ENTERO, 1);
+    this._impuestos =
+        new Productor(new Punto(0, 0, -1), ORO, Parametros.MAX_ENTERO, 1);
     this.almacen = new Almacen(66, 'Deposito de oro', ORO,
         _capital.getPosicion(), Parametros.MAX_ENTERO);
 
-    this.almacen.addCantidad(Parametros.oroInicial);
+    this.almacen.add_cantidad(Parametros.oroInicial);
     this._recaudador =
         new Extractor(this._impuestos, this.almacen, cantidadInicial);
+    // no parece que funcione lo de los segundos entre tarea y tarea
     this._disp.addTareaRepetitiva(recaudaImpuestos, 1);
 
-    cantidadInicial = 50;
-    const cantidadMaxima = 1000;
+    //esto debería ser incremento
+    cantidadInicial = 1;
+    const cantidadMaxima = 50000;
     this._alojamientos =
-        new Productor(new Punto(0,0,-1), POBLACION, cantidadInicial, cantidadMaxima, 1);
+        new Productor(new Punto(0, 0, -1), POBLACION, cantidadMaxima, 1);
     this.poblacion = new Almacen(
         67, 'Población', POBLACION, _capital.getPosicion(), cantidadMaxima);
+    this.poblacion.add_cantidad(Parametros.poblacion_inicial);
     this._crecimientoDemografico =
         new Extractor(this._alojamientos, this.poblacion, cantidadInicial);
-    this._disp.addTareaRepetitiva(realizaCenso, 1);
+    // no parece que funcione lo de los segundos entre tarea y tarea
+    this._disp.addTareaRepetitiva(realizaCenso, 10);
   }
 
   int get_id() {
@@ -59,20 +65,20 @@ class Palacio extends Edificio {
 
   recaudaImpuestos() {
     int cantidad = this._recaudador.getCantidad();
-    this.almacen.addCantidad(cantidad);
+    this.almacen.add_cantidad(cantidad);
   }
 
   realizaCenso() {
     int cantidad = this._crecimientoDemografico.getCantidad();
-    this.poblacion.addCantidad(cantidad);
+    this.poblacion.add_cantidad(cantidad);
   }
 
   int getOroActual() {
-    return this.almacen.getCantidad();
+    return this.almacen.get_cantidad();
   }
 
   int getPoblacionActual() {
-    return this.poblacion.getCantidad();
+    return this.poblacion.get_cantidad();
   }
 
   Almacen getAlmacen() {
@@ -80,15 +86,15 @@ class Palacio extends Edificio {
   }
 
   int gastaOro(int cantidad) {
-    int cantidadActual = this.almacen.getCantidad();
+    int cantidadActual = this.almacen.get_cantidad();
     if (cantidadActual < cantidad) {
       cantidad = cantidadActual;
     }
-    this.almacen.restaCantidad(cantidad);
+    this.almacen.resta_cantidad(cantidad);
     return cantidad;
   }
 
   entraOro(int cantidad) {
-    this.almacen.addCantidad(cantidad);
+    this.almacen.add_cantidad(cantidad);
   }
 }

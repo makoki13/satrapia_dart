@@ -32,14 +32,18 @@ class Mina extends Edificio {
       this._tipoEdificio,
       this._recurso,
       this._posicion,
+      stock_inicial,
       this._capital,
       this._disp,
       this._costeConstruccion,
       this._tiempoConstruccion)
       : super(id, _nombre, _tipoEdificio, _posicion, _costeConstruccion,
             _tiempoConstruccion) {
+    // ignore: todo
+    //TODO -> hay que sacar los valores 20,000 y 200 de los parámetros iniciales
+    // 200 podría ser un valro aleatorio que determina la riquza de la
     this.filon =
-        new Productor(new Punto(0, 0, -1), this._recurso, 20000, 20, 1);
+        new Productor(new Punto(0, 0, -1), this._recurso, stock_inicial, 1);
     this._almacen = new Almacen(67, 'Filón de ' + this._recurso.getNombre(),
         this._recurso, _posicion, 10);
     const cantidadInicial = 1;
@@ -80,10 +84,10 @@ class Mina extends Edificio {
 
   extrae() {
     int cantidad = this.mineros.getCantidad();
-    this._almacen.addCantidad(cantidad);
+    this._almacen.add_cantidad(cantidad);
 
     /* Si el almacen alcanza el tope enviar un transporte de recursos a palacio */
-    if (this._almacen.getCantidad() >= this._almacen.getMaxCantidad()) {
+    if (this._almacen.get_cantidad() >= this._almacen.get_max_cantidad()) {
       if (this.hayEnvioEnMarcha == false) {
         this.hayEnvioEnMarcha = true;
         this.enviaRecursosHaciaPalacio(almacenDestino);
@@ -92,7 +96,7 @@ class Mina extends Edificio {
   }
 
   enviaRecursosHaciaPalacio(almacenDestino) {
-    int cantidad = this._almacen.restaCantidad(this._almacen.getCantidad());
+    int cantidad = this._almacen.resta_cantidad(this._almacen.get_cantidad());
     Transporte transporteDeRecurso = new Transporte(
         this._almacen, almacenDestino, this._recurso, cantidad, this);
 
@@ -102,11 +106,11 @@ class Mina extends Edificio {
   }
 
   num getCantidadAlmacenActual() {
-    return this._almacen.getCantidad();
+    return this._almacen.get_cantidad();
   }
 
   num getMaxAlmacen() {
-    return this._almacen.getMaxCantidad();
+    return this._almacen.get_max_cantidad();
   }
 
   String getStatus() {
@@ -116,6 +120,14 @@ class Mina extends Edificio {
   bool estaActiva() {
     return (this.filon.getStock() > 0);
   }
+
+  int get_cantidad_filon() {
+    return this.filon.get_cantidad_maxima();
+  }
+
+  int get_stock_filon() {
+    return this.filon.getStock();
+  }
 }
 
 /* *************************************************************************************** */
@@ -123,19 +135,29 @@ class Mina extends Edificio {
 class MinaDeOro extends Mina {
   static int costeConstruccion = 250;
   static int tiempoContruccion = 5;
+  static int cantidad_maxima = 20000;
 
   int id;
   String nombre;
 
   MinaDeOro(
       this.id, this.nombre, Punto posicion, Capital capital, Dispatcher disp)
-      : super(id, nombre, TipoEdificio.MINA_DE_ORO, ORO, posicion, capital,
-            disp, MinaDeOro.costeConstruccion, MinaDeOro.tiempoContruccion) {
+      : super(
+            id,
+            nombre,
+            TipoEdificio.MINA_DE_ORO,
+            ORO,
+            posicion,
+            cantidad_maxima,
+            capital,
+            disp,
+            MinaDeOro.costeConstruccion,
+            MinaDeOro.tiempoContruccion) {
     capital.addMinaDeOro(this);
   }
 
   num getOroActual() {
-    return this._almacen.getCantidad();
+    return this._almacen.get_cantidad();
   }
 
   bool estaActiva() {
@@ -148,6 +170,8 @@ class MinaDeOro extends Mina {
 class MinaDeHierro extends Mina {
   static int costeConstruccion = 250;
   static int tiempoContruccion = 5;
+  //Pasar a clase parametros
+  static int cantidad_maxima = 20000;
 
   int id;
   String nombre;
@@ -160,6 +184,7 @@ class MinaDeHierro extends Mina {
             TipoEdificio.MINA_DE_HIERRO,
             HIERRO,
             posicion,
+            cantidad_maxima,
             capital,
             disp,
             MinaDeHierro.costeConstruccion,
@@ -168,6 +193,6 @@ class MinaDeHierro extends Mina {
   }
 
   num getHierroActual() {
-    return this._almacen.getCantidad();
+    return this._almacen.get_cantidad();
   }
 }

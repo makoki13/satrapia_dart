@@ -4,15 +4,17 @@ import './Punto.clase.dart';
 class Productor {
   Punto _posicion;
   Recurso _recurso;
-  int _cantidadInicial;
-  int _cantidadMaxima;
-  double _ratioProduccion;
 
-  Productor(this._posicion, this._recurso, this._cantidadInicial,
-      this._cantidadMaxima, this._ratioProduccion) {
-    if (this._cantidadInicial > this._cantidadMaxima) {
-      this._cantidadInicial = this._cantidadMaxima;
-    }
+  //cantidad que queda en el filon
+  late int _stock;
+
+  // cantidad inicial del filon
+  int _stock_inicial;
+  double _ratio_produccion;
+
+  Productor(this._posicion, this._recurso, this._stock_inicial,
+      this._ratio_produccion) {
+    this._stock = this._stock_inicial;
   }
 
   Punto get_posicion() {
@@ -24,24 +26,37 @@ class Productor {
   }
 
   int extrae(int cantidad) {
-    cantidad = (cantidad * this._ratioProduccion)
+    cantidad = (cantidad * this._ratio_produccion)
         .toInt(); // Para penalizaciones y bonus
 
     // Los productores con cantidadMaxima = 0 son inagotables.
-    if (this._cantidadMaxima == 0) {
+    if (this._stock_inicial == 0) {
       return cantidad;
     }
-    if (cantidad > this._cantidadInicial) {
-      cantidad = this._cantidadInicial;
-      this._cantidadInicial = 0;
+    if (cantidad > this._stock) {
+      cantidad = this._stock;
+      this._stock = 0;
     } else {
       // if (this.recurso === PIEDRA ) { console.log ('A: Cantidad B: ' + cantidad + ' Cantidad maxima: ' + this.cantidadInicial); }
-      this._cantidadInicial -= cantidad;
+      this._stock -= cantidad;
     }
     return cantidad;
   }
 
   int getStock() {
-    return this._cantidadInicial;
+    return this._stock;
+  }
+
+  int get_cantidad_maxima() {
+    return this._stock_inicial;
+  }
+
+  int get_extraido() {
+    int resultado = this._stock_inicial - this._stock;
+    if (resultado < 0) {
+      resultado = this._stock_inicial;
+    }
+
+    return resultado;
   }
 }

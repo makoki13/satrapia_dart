@@ -12,7 +12,6 @@ import './Punto.clase.dart';
 class Serreria extends Edificio {
   static int costeConstruccion = Parametros.Serreria_Construccion_Coste;
   static int tiempoContruccion = Parametros.Serreria_Construccion_Tiempo;
-  int cantidadInicial = Parametros.Serreria_Productor_CantidadInicial;
   int cantidadMaxima = Parametros.Serreria_Productor_CantidadMaxima;
   int maximoItems = Parametros.Serreria_Num_Total;
 
@@ -30,12 +29,8 @@ class Serreria extends Edificio {
       : super(id, _nombre, TipoEdificio.SERRERIA, _posicion,
             Serreria.costeConstruccion, Serreria.tiempoContruccion) {
     this._capital.addSerreria(this);
-    this._filon = new Productor(
-        new Punto(0, 0, -1),
-        MADERA,
-        this.cantidadInicial,
-        this.cantidadMaxima,
-        Parametros.Serreria_Productor_Ratio);
+    this._filon = new Productor(new Punto(0, 0, -1), MADERA,
+        this.cantidadMaxima, Parametros.Serreria_Productor_Ratio);
     this._almacen = new Almacen(67, 'Silo de madera', MADERA, this._posicion,
         Parametros.Serreria_Almacen_Capacidad);
     this._lenyadores = new Extractor(
@@ -56,10 +51,10 @@ class Serreria extends Edificio {
 
   extrae() {
     int cantidad = this._lenyadores.getCantidad();
-    this._almacen.addCantidad(cantidad);
+    this._almacen.add_cantidad(cantidad);
 
     /* Si el almacen alcanza el tope enviar un transporte de comida a palacio */
-    if (this._almacen.getCantidad() >= this._almacen.getMaxCantidad()) {
+    if (this._almacen.get_cantidad() >= this._almacen.get_max_cantidad()) {
       if (this.hayEnvioEnMarcha == false) {
         this.hayEnvioEnMarcha = true;
         this.enviaMaderaHaciaCiudad();
@@ -68,7 +63,7 @@ class Serreria extends Edificio {
   }
 
   enviaMaderaHaciaCiudad() {
-    int cantidad = this._almacen.restaCantidad(this._almacen.getCantidad());
+    int cantidad = this._almacen.resta_cantidad(this._almacen.get_cantidad());
     Transporte transporteDeMadera = new Transporte(this._almacen,
         this._capital.getSilos().getAlmacenMadera(), MADERA, cantidad, this);
 
@@ -79,11 +74,11 @@ class Serreria extends Edificio {
   }
 
   num getMaderaActual() {
-    return this._almacen.getCantidad();
+    return this._almacen.get_cantidad();
   }
 
   num getMaxAlmacen() {
-    return this._almacen.getMaxCantidad();
+    return this._almacen.get_max_cantidad();
   }
 
   String getStatus() {

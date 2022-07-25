@@ -12,7 +12,6 @@ import './Punto.clase.dart';
 class Granja extends Edificio {
   static int costeConstruccion = Parametros.Granja_Construccion_Coste;
   static int tiempoContruccion = Parametros.Granja_Construccion_Tiempo;
-  static int cantidadInicial = Parametros.Granja_Productor_CantidadInicial;
   static int cantidadMaxima = Parametros.Granja_Productor_CantidadMaxima;
   static double ratio = Parametros.Granja_Productor_Ratio;
   static int capacidadAlmacen = Parametros.Granja_Almacen_Capacidad;
@@ -37,8 +36,7 @@ class Granja extends Edificio {
 
     this._filon = new Productor(
         new Punto(0, 0, -1),
-        COMIDA,
-        Parametros.Granja_Productor_CantidadInicial,
+        COMIDA,        
         Parametros.Granja_Productor_CantidadMaxima,
         Parametros.Granja_Productor_Ratio);
     this._almacen = new Almacen(67, 'Silo de comida', COMIDA, this._posicion,
@@ -62,10 +60,10 @@ class Granja extends Edificio {
   extrae() {
     int cantidad = this._granjeros.getCantidad();
 
-    this._almacen.addCantidad(cantidad);
+    this._almacen.add_cantidad(cantidad);
 
     /* Si el almacen alcanza el tope enviar un transporte de comida a palacio */
-    if (this._almacen.getCantidad() >= this._almacen.getMaxCantidad()) {
+    if (this._almacen.get_cantidad() >= this._almacen.get_max_cantidad()) {
       if (this.hayEnvioEnMarcha == false) {
         this.hayEnvioEnMarcha = true;
         this.enviaComidaHaciaCiudad();
@@ -74,7 +72,7 @@ class Granja extends Edificio {
   }
 
   enviaComidaHaciaCiudad() {
-    int cantidad = this._almacen.restaCantidad(this._almacen.getCantidad());
+    int cantidad = this._almacen.resta_cantidad(this._almacen.get_cantidad());
     Transporte transporteDeComida = new Transporte(this._almacen,
         this._capital.getSilos().getAlmacenComida(), COMIDA, cantidad, this);
 
@@ -85,11 +83,11 @@ class Granja extends Edificio {
   }
 
   num getComidaActual() {
-    return this._almacen.getCantidad();
+    return this._almacen.get_cantidad();
   }
 
   num getMaxAlmacen() {
-    return this._almacen.getMaxCantidad();
+    return this._almacen.get_max_cantidad();
   }
 
   String getStatus() {

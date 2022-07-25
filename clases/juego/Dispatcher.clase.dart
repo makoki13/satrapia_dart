@@ -15,7 +15,7 @@ class Tarea {
   }
 
   setVencimiento() {
-    this._vencimiento.add(new Duration(seconds: this._delta));
+    this._vencimiento = this._vencimiento.add(new Duration(seconds: this._delta));
   }
 
   String getNombreFuncion() {
@@ -24,19 +24,25 @@ class Tarea {
 
   int execFuncion() {
     dynamic valor_retornado = this._funcion();
-    int valor = valor_retornado ?? -1;
+    int valor = valor_retornado ?? 0;
 
     return valor;
   }
 }
 
 class Dispatcher {
+  static int instancia = 0;
   List<Tarea> listaDeTareas = [];
 
   Dispatcher() {
+    Dispatcher.instancia++;
     const oneSec = const Duration(microseconds: 500000);
     new Timer.periodic(
         oneSec, (Timer t) => this.ejecuta(this.listaDeTareas.toList()));
+  }
+
+  int get_instancia() {
+    return Dispatcher.instancia;
   }
 
   addTareaRepetitiva(Function f, int tiempo) {

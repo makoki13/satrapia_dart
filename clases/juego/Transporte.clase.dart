@@ -23,8 +23,8 @@ class Transporte {
       this._cantidad, this._origen) {
     //print(this._almacenDestino.toString());
 
-    this.posicionActual = this._almacenOrigen.getPosicion();
-    this.posicionFinal = this._almacenDestino.getPosicion();
+    this.posicionActual = this._almacenOrigen.get_posicion();
+    this.posicionFinal = this._almacenDestino.get_posicion();
   }
 
   Recurso get_recurso() {
@@ -51,7 +51,7 @@ class Transporte {
     if ((this.ruta.length == 0) &&
         (Punto.sonIguales(this.posicionActual, this.posicionFinal))) {
       // console.log ('descarga en palacio');
-      this._almacenDestino.addCantidad(this._cantidad);
+      this._almacenDestino.add_cantidad(this._cantidad);
       this._origen.setStatus('Envio finalizado');
       this._origen.hayEnvioEnMarcha = false;
       //print("Descarga y suicido ${this._cantidad} has ${this._almacenDestino.getCantidad()} en destino");
