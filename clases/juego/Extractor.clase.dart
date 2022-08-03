@@ -1,15 +1,15 @@
 import './Productor.clase.dart';
-import './Almacen.clase.dart';
+import 'Silo.clase.dart';
 
 class Extractor {
   Productor _productor;
-  Almacen _almacen;
+  Silo _silo;
   int _cantidad;
 
-  Extractor(this._productor, this._almacen, this._cantidad) {}
+  Extractor(this._productor, this._silo, this._cantidad) {}
 
-  Almacen get_almacen() {
-    return this._almacen;
+  Silo get_silo() {
+    return this._silo;
   }
 
   getCantidad() {

@@ -1,5 +1,6 @@
 import './Extractor.clase.dart';
 import './Productor.clase.dart';
+import './Silo.clase.dart';
 import './Almacen.clase.dart';
 import './Edificio.clase.dart';
 import './Capital.clase.dart';
@@ -14,14 +15,14 @@ class Mina extends Edificio {
 
   late Extractor mineros;
   late Productor filon;
-  late Almacen _almacen;
+  late Silo _silo;
 
   int id;
   String _nombre;
   late Capital capital;
   TipoEdificio _tipoEdificio;
   Recurso _recurso;
-  late Almacen almacenDestino;
+  late dynamic almacenDestino;
   Capital _capital;
   Dispatcher _disp;
   Punto _posicion;
@@ -44,22 +45,16 @@ class Mina extends Edificio {
     // 200 podría ser un valro aleatorio que determina la riquza de la
     this.filon =
         new Productor(new Punto(0, 0, -1), this._recurso, stock_inicial, 1);
-    this._almacen = new Almacen(67, 'Filón de ' + this._recurso.getNombre(),
+    this._silo = new Silo(67, 'Filón de ' + this._recurso.getNombre(),
         this._recurso, _posicion, 10);
     const cantidadInicial = 1;
-    this.mineros = new Extractor(this.filon, this._almacen, cantidadInicial);
+    this.mineros = new Extractor(this.filon, this._silo, cantidadInicial);
     this._disp.addTareaRepetitiva(extrae, 1);
     this.setStatus('Sin envios actuales');
 
-    this.almacenDestino = this._capital.getSilos().getAlmacenComida();
-    if (this._recurso == MADERA)
-      this.almacenDestino = this._capital.getSilos().getAlmacenMadera();
-    if (this._recurso == PIEDRA)
-      this.almacenDestino = this._capital.getSilos().getAlmacenPiedra();
-    if (this._recurso == HIERRO)
-      this.almacenDestino = this._capital.getSilos().getAlmacenHierro();
+    this.almacenDestino = this._capital.getAlmacen();
     if (this._recurso == ORO)
-      this.almacenDestino = this._capital.getPalacio().getAlmacen();
+      this.almacenDestino = this._capital.getPalacio().getTesoro();
   }
 
   int get_coste_construccion() {
@@ -78,16 +73,16 @@ class Mina extends Edificio {
     return this._nombre;
   }
 
-  Almacen getAlmacen() {
-    return this._almacen;
+  Silo getSilo() {
+    return this._silo;
   }
 
   extrae() {
     int cantidad = this.mineros.getCantidad();
-    this._almacen.add_cantidad(cantidad);
+    this._silo.add_cantidad(cantidad);
 
     /* Si el almacen alcanza el tope enviar un transporte de recursos a palacio */
-    if (this._almacen.get_cantidad() >= this._almacen.get_max_cantidad()) {
+    if (this._silo.get_cantidad() >= this._silo.get_max_cantidad()) {
       if (this.hayEnvioEnMarcha == false) {
         this.hayEnvioEnMarcha = true;
         this.enviaRecursosHaciaPalacio(almacenDestino);
@@ -96,21 +91,21 @@ class Mina extends Edificio {
   }
 
   enviaRecursosHaciaPalacio(almacenDestino) {
-    int cantidad = this._almacen.resta_cantidad(this._almacen.get_cantidad());
+    int cantidad = this._silo.resta_cantidad(this._silo.get_cantidad());
     Transporte transporteDeRecurso = new Transporte(
-        this._almacen, almacenDestino, this._recurso, cantidad, this);
+        this._posicion, almacenDestino, this._recurso, cantidad, this);
 
     transporteDeRecurso.calculaViaje();
     this.setStatus('Enviando ' + this._recurso.getNombre() + '...');
     this._disp.addTareaRepetitiva(transporteDeRecurso.envia, 1);
   }
 
-  num getCantidadAlmacenActual() {
-    return this._almacen.get_cantidad();
+  num getCantidadSiloActual() {
+    return this._silo.get_cantidad();
   }
 
-  num getMaxAlmacen() {
-    return this._almacen.get_max_cantidad();
+  num getMaxSilo() {
+    return this._silo.get_max_cantidad();
   }
 
   String getStatus() {
@@ -157,7 +152,7 @@ class MinaDeOro extends Mina {
   }
 
   num getOroActual() {
-    return this._almacen.get_cantidad();
+    return this._silo.get_cantidad();
   }
 
   bool estaActiva() {
@@ -193,6 +188,6 @@ class MinaDeHierro extends Mina {
   }
 
   num getHierroActual() {
-    return this._almacen.get_cantidad();
+    return this._silo.get_cantidad();
   }
 }

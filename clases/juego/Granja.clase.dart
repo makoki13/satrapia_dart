@@ -2,7 +2,7 @@ import './Edificio.clase.dart';
 import './Parametros.clase.dart';
 import './Extractor.clase.dart';
 import './Productor.clase.dart';
-import './Almacen.clase.dart';
+import 'Silo.clase.dart';
 import './Recurso.clase.dart';
 import './Transporte.clase.dart';
 import './Capital.clase.dart';
@@ -21,7 +21,7 @@ class Granja extends Edificio {
 
   late Extractor _granjeros;
   late Productor _filon;
-  late Almacen _almacen;
+  late Silo _silo;
 
   int id;
   String _nombre;
@@ -36,13 +36,13 @@ class Granja extends Edificio {
 
     this._filon = new Productor(
         new Punto(0, 0, -1),
-        COMIDA,        
+        COMIDA,
         Parametros.Granja_Productor_CantidadMaxima,
         Parametros.Granja_Productor_Ratio);
-    this._almacen = new Almacen(67, 'Silo de comida', COMIDA, this._posicion,
+    this._silo = new Silo(67, 'Silo de comida', COMIDA, this._posicion,
         Parametros.Granja_Almacen_Capacidad);
     this._granjeros = new Extractor(
-        this._filon, this._almacen, Parametros.Granja_Cosecha_Tamanyo);
+        this._filon, this._silo, Parametros.Granja_Cosecha_Tamanyo);
 
     this._disp.addTareaRepetitiva(extrae, Granja.cosechaFrecuencia);
 
@@ -53,17 +53,17 @@ class Granja extends Edificio {
     return this._nombre;
   }
 
-  Almacen getAlmacen() {
-    return this._almacen;
+  Silo getSilo() {
+    return this._silo;
   }
 
   extrae() {
     int cantidad = this._granjeros.getCantidad();
 
-    this._almacen.add_cantidad(cantidad);
+    this._silo.add_cantidad(cantidad);
 
     /* Si el almacen alcanza el tope enviar un transporte de comida a palacio */
-    if (this._almacen.get_cantidad() >= this._almacen.get_max_cantidad()) {
+    if (this._silo.get_cantidad() >= this._silo.get_max_cantidad()) {
       if (this.hayEnvioEnMarcha == false) {
         this.hayEnvioEnMarcha = true;
         this.enviaComidaHaciaCiudad();
@@ -72,9 +72,9 @@ class Granja extends Edificio {
   }
 
   enviaComidaHaciaCiudad() {
-    int cantidad = this._almacen.resta_cantidad(this._almacen.get_cantidad());
-    Transporte transporteDeComida = new Transporte(this._almacen,
-        this._capital.getSilos().getAlmacenComida(), COMIDA, cantidad, this);
+    int cantidad = this._silo.resta_cantidad(this._silo.get_cantidad());
+    Transporte transporteDeComida = new Transporte(
+        this._posicion, this._capital.getAlmacen(), COMIDA, cantidad, this);
 
     transporteDeComida.calculaViaje();
     this.setStatus('Enviando comida...');
@@ -83,11 +83,11 @@ class Granja extends Edificio {
   }
 
   num getComidaActual() {
-    return this._almacen.get_cantidad();
+    return this._silo.get_cantidad();
   }
 
   num getMaxAlmacen() {
-    return this._almacen.get_max_cantidad();
+    return this._silo.get_max_cantidad();
   }
 
   String getStatus() {

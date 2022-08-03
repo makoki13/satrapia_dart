@@ -76,24 +76,64 @@ class Principal {
       i = investigaciones.iterator;
       Iterator j;
       Iterator k;
+      bool muestra_investigacion;
+      bool muestra_subinvestigacion;
+
       while (i.moveNext()) {
-        print("   - ${i.current.getNombre()}");
+        muestra_investigacion = false;
         List<TipoSubInvestigacion> listaSubinvestigaciones =
             i.current.getLista();
         j = listaSubinvestigaciones.iterator;
         while (j.moveNext()) {
-          print("      - ${j.current.getNombre()}");
           List<TipoItemInvestigacion> listaItems = j.current.getLista();
           k = listaItems.iterator;
           while (k.moveNext()) {
-            stdout.write(
-                "         - ${k.current.getNombre()} Investigada: ${k.current.getConseguido()}");
+            if (k.current.getConseguido() == false) {
+              muestra_investigacion = true;
+            }
           }
-          print("");
+        }
+
+        if (muestra_investigacion == true) {
+          print("   - ${i.current.getNombre()}");
+
+          /* List<TipoSubInvestigacion> listaSubinvestigaciones =
+              i.current.getLista(); */
+          j = listaSubinvestigaciones.iterator;
+          while (j.moveNext()) {
+            muestra_subinvestigacion = false;
+            List<TipoItemInvestigacion> listaItems = j.current.getLista();
+            k = listaItems.iterator;
+            while (k.moveNext()) {
+              if (k.current.getConseguido() == false) {
+                muestra_subinvestigacion = true;
+              }
+            }
+
+            if (muestra_subinvestigacion == true) {
+              print("      - ${j.current.getNombre()}");
+
+              /* List<TipoSubInvestigacion> listaSubinvestigaciones =
+                  i.current.getLista();
+              j = listaSubinvestigaciones.iterator;
+              while (j.moveNext()) { */
+
+              List<TipoItemInvestigacion> listaItems = j.current.getLista();
+              k = listaItems.iterator;
+              while (k.moveNext()) {
+                if (k.current.getConseguido() == false) {
+                  stdout.write(
+                      "         - ${k.current.getNombre()} (${k.current.getPrecio()}): ${k.current.getConseguido()}");
+                }
+              }
+              print("");
+              //}
+            }
+          }
         }
       }
 
-      /* i = investigaciones.iterator;
+      i = investigaciones.iterator;
       while (i.moveNext()) {
         List<TipoSubInvestigacion> listaSubinvestigaciones =
             i.current.getLista();
@@ -104,13 +144,13 @@ class Principal {
           while (k.moveNext()) {
             //print("Investigando: ${k.current.getNombre()}");
             if (k.current.getConseguido() == false) {
-              print("Investigando: ${k.current.getNombre()}");
+              //print("Investigando: ${k.current.getNombre()}");
               API.investiga(i.current.getID(), j.current.getID(),
                   k.current.getID(), API.getCapital());
             }
           }
         }
-      } */
+      }
 
       print("............................................................");
       print("............................................................");

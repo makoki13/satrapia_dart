@@ -7,7 +7,7 @@ import './Palacio.clase.dart';
 import './CentroDeInvestigacion.clase.dart';
 import './Cuartel.clase.dart';
 import './Mercado.clase.dart';
-import './Silos.clase.dart';
+import './Almacen.clase.dart';
 import './Embajada.clase.dart';
 import './Taberna.clase.dart';
 import './Punto.clase.dart';
@@ -15,7 +15,7 @@ import './Punto.clase.dart';
 class Capital extends Localidad {
   late Palacio _palacio;
   late CentroDeInvestigacion _centroDeInvestigacion;
-  late Silos silos;
+  late Almacen almacen;
   late Cuartel cuartel;
   late Mercado mercado;
   late Embajada embajada;
@@ -73,12 +73,12 @@ class Capital extends Localidad {
     return this._centroDeInvestigacion;
   }
 
-  setSilos(Silos s) {
-    this.silos = s;
+  setAlmacen(Almacen a) {
+    this.almacen = a;
   }
 
-  Silos getSilos() {
-    return this.silos;
+  Almacen getAlmacen() {
+    return this.almacen;
   }
 
   setCuartel(Cuartel c) {

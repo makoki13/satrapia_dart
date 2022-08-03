@@ -2,7 +2,7 @@
 import '../clases/juego/Dispatcher.clase.dart';
 import '../clases/juego/Parametros.clase.dart';
 import '../clases/juego/Recurso.clase.dart';
-import '../clases/juego/Almacen.clase.dart';
+import '../clases/juego/Silo.clase.dart';
 
 import '../clases/juego/Jugador.clase.dart';
 import '../clases/juego/Imperio.clase.dart';
@@ -10,7 +10,7 @@ import '../clases/juego/Punto.clase.dart';
 import '../clases/juego/Capital.clase.dart';
 
 import '../clases/juego/Palacio.clase.dart';
-import '../clases/juego/Silos.clase.dart';
+import '../clases/juego/Almacen.clase.dart';
 import '../clases/juego/Cuartel.clase.dart';
 import '../clases/juego/Ejercito.clase.dart';
 import '../clases/juego/CentroDeInvestigacion.clase.dart';
@@ -27,12 +27,6 @@ class Estructura {
   static late Provincia _provincia;
   static late Capital _capital;
   static late List<Localidad> _ciudades;
-
-  static late Palacio _palacio;
-  static late Silos _silo;
-  static late Cuartel _cuartel;
-  static late CentroDeInvestigacion _centroDeInvestigacion;
-
   static late List<Granja> granjas;
   static late List<Serreria> serrerias;
   static late List<Cantera> canteras;
@@ -61,37 +55,31 @@ class API {
     Estructura._ciudades.add(Estructura._capital);
 
     //generar palacio
-    Estructura._palacio = new Palacio(
-        1, 'Palacio de Makoki', Estructura._capital, Estructura._dispatcher);
-    Estructura._capital.setPalacio(Estructura._palacio);
+    Estructura._capital.setPalacio(new Palacio(
+        1, 'Palacio de Makoki', Estructura._capital, Estructura._dispatcher));
 
-    //generar silos
-    Estructura._silo =
-        new Silos(1, 'Silos', Estructura._capital, Estructura._dispatcher);
-    Almacen miAlmacenDeComida = new Almacen(
-        1, 'Silo de comida', COMIDA, _miPosicion, Parametros.MAX_ENTERO);
-    Estructura._silo.addAlmacen(miAlmacenDeComida);
-    Almacen miAlmacenDeMadera = new Almacen(
-        2, 'Silo de madera', MADERA, _miPosicion, Parametros.MAX_ENTERO);
-    Estructura._silo.addAlmacen(miAlmacenDeMadera);
-    Almacen miAlmacenDePiedra = new Almacen(
-        3, 'Silo de piedra', PIEDRA, _miPosicion, Parametros.MAX_ENTERO);
-    Estructura._silo.addAlmacen(miAlmacenDePiedra);
-    Almacen miAlmacenDeHierro = new Almacen(
-        4, 'Silo de hierro', HIERRO, _miPosicion, Parametros.MAX_ENTERO);
-    Estructura._silo.addAlmacen(miAlmacenDeHierro);
-    Estructura._capital.setSilos(Estructura._silo);
+    //generar almacen y silos
+    Estructura._capital.setAlmacen(
+        new Almacen(1, 'Silos', _miPosicion, Estructura._dispatcher));
+    Estructura._capital.getAlmacen().addSilo(new Silo(
+        1, 'Silo de comida', COMIDA, _miPosicion, Parametros.MAX_ENTERO));
+    Estructura._capital.getAlmacen().addSilo(new Silo(
+        2, 'Silo de madera', MADERA, _miPosicion, Parametros.MAX_ENTERO));
+    Estructura._capital.getAlmacen().addSilo(new Silo(
+        3, 'Silo de piedra', PIEDRA, _miPosicion, Parametros.MAX_ENTERO));
+    Estructura._capital.getAlmacen().addSilo(new Silo(
+        4, 'Silo de hierro', HIERRO, _miPosicion, Parametros.MAX_ENTERO));
 
     //generar cuartel
-    Estructura._cuartel = new Cuartel(
-        1, 'Cuartel de Makoki', Estructura._capital, Estructura._dispatcher);
+    Estructura._capital.setCuartel(new Cuartel(
+        1, 'Cuartel de Makoki', Estructura._capital, Estructura._dispatcher));
 
     //generar centro de investigacion
-    Estructura._centroDeInvestigacion = new CentroDeInvestigacion(
+    Estructura._capital.setCentroDeInvestigacion(new CentroDeInvestigacion(
         1,
         'Centro de investigación de Makoki',
         Estructura._capital,
-        Estructura._dispatcher);
+        Estructura._dispatcher));
 
     Estructura.granjas = [];
     Estructura.serrerias = [];
@@ -114,27 +102,27 @@ class API {
   }
 
   static int getPoblacionActual() {
-    return Estructura._palacio.getPoblacionActual();
+    return Estructura._capital.getPalacio().getPoblacionActual();
   }
 
   static int getOroActual() {
-    return Estructura._palacio.getOroActual();
+    return Estructura._capital.getPalacio().getOroActual();
   }
 
   static int getStockComida() {
-    return Estructura._silo.getAlmacenComida().get_cantidad();
+    return Estructura._capital.getAlmacen().getSiloComida().get_cantidad();
   }
 
   static int getStockMadera() {
-    return Estructura._silo.getAlmacenMadera().get_cantidad();
+    return Estructura._capital.getAlmacen().getSiloMadera().get_cantidad();
   }
 
   static int getStockPiedra() {
-    return Estructura._silo.getAlmacenPiedra().get_cantidad();
+    return Estructura._capital.getAlmacen().getSiloPiedra().get_cantidad();
   }
 
   static int getStockHierro() {
-    return Estructura._silo.getAlmacenHierro().get_cantidad();
+    return Estructura._capital.getAlmacen().getSiloHierro().get_cantidad();
   }
 
   /* GRANJAS */
@@ -292,42 +280,43 @@ class API {
 
   /* INVESTIGACIONES */
   static List<TipoInvestigacion> getListaInvestigaciones() {
-    return Estructura._centroDeInvestigacion.getLista();
+    return Estructura._capital.getCentroDeInvestigacion().getLista();
   }
 
   static void investiga(int idTipo, int idSubtipo, int idItem, Capital ciudad) {
-    Estructura._centroDeInvestigacion
+    Estructura._capital
+        .getCentroDeInvestigacion()
         .iniciaInvestigacion(idTipo, idSubtipo, idItem, ciudad);
   }
 
   /* TROPAS */
   static List<Unidades> getListaTropas() {
-    return Estructura._cuartel.getTropas();
+    return Estructura._capital.getCuartel().getTropas();
   }
 
   static void entrenaCivilesConHonda(int cantidad) {
     CivilConHonda leva = new CivilConHonda(1, 10, 10, 80);
     Unidades unidad = new Unidades(leva, cantidad);
-    Estructura._cuartel.entrena(unidad, cantidad);
+    Estructura._capital.getCuartel().entrena(unidad, cantidad);
   }
 
   static int entrenaSoldados(int cantidad) {
     Soldado leva = new Soldado(3, 20, 20, 100);
     Unidades unidad = new Unidades(leva, cantidad);
-    return Estructura._cuartel.entrena(unidad, cantidad);
+    return Estructura._capital.getCuartel().entrena(unidad, cantidad);
   }
 
   static List<Unidades> getListaEjercito() {
-    return Estructura._cuartel.getEjercito().getTropas();
+    return Estructura._capital.getCuartel().getEjercito().getTropas();
   }
 
   static void traspasaCivilesConHondaAlEjercito(cantidad) {
     CivilConHonda leva = new CivilConHonda(3, 20, 20, 100);
-    Estructura._cuartel.transfiere(leva, cantidad);
+    Estructura._capital.getCuartel().transfiere(leva, cantidad);
   }
 
   static void traspasaSoldadosAlEjercito(cantidad) {
     Soldado leva = new Soldado(3, 20, 20, 100);
-    Estructura._cuartel.transfiere(leva, cantidad);
+    Estructura._capital.getCuartel().transfiere(leva, cantidad);
   }
 }

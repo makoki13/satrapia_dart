@@ -2,7 +2,7 @@ import './Punto.clase.dart';
 
 enum TipoEdificio {
   PALACIO,
-  SILOS,
+  ALMACEN,
   CUARTEL,
   MERCADO,
   EMBAJADA,

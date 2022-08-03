@@ -317,8 +317,8 @@ class CentroDeInvestigacion extends Edificio {
     // **************** TACTICAS *********************/
     investigacion = new TipoInvestigacion(3, 'TÁCTICAS MILITARES');
     subinvestigacion = new TipoSubInvestigacion(1, 'ORDENACIÓN', investigacion);
-    itemInvestigacion = new TipoItemInvestigacion(
-        1, 'Unidades en filas', 10, 5, false, subinvestigacion, TipoEdificio.OTROS, NINGUNO);
+    itemInvestigacion = new TipoItemInvestigacion(1, 'Unidades en filas', 10, 5,
+        false, subinvestigacion, TipoEdificio.OTROS, NINGUNO);
     subinvestigacion.addIteminvestigacion(itemInvestigacion);
     investigacion.addSubinvestigacion(subinvestigacion);
     this.listaInvestigaciones.add(investigacion);
@@ -472,8 +472,8 @@ class CentroDeInvestigacion extends Edificio {
     int precio = item.getPrecio();
     int cantidadObtenida = this._capital.getPalacio().gastaOro(precio);
     if (cantidadObtenida < precio) {
-      print(
-          "No se puede pagar $precio con $cantidadObtenida por investigar ${item.getNombre()}");
+      /* print(
+          "No se puede pagar $precio con $cantidadObtenida por investigar ${item.getNombre()}"); */
       this._capital.getPalacio().entraOro(cantidadObtenida);
       this.setStatus(' Se aborta la investigación ' +
           item.getNombre() +
@@ -482,7 +482,7 @@ class CentroDeInvestigacion extends Edificio {
     }
 
     item.setInvestigada(true);
-    print("Se inicia investigar ${item.getNombre()}");
+    //print("Se inicia investigar ${item.getNombre()}");
     this._idTipo = idTipo;
     this._idSubtipo = idSubtipo;
     this._idItem = idItem;

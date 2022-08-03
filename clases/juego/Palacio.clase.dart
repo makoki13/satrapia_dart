@@ -1,7 +1,7 @@
 import './Edificio.clase.dart';
 import './Extractor.clase.dart';
 import './Productor.clase.dart';
-import './Almacen.clase.dart';
+import './Silo.clase.dart';
 import './Capital.clase.dart';
 import './Dispatcher.clase.dart';
 import './Recurso.clase.dart';
@@ -15,8 +15,8 @@ class Palacio extends Edificio {
   late Productor _impuestos;
   late Productor _alojamientos;
 
-  late Almacen almacen;
-  late Almacen poblacion;
+  late Silo tesoro;
+  late Silo poblacion;
 
   int _id;
   String _nombre;
@@ -32,12 +32,12 @@ class Palacio extends Edificio {
     int cantidadInicial = 2;
     this._impuestos =
         new Productor(new Punto(0, 0, -1), ORO, Parametros.MAX_ENTERO, 1);
-    this.almacen = new Almacen(66, 'Deposito de oro', ORO,
-        _capital.getPosicion(), Parametros.MAX_ENTERO);
+    this.tesoro = new Silo(66, 'Deposito de oro', ORO, _capital.getPosicion(),
+        Parametros.MAX_ENTERO);
 
-    this.almacen.add_cantidad(Parametros.oroInicial);
+    this.tesoro.add_cantidad(Parametros.oroInicial);
     this._recaudador =
-        new Extractor(this._impuestos, this.almacen, cantidadInicial);
+        new Extractor(this._impuestos, this.tesoro, cantidadInicial);
     // no parece que funcione lo de los segundos entre tarea y tarea
     this._disp.addTareaRepetitiva(recaudaImpuestos, 1);
 
@@ -46,7 +46,7 @@ class Palacio extends Edificio {
     const cantidadMaxima = 50000;
     this._alojamientos =
         new Productor(new Punto(0, 0, -1), POBLACION, cantidadMaxima, 1);
-    this.poblacion = new Almacen(
+    this.poblacion = new Silo(
         67, 'Población', POBLACION, _capital.getPosicion(), cantidadMaxima);
     this.poblacion.add_cantidad(Parametros.poblacion_inicial);
     this._crecimientoDemografico =
@@ -65,7 +65,7 @@ class Palacio extends Edificio {
 
   recaudaImpuestos() {
     int cantidad = this._recaudador.getCantidad();
-    this.almacen.add_cantidad(cantidad);
+    this.tesoro.add_cantidad(cantidad);
   }
 
   realizaCenso() {
@@ -74,27 +74,27 @@ class Palacio extends Edificio {
   }
 
   int getOroActual() {
-    return this.almacen.get_cantidad();
+    return this.tesoro.get_cantidad();
   }
 
   int getPoblacionActual() {
     return this.poblacion.get_cantidad();
   }
 
-  Almacen getAlmacen() {
-    return this.almacen;
+  Silo getTesoro() {
+    return this.tesoro;
   }
 
   int gastaOro(int cantidad) {
-    int cantidadActual = this.almacen.get_cantidad();
+    int cantidadActual = this.tesoro.get_cantidad();
     if (cantidadActual < cantidad) {
       cantidad = cantidadActual;
     }
-    this.almacen.resta_cantidad(cantidad);
+    this.tesoro.resta_cantidad(cantidad);
     return cantidad;
   }
 
   entraOro(int cantidad) {
-    this.almacen.add_cantidad(cantidad);
+    this.tesoro.add_cantidad(cantidad);
   }
 }

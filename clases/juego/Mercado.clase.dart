@@ -1,10 +1,10 @@
 import './Edificio.clase.dart';
-import './Almacen.clase.dart';
+import './Silo.clase.dart';
 import './Capital.clase.dart';
 import './Dispatcher.clase.dart';
 
 class Mercado extends Edificio {
-  late List<Almacen> almacenes;
+  late List<Silo> silos;
 
   int id;
   String nombre;
@@ -14,15 +14,15 @@ class Mercado extends Edificio {
   Mercado(this.id, this.nombre, this._capital, this._disp)
       : super(id, nombre, TipoEdificio.MERCADO, _capital.getPosicion(), 0, 0) {
     this._capital.setMercado(this);
-    this.almacenes = [];
+    this.silos = [];
   }
 
-  addAlmacen(Almacen nuevoAlmacen) {
-    this.almacenes.add(nuevoAlmacen);
+  addSilo(Silo nuevoSilo) {
+    this.silos.add(nuevoSilo);
   }
 
-  List<Almacen> getLista() {
-    return this.almacenes;
+  List<Silo> getLista() {
+    return this.silos;
   }
 
   Dispatcher get_dispatcher() {
