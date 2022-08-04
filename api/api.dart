@@ -32,7 +32,7 @@ class Estructura {
   static late List<Cantera> canteras;
   static late List<MinaDeHierro> minasDeHierro;
 
-   Map<String, dynamic> toJson() => {
+  static Map<String, dynamic> toJson() => {
         'Jugador': _jugador.toJson(),
         'imperio': _imperio.toJson(),
         'provincia': _provincia.toJson(),
@@ -204,7 +204,7 @@ class API {
   }
 
   static void invadeSerreria(int id) {} //Se cambia el jugador propietario
-  
+
   static int numSerrerias() {
     return Estructura.serrerias.length;
   }
@@ -242,7 +242,7 @@ class API {
   }
 
   static void invadeCantera(int id) {} //Se cambia el jugador propietario
-  
+
   static int numCanteras() {
     return Estructura.canteras.length;
   }
@@ -284,7 +284,7 @@ class API {
   }
 
   static void invadeMinaDeHierro(int id) {} //Se cambia el jugador propietario
-  
+
   static int numMinasDeHierro() {
     return Estructura.canteras.length;
   }
@@ -333,5 +333,9 @@ class API {
   static void traspasaSoldadosAlEjercito(cantidad) {
     Soldado leva = new Soldado(3, 20, 20, 100);
     Estructura._capital.getCuartel().transfiere(leva, cantidad);
+  }
+
+  Map<String, dynamic> get_json() {
+    return Estructura.toJson();
   }
 }
