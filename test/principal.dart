@@ -39,7 +39,7 @@ class Principal {
       Iterator i = listaGranjas.iterator;
       while (i.moveNext()) {
         print(
-            "   - ${i.current.getNombre()} : comida actual ${i.current.getComidaActual()} : maxima cantidad ${i.current.getAlmacen().get_max_cantidad()}");
+            "   - ${i.current.getNombre()} : comida actual ${i.current.getComidaActual()} : maxima cantidad ${i.current.getSilo().get_max_cantidad()}");
       }
 
       print(" * Serrerias: ${API.numSerrerias()}");
@@ -47,7 +47,7 @@ class Principal {
       i = listaSerrerias.iterator;
       while (i.moveNext()) {
         print(
-            "   - ${i.current.getNombre()} : ${i.current.getMaderaActual()} : ${i.current.getAlmacen().get_max_cantidad()}");
+            "   - ${i.current.getNombre()} : ${i.current.getMaderaActual()} : ${i.current.getSilo().get_max_cantidad()}");
       }
 
       print(" * Canteras: ${API.numCanteras()}}");
@@ -55,14 +55,14 @@ class Principal {
       i = listaCanteras.iterator;
       while (i.moveNext()) {
         print(
-            "   - ${i.current.getNombre()} : ${i.current.getPiedraActual()} : ${i.current.getAlmacen().get_max_cantidad()}");
+            "   - ${i.current.getNombre()} : ${i.current.getPiedraActual()} : ${i.current.getSilo().get_max_cantidad()}");
       }
 
       print(" * Minas de hierro: ${API.numMinasDeHierro()}");
       List<MinaDeHierro> listaMinasDeHierro = API.listaMinasDeHierro();
       i = listaMinasDeHierro.iterator;
       while (i.moveNext()) {
-        print("   - ${i.current.getNombre()} : ${i.current.getCantidadAlmacenActual()} : ${i.current.getAlmacen().get_max_cantidad()} : " +
+        print("   - ${i.current.getNombre()} : ${i.current.getHierroActual()} : ${i.current.getSilo().get_max_cantidad()} : " +
             "stock inicial filon ${i.current.get_cantidad_filon()} : stock actual filon: ${i.current.get_stock_filon()}");
       }
 

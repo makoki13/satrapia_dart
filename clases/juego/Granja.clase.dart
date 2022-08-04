@@ -97,4 +97,6 @@ class Granja extends Edificio {
   bool estaActiva() {
     return (this._filon.getStock() > Parametros.Filon_Vacio);
   }
+
+  Map<String, dynamic> toJson() => {'id': id, 'nombre': _nombre};
 }

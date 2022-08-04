@@ -190,4 +190,6 @@ class MinaDeHierro extends Mina {
   num getHierroActual() {
     return this._silo.get_cantidad();
   }
+
+  Map<String, dynamic> toJson() => {'id': id, 'nombre': nombre};
 }

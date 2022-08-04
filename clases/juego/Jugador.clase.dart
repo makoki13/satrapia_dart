@@ -5,12 +5,24 @@ class Jugador {
   int _idUsuario;
   String _nombre;
   TipoJugador _tipo;
-  Jugador (this._idJugador, this._idUsuario, this._nombre, this._tipo) {
+  Jugador(this._idJugador, this._idUsuario, this._nombre, this._tipo) {}
 
+  int getID() {
+    return this._idJugador;
   }
 
-  int getID() { return this._idJugador; }
-  int getUsuario() { return this._idUsuario; }
-  String getNombre() { return this._nombre; }
-  TipoJugador getTipo() { return this._tipo; }
+  int getUsuario() {
+    return this._idUsuario;
+  }
+
+  String getNombre() {
+    return this._nombre;
+  }
+
+  TipoJugador getTipo() {
+    return this._tipo;
+  }
+
+  Map<String, dynamic> toJson() =>
+      {'id_jugador': _idJugador, 'id_usuario': _idUsuario, 'nombre': _nombre};
 }

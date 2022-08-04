@@ -152,4 +152,6 @@ class Capital extends Localidad {
   List<MinaDeHierro> getMinasDeHierro() {
     return this.minasDeHierro;
   }
+
+  Map<String, dynamic> toJson() => {'id': _id, 'nombre': _nombre};
 }

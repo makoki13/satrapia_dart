@@ -216,7 +216,7 @@ class CentroDeInvestigacion extends Edificio {
 
     subinvestigacion =
         new TipoSubInvestigacion(6, 'EXTRACCION DE HIERRO', investigacion);
-    itemInvestigacion = new TipoItemInvestigacion(1, 'Obtener hierro', 50, 5,
+    itemInvestigacion = new TipoItemInvestigacion(1, 'Mejorar producción un 5%', 50, 5,
         false, subinvestigacion, TipoEdificio.MINA_DE_HIERRO, HIERRO);
     subinvestigacion.addIteminvestigacion(itemInvestigacion);
     investigacion.addSubinvestigacion(subinvestigacion);

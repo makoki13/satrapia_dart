@@ -25,6 +25,8 @@ class Imperio {
   bool esTribu() {
     return this._esTribu;
   }
+
+  Map<String, dynamic> toJson() => {'id': _id, 'nombre': _nombre};
 }
 
 class Provincia extends Imperio {
@@ -87,4 +89,6 @@ class Localidad {
   Provincia get_provincia() {
     return this._provincia;
   }
+
+  Map<String, dynamic> toJson() => {'id': _id, 'nombre': _nombre};
 }

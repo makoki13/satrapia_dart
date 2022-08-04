@@ -31,6 +31,18 @@ class Estructura {
   static late List<Serreria> serrerias;
   static late List<Cantera> canteras;
   static late List<MinaDeHierro> minasDeHierro;
+
+   Map<String, dynamic> toJson() => {
+        'Jugador': _jugador.toJson(),
+        'imperio': _imperio.toJson(),
+        'provincia': _provincia.toJson(),
+        'capital': _capital.toJson(),
+        'ciudades': _ciudades.map((c) => c.toJson()).toList(),
+        'granjas': granjas.map((g) => g.toJson()).toList(),
+        'serrerias': serrerias.map((s) => s.toJson()).toList(),
+        'canteras': canteras.map((c) => c.toJson()).toList(),
+        'minasDeHierro': minasDeHierro.map((m) => m.toJson()).toList()
+      };
 }
 
 class API {
@@ -192,6 +204,7 @@ class API {
   }
 
   static void invadeSerreria(int id) {} //Se cambia el jugador propietario
+  
   static int numSerrerias() {
     return Estructura.serrerias.length;
   }
@@ -229,6 +242,7 @@ class API {
   }
 
   static void invadeCantera(int id) {} //Se cambia el jugador propietario
+  
   static int numCanteras() {
     return Estructura.canteras.length;
   }
@@ -270,6 +284,7 @@ class API {
   }
 
   static void invadeMinaDeHierro(int id) {} //Se cambia el jugador propietario
+  
   static int numMinasDeHierro() {
     return Estructura.canteras.length;
   }
