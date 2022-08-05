@@ -3,6 +3,8 @@
 import 'dart:io';
 import 'dart:convert';
 
+import 'api/api.dart';
+
 Future<void> handleRequests(HttpServer server) async {
   await for (HttpRequest request in server) {
     switch (request.method) {
@@ -79,8 +81,11 @@ void handlePostApi(HttpRequest request) {
   // 1
   final queryParams = request.uri.queryParameters;
   //final comando = queryParams[0];
-  print(queryParams['comando']);
-  //queryParams.forEach((k, v) => print('${k}: ${v}'));
+  String? comando = queryParams['comando'];
+  if (comando == 'load_empire') {
+    int id_imperio = queryParams['id'] as int;
+    API.generaImperio(id_imperio);
+  }
 
   final jsonString = jsonEncode(queryParams);
   request.response
