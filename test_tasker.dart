@@ -1,5 +1,11 @@
 import 'test/principal.dart';
+import 'webserver.dart';
 
-void main() {      
-    Principal miPrincipal = new Principal();    
+Future<void> main() async {
+  //lanzamos el servidor
+  final server = await createServer();
+  print('Server started: ${server.address} port ${server.port}');
+  await handleRequests(server);
+
+  Principal miPrincipal = new Principal();
 }
