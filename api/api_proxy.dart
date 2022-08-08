@@ -1,3 +1,9 @@
+/*
+http://localhost:2710/api/?comando=1
+http://localhost:2710/api/?comando=1&jugador=1
+http://localhost:2710/api/?comando=2&x=10&y=10&z=0
+http://localhost:2710/api/?comando=3&x=15&y=15&z=0
+*/
 import 'dart:convert';
 import 'api.dart';
 
