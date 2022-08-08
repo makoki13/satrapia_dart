@@ -122,6 +122,7 @@ class Capital extends Localidad {
   }
 
   addGranja(Granja g) {
+    print("añadida granja " + g.getNombre());
     this.granjas.add(g);
   }
 
@@ -153,5 +154,23 @@ class Capital extends Localidad {
     return this.minasDeHierro;
   }
 
-  Map<String, dynamic> toJson() => {'id': _id, 'nombre': _nombre};
+  Map<String, dynamic> toJson() => {
+        'id': _id,
+        'nombre': _nombre,
+        'palacio': _palacio,
+        'es_capital': esCapital(),
+        'granjas': granjas,
+        'almacen': almacen,
+        /* 'centroDeInvestigacion': _centroDeInvestigacion,
+        
+        'cuartel': cuartel,
+        'mercado': mercado,
+        'embajada': embajada,
+        'taberna': taberna,
+        'minasDeOro': minasDeOro,
+        'granjas': granjas,
+        'serrerias': serrerias,
+        'canteras': canteras,
+        'minasDeHierro': minasDeHierro */
+      };
 }

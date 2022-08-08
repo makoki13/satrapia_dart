@@ -98,5 +98,9 @@ class Granja extends Edificio {
     return (this._filon.getStock() > Parametros.Filon_Vacio);
   }
 
-  Map<String, dynamic> toJson() => {'id': id, 'nombre': _nombre};
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'nombre': _nombre,
+        'comida': this.getComidaActual(),
+      };
 }

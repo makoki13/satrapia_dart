@@ -100,6 +100,13 @@ class Almacen extends Edificio {
         silo = this.getSiloHierro();
         break;
     }
-    silo.add_cantidad(cantidad);    
+    silo.add_cantidad(cantidad);
   }
+
+  Map<String, dynamic> toJson() => {
+        'comida': this.getSiloComida().get_cantidad(),
+        'madera': this.getSiloMadera().get_cantidad(),
+        'piedra': this.getSiloPiedra().get_cantidad(),
+        'hierro': this.getSiloHierro().get_cantidad()
+      };
 }

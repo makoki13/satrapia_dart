@@ -158,6 +158,8 @@ class MinaDeOro extends Mina {
   bool estaActiva() {
     return (this.filon.getStock() > 0);
   }
+
+  Map<String, dynamic> toJson() => {'id': id, 'nombre': nombre};
 }
 
 /* *****************************************************************************************/

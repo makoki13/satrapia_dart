@@ -55,6 +55,13 @@ class Palacio extends Edificio {
     this._disp.addTareaRepetitiva(realizaCenso, 10);
   }
 
+  Map<String, dynamic> toJson() => {
+        'id': _id,
+        'nombre': _nombre,
+        'oro': this.tesoro.get_cantidad(),
+        'poblacion': this.poblacion.get_cantidad(),
+      };
+
   int get_id() {
     return this._id;
   }

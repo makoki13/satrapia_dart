@@ -89,5 +89,9 @@ class Serreria extends Edificio {
     return (this._filon.getStock() > Parametros.Filon_Vacio);
   }
 
-  Map<String, dynamic> toJson() => {'id': id, 'nombre': _nombre};
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'nombre': _nombre,
+        'madera': this.getMaderaActual(),
+      };
 }

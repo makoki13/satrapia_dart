@@ -3,7 +3,7 @@
 import 'dart:io';
 import 'dart:convert';
 
-import 'api/api.dart';
+import 'api/api_proxy.dart';
 
 Future<void> handleRequests(HttpServer server) async {
   await for (HttpRequest request in server) {
@@ -62,11 +62,11 @@ void handleDefault(HttpRequest request) {
 //GET
 void handleGetApi(HttpRequest request) {
   final queryParams = request.uri.queryParameters;
-
-  final jsonString = jsonEncode(queryParams);
+  String resultado = API_PROXY.get_comando(queryParams);
+  
   request.response
     ..statusCode = HttpStatus.ok
-    ..write(jsonString)
+    ..write(resultado)
     ..close();
 }
 
@@ -78,16 +78,10 @@ void handleGetOther(HttpRequest request) {
 
 //POST
 void handlePostApi(HttpRequest request) {
-  // 1
   final queryParams = request.uri.queryParameters;
-  //final comando = queryParams[0];
-  String? comando = queryParams['comando'];
-  if (comando == 'load_empire') {
-    int id_imperio = queryParams['id'] as int;
-    API.generaImperio(id_imperio);
-  }
+  int resultado = API_PROXY.exec_comando(queryParams);
 
-  final jsonString = jsonEncode(queryParams);
+  final jsonString = jsonEncode(resultado);
   request.response
     ..statusCode = HttpStatus.ok
     ..write(jsonString)

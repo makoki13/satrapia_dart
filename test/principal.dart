@@ -214,29 +214,18 @@ class Principal {
 
     this.miDispatcher.addTareaRepetitiva(visualizador, 1);
 
-    Punto posicion = new Punto(105, 103, 0);
-    API.creaGranja(posicion);
-    posicion = new Punto(106, 103, 0);
-    API.creaGranja(posicion);
+    API.creaGranja(105, 103, 0);
+    API.creaGranja(106, 103, 0);
     //API.destruyeGranja(1);
 
-    posicion = new Punto(103, 107, 0);
-    API.creaSerreria(posicion);
-    posicion = new Punto(101, 106, 0);
-    API.creaSerreria(posicion);
-    //API.destruyeSerreria(1);
+    API.creaSerreria(103, 107, 0);
+    API.creaSerreria(101, 106, 0);
 
-    posicion = new Punto(104, 105, 0);
-    API.creaCantera(posicion);
-    posicion = new Punto(105, 104, 0);
-    API.creaCantera(posicion);
-    //API.destruyeSerreria(1);
+    API.creaCantera(104, 105, 0);
 
-    posicion = new Punto(111, 115, 0);
-    API.creaMinaDeHierro(posicion);
-    posicion = new Punto(110, 108, 0);
-    API.creaMinaDeHierro(posicion);
-    //API.destruyeMinaDeHierro(1);
+    API.creaMinaDeHierro(111, 115, 0);
+
+    API.creaMinaDeOro(110, 108, 0);
 
     stdin.transform(utf8.decoder).forEach((element) => this.comando = element);
   }

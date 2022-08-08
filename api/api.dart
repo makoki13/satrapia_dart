@@ -31,17 +31,18 @@ class Estructura {
   static late List<Serreria> serrerias;
   static late List<Cantera> canteras;
   static late List<MinaDeHierro> minasDeHierro;
+  static late List<MinaDeOro> minasDeOro;
 
   static Map<String, dynamic> toJson() => {
         'Jugador': _jugador.toJson(),
         'imperio': _imperio.toJson(),
         'provincia': _provincia.toJson(),
-        'capital': _capital.toJson(),
         'ciudades': _ciudades.map((c) => c.toJson()).toList(),
         'granjas': granjas.map((g) => g.toJson()).toList(),
         'serrerias': serrerias.map((s) => s.toJson()).toList(),
         'canteras': canteras.map((c) => c.toJson()).toList(),
-        'minasDeHierro': minasDeHierro.map((m) => m.toJson()).toList()
+        'minasDeHierro': minasDeHierro.map((m) => m.toJson()).toList(),
+        'minasDeOro': minasDeOro.map((m) => m.toJson()).toList()
       };
 }
 
@@ -49,11 +50,12 @@ class API {
   static void generaImperio(int jugador) {
     Estructura._dispatcher = new Dispatcher();
 
-    print("api dispatcher id: " +
-        Estructura._dispatcher.get_instancia().toString());
+    /* print("api dispatcher id: " +
+        Estructura._dispatcher.get_instancia().toString()); */
 
     Estructura._jugador =
         new Jugador(jugador, 1, 'Makoki', TipoJugador.EMPERADOR);
+
     Estructura._imperio =
         new Imperio(1, 'Imperio de Makoki', Estructura._jugador, false);
     Estructura._provincia = new Provincia(
@@ -97,6 +99,7 @@ class API {
     Estructura.serrerias = [];
     Estructura.canteras = [];
     Estructura.minasDeHierro = [];
+    Estructura.minasDeOro = [];
 
     return;
   }
@@ -138,7 +141,8 @@ class API {
   }
 
   /* GRANJAS */
-  static int creaGranja(Punto posicion) {
+  static int creaGranja(x, y, z) {
+    Punto posicion = new Punto(x, y, z);
     int indice = Estructura.granjas.length + 1;
     Granja _granja = new Granja(indice, 'Granja de Makoki $indice', posicion,
         Estructura._capital, Estructura._dispatcher);
@@ -176,7 +180,8 @@ class API {
   }
 
   /* SERRERIAS */
-  static int creaSerreria(Punto posicion) {
+  static int creaSerreria(int x, int y, int z) {
+    Punto posicion = new Punto(x, y, z);
     int indice = Estructura.serrerias.length + 1;
     Serreria _serreria = new Serreria(indice, 'Serreria de Makoki $indice',
         posicion, Estructura._capital, Estructura._dispatcher);
@@ -214,7 +219,8 @@ class API {
   }
 
   /* CANTERAS */
-  static int creaCantera(Punto posicion) {
+  static int creaCantera(int x, int y, int z) {
+    Punto posicion = new Punto(x, y, z);
     int indice = Estructura.canteras.length + 1;
     Cantera _cantera = new Cantera(indice, 'Cantera de Makoki $indice',
         posicion, Estructura._capital, Estructura._dispatcher);
@@ -252,7 +258,8 @@ class API {
   }
 
   /* MINAS DE HIERRO */
-  static int creaMinaDeHierro(Punto posicion) {
+  static int creaMinaDeHierro(int x, int y, int z) {
+    Punto posicion = new Punto(x, y, z);
     int indice = Estructura.minasDeHierro.length + 1;
     MinaDeHierro _minaDeHierro = new MinaDeHierro(
         indice,
@@ -286,11 +293,54 @@ class API {
   static void invadeMinaDeHierro(int id) {} //Se cambia el jugador propietario
 
   static int numMinasDeHierro() {
-    return Estructura.canteras.length;
+    return Estructura.minasDeHierro.length;
   }
 
   static List<MinaDeHierro> listaMinasDeHierro() {
     return Estructura.minasDeHierro;
+  }
+
+  /* MINAS DE ORO */
+  static int creaMinaDeOro(int x, int y, int z) {
+    Punto posicion = new Punto(x, y, z);
+    int indice = Estructura.minasDeOro.length + 1;
+    MinaDeOro _minaDeOro = new MinaDeOro(
+        indice,
+        'Mina de oro de Makoki $indice',
+        posicion,
+        Estructura._capital,
+        Estructura._dispatcher);
+    Estructura.minasDeOro.add(_minaDeOro);
+    return indice;
+  }
+
+  static int destruyeMinaDeOro(int id) {
+    Iterator i = Estructura.minasDeOro.iterator;
+    int indice = 0;
+    bool encontrado = false;
+    while (i.moveNext()) {
+      if (i.current.getID() == id) {
+        encontrado = true;
+        break;
+      }
+      indice++;
+    }
+    if (encontrado == true) {
+      Estructura.minasDeOro.removeAt(indice);
+      return 0;
+    }
+
+    return -1;
+  }
+
+  static void invadeMinaDeOro(int id) {} //Se cambia el jugador propietario
+
+  static int numMinasDeOro() {
+    return Estructura.minasDeOro.length;
+  }
+
+  static List<MinaDeOro> listaMinasDeOro() {
+    return Estructura.minasDeOro;
   }
 
   /* INVESTIGACIONES */
@@ -335,7 +385,7 @@ class API {
     Estructura._capital.getCuartel().transfiere(leva, cantidad);
   }
 
-  Map<String, dynamic> get_json() {
+  static Map<String, dynamic> get_json() {
     return Estructura.toJson();
   }
 }

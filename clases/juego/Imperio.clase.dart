@@ -90,5 +90,19 @@ class Localidad {
     return this._provincia;
   }
 
-  Map<String, dynamic> toJson() => {'id': _id, 'nombre': _nombre};
+  Map<String, dynamic> toJson() => {
+        'id': _id,
+        'nombre': _nombre,
+        /* 'centroDeInvestigacion': _centroDeInvestigacion,
+        'almacen': almacen,
+        'cuartel': cuartel,
+        'mercado': mercado,
+        'embajada': embajada,
+        'taberna': taberna,
+        'minasDeOro': minasDeOro,
+        'granjas': granjas,
+        'serrerias': serrerias,
+        'canteras': canteras,
+        'minasDeHierro': minasDeHierro */
+      };
 }
