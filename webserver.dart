@@ -7,6 +7,8 @@ import 'api/api_proxy.dart';
 
 Future<void> handleRequests(HttpServer server) async {
   await for (HttpRequest request in server) {
+    print('request: ${request.method} ${request.uri.path}');
+
     switch (request.method) {
       case 'GET':
         handleGet(request);
@@ -63,7 +65,7 @@ void handleDefault(HttpRequest request) {
 void handleGetApi(HttpRequest request) {
   final queryParams = request.uri.queryParameters;
   String resultado = API_PROXY.get_comando(queryParams);
-  
+
   request.response
     ..statusCode = HttpStatus.ok
     ..write(resultado)
@@ -80,6 +82,7 @@ void handleGetOther(HttpRequest request) {
 void handlePostApi(HttpRequest request) {
   final queryParams = request.uri.queryParameters;
   int resultado = API_PROXY.exec_comando(queryParams);
+  print('resultado post: $resultado');
 
   final jsonString = jsonEncode(resultado);
   request.response

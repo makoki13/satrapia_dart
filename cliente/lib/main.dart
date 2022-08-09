@@ -1,4 +1,9 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -49,6 +54,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final int _selectedIndex = 0;
+  //final List<String> entries = <String>['A', 'B', 'C'];
+
+  @override
+  initState() {
+    super.initState();
+    //Future<void>.delayed(new Duration(seconds: 5),createlist());
+    Future<String>.delayed(
+            const Duration(seconds: 1), () => '["123", "456", "789"]')
+        .then((String value) {
+      setState(() {
+        createlist();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,35 +77,71 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
+    if (entries.isEmpty) {
+      return Scaffold(
         appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
+          title: const Text("Loading..."),
         ),
-        body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: _VerticalDividerDemo(),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'Business',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              label: 'School',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
-        ));
+      );
+    } else {
+      return Scaffold(
+          appBar: AppBar(
+            // Here we take the value from the MyHomePage object that was created by
+            // the App.build method, and use it to set our appbar title.
+            title: Text(widget.title),
+          ),
+          body: Center(
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+            child: _VerticalDividerDemo(),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.business),
+                label: 'Business',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.school),
+                label: 'School',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.amber[800],
+          ));
+    }
+  }
+
+  Future<void> createlist() async {
+    Future<http.Response> loadImperio() {
+      var uri = Uri.parse('http://localhost:2710/api/?comando=1&jugador=1');
+      print(uri.port);
+      return http.post(uri);
+      /* return http.post(Uri.parse('https://jsonplaceholder.typicode.com/albums')); */
+    }
+
+    Future<http.Response> fetchCiudades() {
+      var uri = Uri.parse('http://localhost:2710/api/?comando=1');
+      print(uri.port);
+      return http.get(uri);
+      /* return http.post(Uri.parse('https://jsonplaceholder.typicode.com/albums')); */
+    }
+
+    print('antes de imperio...');
+    var response = await loadImperio();
+    print('despues de imperio...');
+    response = await fetchCiudades();
+    var data = jsonDecode(response.body);
+    //print(data['ciudades'][0]['nombre']);
+
+    data['ciudades'].forEach((ciudad) {
+      print('${ciudad['id']} : nombre: ${ciudad['nombre']}');
+      entries.add('${ciudad['id']} - ${ciudad['nombre']}');
+    });
   }
 }
 
@@ -115,7 +170,7 @@ class _VerticalDividerDemo extends StatelessWidget {
                   return Container(
                     height: 50,
                     color: Colors.amber[colorCodes[index]],
-                    child: Center(child: Text('Entry ${entries[index]}')),
+                    child: Center(child: Text(entries[index])),
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>
@@ -161,5 +216,5 @@ class _VerticalDividerDemo extends StatelessWidget {
   }
 }
 
-final List<String> entries = <String>['A', 'B', 'C'];
+final List<String> entries = <String>[];
 final List<int> colorCodes = <int>[500, 128, 128];
