@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -56,6 +56,25 @@ class _MyHomePageState extends State<MyHomePage> {
   final int _selectedIndex = 0;
   //final List<String> entries = <String>['A', 'B', 'C'];
 
+  int oro = 0;
+  int comida = 0;
+  int madera = 0;
+
+  _MyHomePageState();
+
+  /* @override
+  void setState(VoidCallback fn) {
+    print("setState override");
+    super.setState(fn);
+  } */
+
+  Future getItems() async {
+    setState(() {
+      oro++;
+      print("setState getItems $oro...");
+    });
+  }
+
   @override
   initState() {
     super.initState();
@@ -64,8 +83,14 @@ class _MyHomePageState extends State<MyHomePage> {
             const Duration(seconds: 1), () => '["123", "456", "789"]')
         .then((String value) {
       setState(() {
+        print("setState initState");
         createlist();
       });
+    });
+
+    Timer.periodic(const Duration(seconds: 10), (timer) {
+      getItems();
+      //print(timer.tick.toString());
     });
   }
 
@@ -88,7 +113,90 @@ class _MyHomePageState extends State<MyHomePage> {
           appBar: AppBar(
             // Here we take the value from the MyHomePage object that was created by
             // the App.build method, and use it to set our appbar title.
-            title: Text(widget.title),
+            title: SizedBox(
+              width: 300,
+              child: Text(widget.title),
+            ),
+            centerTitle: true,
+            leading: const Icon(Icons.account_circle_rounded),
+            actions: <Widget>[
+              // action button
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(
+                    child: Text(
+                  "Oro",
+                  textScaleFactor: 1.5,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.black,
+                  ),
+                )),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 38.0),
+                child: Center(
+                    child: Text(
+                  oro.toString(),
+                  textScaleFactor: 1.5,
+                  style: const TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
+                )),
+              ),
+
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(
+                    child: Text(
+                  "Comida",
+                  textScaleFactor: 1.5,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.black,
+                  ),
+                )),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(right: 38.0),
+                child: Center(
+                    child: Text(
+                  "Y",
+                  textScaleFactor: 1.5,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
+                )),
+              ),
+
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(
+                    child: Text(
+                  "Madera",
+                  textScaleFactor: 1.5,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.black,
+                  ),
+                )),
+              ),
+
+              const Padding(
+                padding: EdgeInsets.only(right: 238.0),
+                child: Center(
+                    child: Text(
+                  "Z",
+                  textScaleFactor: 1.5,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
+                )),
+              )
+            ],
           ),
           body: Center(
             // Center is a layout widget. It takes a single child and positions it
@@ -96,16 +204,16 @@ class _MyHomePageState extends State<MyHomePage> {
             child: _VerticalDividerDemo(),
           ),
           bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
+            items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
+                icon: const Icon(Icons.home),
+                label: oro.toString(),
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.business),
                 label: 'Business',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.school),
                 label: 'School',
               ),
@@ -118,6 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> createlist() async {
     Future<http.Response> loadImperio() {
+      print('loadImperio...');
       var uri = Uri.parse('http://localhost:2710/api/?comando=1&jugador=1');
       print(uri.port);
       return http.post(uri);
@@ -125,18 +234,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     Future<http.Response> fetchCiudades() {
+      print('fetchCiudades...');
       var uri = Uri.parse('http://localhost:2710/api/?comando=1');
       print(uri.port);
       return http.get(uri);
       /* return http.post(Uri.parse('https://jsonplaceholder.typicode.com/albums')); */
     }
 
-    print('antes de imperio...');
     var response = await loadImperio();
-    print('despues de imperio...');
     response = await fetchCiudades();
     var data = jsonDecode(response.body);
-    //print(data['ciudades'][0]['nombre']);
 
     data['ciudades'].forEach((ciudad) {
       print('${ciudad['id']} : nombre: ${ciudad['nombre']}');
@@ -188,11 +295,29 @@ class _VerticalDividerDemo extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black12,
-              ),
-            ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black12,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const <Widget>[
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Palacio',
+                      ),
+                    ),
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Almacén',
+                      ),
+                    )
+                  ],
+                )),
           ),
           const VerticalDivider(
             color: Colors.grey,
