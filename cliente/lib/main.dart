@@ -60,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int oro = 0;
   int comida = 0;
   int madera = 0;
+  int piedra = 0;
 
   _MyHomePageState();
 
@@ -70,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   } */
 
   Future<http.Response> fetchData() {
-    print('fetchData...');
+    print('cliente: fetchData...');
     var uri = Uri.parse('http://localhost:2710/api/?comando=1');
     return http.get(uri);
   }
@@ -86,15 +87,10 @@ class _MyHomePageState extends State<MyHomePage> {
           oro = ciudad['palacio']['oro'];
           comida = ciudad['almacen']['comida'];
           madera = ciudad['almacen']['madera'];
+          piedra = ciudad['almacen']['piedra'];
         });
       }
-      //print('${ciudad['id']} : nombre: ${ciudad['nombre']}');
-      //entries.add('${ciudad['id']} - ${ciudad['nombre']}');
     });
-    /* setState(() {
-      oro++;
-      //print("setState getItems $oro...");
-    }); */
   }
 
   @override
@@ -150,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   textScaleFactor: 1.5,
                   style: TextStyle(
                     fontSize: 12.0,
-                    color: Colors.black,
+                    color: Colors.yellowAccent,
                   ),
                 )),
               ),
@@ -174,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   textScaleFactor: 1.5,
                   style: TextStyle(
                     fontSize: 12.0,
-                    color: Colors.black,
+                    color: Colors.yellowAccent,
                   ),
                 )),
               ),
@@ -198,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   textScaleFactor: 1.5,
                   style: TextStyle(
                     fontSize: 12.0,
-                    color: Colors.black,
+                    color: Colors.yellowAccent,
                   ),
                 )),
               ),
@@ -222,7 +218,31 @@ class _MyHomePageState extends State<MyHomePage> {
                   textScaleFactor: 1.5,
                   style: TextStyle(
                     fontSize: 12.0,
-                    color: Colors.black,
+                    color: Colors.yellowAccent,
+                  ),
+                )),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 38.0),
+                child: Center(
+                    child: Text(
+                  madera.toString(),
+                  textScaleFactor: 1.5,
+                  style: const TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
+                )),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(
+                    child: Text(
+                  "Piedra",
+                  textScaleFactor: 1.5,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.yellowAccent,
                   ),
                 )),
               ),
@@ -230,7 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.only(right: 238.0),
                 child: Center(
                     child: Text(
-                  madera.toString(),
+                  piedra.toString(),
                   textScaleFactor: 1.5,
                   style: const TextStyle(
                     fontSize: 12.0,
@@ -246,16 +266,16 @@ class _MyHomePageState extends State<MyHomePage> {
             child: _VerticalDividerDemo(),
           ),
           bottomNavigationBar: BottomNavigationBar(
-            items: <BottomNavigationBarItem>[
+            items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: const Icon(Icons.home),
-                label: oro.toString(),
+                icon: Icon(Icons.home),
+                label: 'Inicio',
               ),
-              const BottomNavigationBarItem(
+              BottomNavigationBarItem(
                 icon: Icon(Icons.business),
                 label: 'Business',
               ),
-              const BottomNavigationBarItem(
+              BottomNavigationBarItem(
                 icon: Icon(Icons.school),
                 label: 'School',
               ),

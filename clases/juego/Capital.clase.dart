@@ -122,7 +122,6 @@ class Capital extends Localidad {
   }
 
   addGranja(Granja g) {
-    print("añadida granja " + g.getNombre());
     this.granjas.add(g);
   }
 

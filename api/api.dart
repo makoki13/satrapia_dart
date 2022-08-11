@@ -83,6 +83,8 @@ class API {
         3, 'Silo de piedra', PIEDRA, _miPosicion, Parametros.MAX_ENTERO));
     Estructura._capital.getAlmacen().addSilo(new Silo(
         4, 'Silo de hierro', HIERRO, _miPosicion, Parametros.MAX_ENTERO));
+    Estructura._capital.getAlmacen().addSilo(
+        new Silo(5, 'Silo de oro', ORO, _miPosicion, Parametros.MAX_ENTERO));
 
     //generar cuartel
     Estructura._capital.setCuartel(new Cuartel(
@@ -100,6 +102,19 @@ class API {
     Estructura.canteras = [];
     Estructura.minasDeHierro = [];
     Estructura.minasDeOro = [];
+
+    API.creaGranja(105, 103, 0);
+    API.creaGranja(106, 103, 0);
+    //API.destruyeGranja(1);
+
+    API.creaSerreria(103, 107, 0);
+    API.creaSerreria(101, 106, 0);
+
+    API.creaCantera(104, 105, 0);
+
+    API.creaMinaDeHierro(111, 115, 0);
+
+    //API.creaMinaDeOro(110, 108, 0);
 
     return;
   }

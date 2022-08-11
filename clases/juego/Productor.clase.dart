@@ -37,7 +37,9 @@ class Productor {
       cantidad = this._stock;
       this._stock = 0;
     } else {
-      // if (this.recurso === PIEDRA ) { console.log ('A: Cantidad B: ' + cantidad + ' Cantidad maxima: ' + this.cantidadInicial); }
+      /* if (this._recurso == ORO) {
+        print('A: Cantidad B: ${cantidad} Cantidad maxima: ${this._stock}');
+      } */
       this._stock -= cantidad;
     }
     return cantidad;

@@ -54,7 +54,7 @@ class Mina extends Edificio {
 
     this.almacenDestino = this._capital.getAlmacen();
     if (this._recurso == ORO)
-      this.almacenDestino = this._capital.getPalacio().getTesoro();
+      this.almacenDestino = this._capital.getPalacio().getAlmacen();
   }
 
   int get_coste_construccion() {

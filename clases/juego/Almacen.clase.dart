@@ -84,6 +84,17 @@ class Almacen extends Edificio {
     return a;
   }
 
+  Silo getSiloOro() {
+    late Silo a;
+    this.silos.forEach((silo) {
+      if (silo.get_tipo_recurso() == ORO) {
+        a = silo;
+        return;
+      }
+    });
+    return a;
+  }
+
   void add_cantidad(Recurso recurso, int cantidad) {
     late Silo silo;
     switch (recurso.getNombre()) {
@@ -99,14 +110,28 @@ class Almacen extends Edificio {
       case 'HIERRO':
         silo = this.getSiloHierro();
         break;
+      case 'ORO':
+        silo = this.getSiloOro();
+        break;
     }
     silo.add_cantidad(cantidad);
   }
 
-  Map<String, dynamic> toJson() => {
+  /* Map<String, dynamic> toJson() => {
         'comida': this.getSiloComida().get_cantidad(),
         'madera': this.getSiloMadera().get_cantidad(),
         'piedra': this.getSiloPiedra().get_cantidad(),
-        'hierro': this.getSiloHierro().get_cantidad()
-      };
+        'hierro': this.getSiloHierro().get_cantidad(),
+        'oro'   : this.getSiloOro().get_cantidad(),
+      }; */
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['comida'] = this.getSiloComida().get_cantidad();
+    data['madera'] = this.getSiloMadera().get_cantidad();
+    data['piedra'] = this.getSiloPiedra().get_cantidad();
+    data['hierro'] = this.getSiloHierro().get_cantidad();
+    data['oro'] = this.getSiloOro().get_cantidad();
+    return data;
+  }
 }
