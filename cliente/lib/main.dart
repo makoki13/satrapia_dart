@@ -56,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final int _selectedIndex = 0;
   //final List<String> entries = <String>['A', 'B', 'C'];
 
+  int poblacion = 0;
   int oro = 0;
   int comida = 0;
   int madera = 0;
@@ -68,11 +69,32 @@ class _MyHomePageState extends State<MyHomePage> {
     super.setState(fn);
   } */
 
+  Future<http.Response> fetchData() {
+    print('fetchData...');
+    var uri = Uri.parse('http://localhost:2710/api/?comando=1');
+    return http.get(uri);
+  }
+
   Future getItems() async {
-    setState(() {
-      oro++;
-      print("setState getItems $oro...");
+    var response = await fetchData();
+    var data = jsonDecode(response.body);
+
+    data['ciudades'].forEach((ciudad) {
+      if (ciudad['es_capital'] == true) {
+        setState(() {
+          poblacion = ciudad['palacio']['poblacion'];
+          oro = ciudad['palacio']['oro'];
+          comida = ciudad['almacen']['comida'];
+          madera = ciudad['almacen']['madera'];
+        });
+      }
+      //print('${ciudad['id']} : nombre: ${ciudad['nombre']}');
+      //entries.add('${ciudad['id']} - ${ciudad['nombre']}');
     });
+    /* setState(() {
+      oro++;
+      //print("setState getItems $oro...");
+    }); */
   }
 
   @override
@@ -88,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
 
-    Timer.periodic(const Duration(seconds: 10), (timer) {
+    Timer.periodic(const Duration(seconds: 5), (timer) {
       getItems();
       //print(timer.tick.toString());
     });
@@ -120,7 +142,30 @@ class _MyHomePageState extends State<MyHomePage> {
             centerTitle: true,
             leading: const Icon(Icons.account_circle_rounded),
             actions: <Widget>[
-              // action button
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(
+                    child: Text(
+                  "Población",
+                  textScaleFactor: 1.5,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.black,
+                  ),
+                )),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 38.0),
+                child: Center(
+                    child: Text(
+                  poblacion.toString(),
+                  textScaleFactor: 1.5,
+                  style: const TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
+                )),
+              ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Center(
@@ -145,7 +190,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 )),
               ),
-
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Center(
@@ -158,19 +202,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 )),
               ),
-              const Padding(
-                padding: EdgeInsets.only(right: 38.0),
+              Padding(
+                padding: const EdgeInsets.only(right: 38.0),
                 child: Center(
                     child: Text(
-                  "Y",
+                  comida.toString(),
                   textScaleFactor: 1.5,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12.0,
                     color: Colors.white,
                   ),
                 )),
               ),
-
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Center(
@@ -183,14 +226,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 )),
               ),
-
-              const Padding(
-                padding: EdgeInsets.only(right: 238.0),
+              Padding(
+                padding: const EdgeInsets.only(right: 238.0),
                 child: Center(
                     child: Text(
-                  "Z",
+                  madera.toString(),
                   textScaleFactor: 1.5,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12.0,
                     color: Colors.white,
                   ),
@@ -315,7 +357,58 @@ class _VerticalDividerDemo extends StatelessWidget {
                         border: OutlineInputBorder(),
                         labelText: 'Almacén',
                       ),
-                    )
+                    ),
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Centro Investigación',
+                      ),
+                    ),
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Cuartel',
+                      ),
+                    ),
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Granjas',
+                        filled: true,
+                        hoverColor: Colors.orange,
+                      ),
+                    ),
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Serrerias',
+                      ),
+                    ),
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Canteras',
+                      ),
+                    ),
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Minas de Hierro',
+                      ),
+                    ),
+                    TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Minas de Oro',
+                      ),
+                    ),
                   ],
                 )),
           ),
