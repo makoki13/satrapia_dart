@@ -446,6 +446,7 @@ class _VerticalDividerDemo extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.black26,
               ),
+              //ver linea 364
             ),
           ),
         ],
