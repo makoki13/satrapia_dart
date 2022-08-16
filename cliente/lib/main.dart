@@ -18,15 +18,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.red,
       ),
       home: const MyHomePage(title: 'SATRAPIA 0.0.1'),
@@ -61,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int comida = 0;
   int madera = 0;
   int piedra = 0;
+  int porcImpuestos = 0;
 
   _MyHomePageState();
 
@@ -80,6 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await fetchData();
     var data = jsonDecode(response.body);
 
+    print(data);
+
     data['ciudades'].forEach((ciudad) {
       if (ciudad['es_capital'] == true) {
         setState(() {
@@ -88,9 +82,12 @@ class _MyHomePageState extends State<MyHomePage> {
           comida = ciudad['almacen']['comida'];
           madera = ciudad['almacen']['madera'];
           piedra = ciudad['almacen']['piedra'];
+          porcImpuestos = data['porc_impuestos'];
         });
       }
     });
+
+    addPantalla(oro);
   }
 
   @override
@@ -263,7 +260,154 @@ class _MyHomePageState extends State<MyHomePage> {
           body: Center(
             // Center is a layout widget. It takes a single child and positions it
             // in the middle of the parent.
-            child: _VerticalDividerDemo(),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.redAccent,
+                      ),
+                      child: ListView.separated(
+                        padding: const EdgeInsets.all(8),
+                        itemCount: entries.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: 50,
+                            color: Colors.amber[colorCodes[index]],
+                            child: Center(child: Text(entries[index])),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) =>
+                            const Divider(),
+                      ),
+                    ),
+                  ),
+                  const VerticalDivider(
+                    color: Colors.grey,
+                    thickness: 1,
+                    indent: 20,
+                    endIndent: 0,
+                    width: 10,
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.black12,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(36.0),
+                                primary: Colors.black,
+                                textStyle: const TextStyle(fontSize: 20),
+                              ),
+                              onPressed: () {},
+                              child: const Text('PALACIO'),
+                            ),
+                            const TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Almacén',
+                              ),
+                            ),
+                            const TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Centro Investigación',
+                              ),
+                            ),
+                            const TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Cuartel',
+                              ),
+                            ),
+                            const TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Granjas',
+                                filled: true,
+                                hoverColor: Colors.orange,
+                              ),
+                            ),
+                            const TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Serrerias',
+                              ),
+                            ),
+                            const TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Canteras',
+                              ),
+                            ),
+                            const TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Minas de Hierro',
+                              ),
+                            ),
+                            const TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Minas de Oro',
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
+                  const VerticalDivider(
+                    color: Colors.grey,
+                    thickness: 1,
+                    indent: 20,
+                    endIndent: 0,
+                    width: 10,
+                  ),
+                  Expanded(
+                      flex: 2,
+                      child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.black26,
+                          ),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text("Oro en el tesoro: ${oro.toString()}",
+                                        style: const TextStyle(fontSize: 20)),
+                                    Text(
+                                        'Población actual: ${poblacion.toString()}',
+                                        style: const TextStyle(fontSize: 20)),
+                                    Text(
+                                        'Impuestos: ${porcImpuestos.toString()}',
+                                        style: const TextStyle(fontSize: 20)),
+                                  ],
+                                ),
+                              ]))),
+                ],
+              ),
+            ),
           ),
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
@@ -317,7 +461,7 @@ class _MyHomePageState extends State<MyHomePage> {
 // Copyright 2019 The Flutter team. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
+/* 
 class _VerticalDividerDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -363,36 +507,38 @@ class _VerticalDividerDemo extends StatelessWidget {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const <Widget>[
-                    TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Palacio',
+                  children: <Widget>[
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.all(36.0),
+                        primary: Colors.black,
+                        textStyle: const TextStyle(fontSize: 20),
                       ),
+                      onPressed: () {},
+                      child: const Text('PALACIO'),
                     ),
-                    TextField(
+                    const TextField(
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Almacén',
                       ),
                     ),
-                    TextField(
+                    const TextField(
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Centro Investigación',
                       ),
                     ),
-                    TextField(
+                    const TextField(
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Cuartel',
                       ),
                     ),
-                    TextField(
+                    const TextField(
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -401,28 +547,28 @@ class _VerticalDividerDemo extends StatelessWidget {
                         hoverColor: Colors.orange,
                       ),
                     ),
-                    TextField(
+                    const TextField(
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Serrerias',
                       ),
                     ),
-                    TextField(
+                    const TextField(
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Canteras',
                       ),
                     ),
-                    TextField(
+                    const TextField(
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Minas de Hierro',
                       ),
                     ),
-                    TextField(
+                    const TextField(
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -440,20 +586,41 @@ class _VerticalDividerDemo extends StatelessWidget {
             width: 10,
           ),
           Expanded(
-            flex: 2,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.black26,
-              ),
-              //ver linea 364
-            ),
-          ),
+              flex: 2,
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.black26,
+                  ),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: getPantalla()))),
         ],
       ),
     );
   }
 }
-
+ */
 final List<String> entries = <String>[];
 final List<int> colorCodes = <int>[500, 128, 128];
+List<List<Widget>> lista = [];
+const int indice = 0;
+
+void addPantalla(int oro) {
+  String strOro = oro.toString();
+  lista.add(<Widget>[
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Text("Oro en el tesoro: $strOro", style: const TextStyle(fontSize: 20)),
+        Text('Población actual: $strOro', style: const TextStyle(fontSize: 20)),
+        Text('Impuestos: $strOro', style: const TextStyle(fontSize: 20)),
+      ],
+    ),
+  ]);
+}
+
+List<Widget> getPantalla() {
+  return lista[indice];
+}

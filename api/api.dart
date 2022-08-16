@@ -42,7 +42,9 @@ class Estructura {
         'serrerias': serrerias.map((s) => s.toJson()).toList(),
         'canteras': canteras.map((c) => c.toJson()).toList(),
         'minasDeHierro': minasDeHierro.map((m) => m.toJson()).toList(),
-        'minasDeOro': minasDeOro.map((m) => m.toJson()).toList()
+        'minasDeOro': minasDeOro.map((m) => m.toJson()).toList(),
+        //parametros
+        'porc_impuestos': Parametros.porc_impuestos,
       };
 }
 
