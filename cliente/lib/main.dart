@@ -97,6 +97,15 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
         ];
 
+      case 4:
+        return <Widget>[
+          const Text("Infanteria", style: TextStyle(fontSize: 20)),
+          const Text('Arqueros', style: TextStyle(fontSize: 20)),
+          const Text('Lanceros', style: TextStyle(fontSize: 20)),
+          const Text('Caballería', style: TextStyle(fontSize: 20)),
+          const Text('Asalto', style: TextStyle(fontSize: 20)),
+        ];
+
       default:
         return <Widget>[
           Text("Oro en el tesoro: ${oro.toString()}",
