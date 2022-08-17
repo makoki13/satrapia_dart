@@ -52,9 +52,70 @@ class _MyHomePageState extends State<MyHomePage> {
   int comida = 0;
   int madera = 0;
   int piedra = 0;
+  int hierro = 0;
   int porcImpuestos = 0;
 
+  int moduloActual = 1;
+
   _MyHomePageState();
+
+  List<Widget> getModuloActual() {
+    //print('modulo actual $moduloActual');
+    switch (moduloActual) {
+      case 2:
+        return <Widget>[
+          Text("Comida: ${comida.toString()}",
+              style: const TextStyle(fontSize: 20)),
+          Text('Madera: ${madera.toString()}',
+              style: const TextStyle(fontSize: 20)),
+          Text('Piedra: ${piedra.toString()}',
+              style: const TextStyle(fontSize: 20)),
+          Text('Hierro: ${hierro.toString()}',
+              style: const TextStyle(fontSize: 20)),
+        ];
+
+      case 3:
+        return <Widget>[
+          Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.redAccent,
+              ),
+              child: ListView.separated(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(8),
+                itemCount: entries.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    height: 50,
+                    color: Colors.amber[colorCodes[index]],
+                    child: Center(child: Text(entries[index])),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
+              )),
+        ];
+
+      default:
+        return <Widget>[
+          Text("Oro en el tesoro: ${oro.toString()}",
+              style: const TextStyle(fontSize: 20)),
+          Text('Población actual: ${poblacion.toString()}',
+              style: const TextStyle(fontSize: 20)),
+          Text('Impuestos: ${porcImpuestos.toString()}',
+              style: const TextStyle(fontSize: 20)),
+        ];
+    }
+  }
+
+  void setModuloActual(int modulo) {
+    setState(() {
+      moduloActual = modulo;
+      getModuloActual();
+    });
+  }
 
   /* @override
   void setState(VoidCallback fn) {
@@ -68,20 +129,30 @@ class _MyHomePageState extends State<MyHomePage> {
     return http.get(uri);
   }
 
+  void fillListaInvestigaciones(lista) {
+    //Map<String, dynamic> listaJson = json.decode(lista);
+    List<dynamic> listaJson = lista['listaInvestigaciones'];
+    for (var value in listaJson) {
+      print('---> ${value['nombre']}');
+    }
+  }
+
   Future getItems() async {
     var response = await fetchData();
     var data = jsonDecode(response.body);
 
-    print(data);
+    //print(data);
 
     data['ciudades'].forEach((ciudad) {
       if (ciudad['es_capital'] == true) {
         setState(() {
+          fillListaInvestigaciones(ciudad['centroDeInvestigacion']);
           poblacion = ciudad['palacio']['poblacion'];
           oro = ciudad['palacio']['oro'];
           comida = ciudad['almacen']['comida'];
           madera = ciudad['almacen']['madera'];
           piedra = ciudad['almacen']['piedra'];
+          hierro = ciudad['almacen']['hierro'];
           porcImpuestos = data['porc_impuestos'];
         });
       }
@@ -309,22 +380,32 @@ class _MyHomePageState extends State<MyHomePage> {
                                 primary: Colors.black,
                                 textStyle: const TextStyle(fontSize: 20),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                setModuloActual(1);
+                              },
                               child: const Text('PALACIO'),
                             ),
-                            const TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Almacén',
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(36.0),
+                                primary: Colors.black,
+                                textStyle: const TextStyle(fontSize: 20),
                               ),
+                              onPressed: () {
+                                setModuloActual(2);
+                              },
+                              child: const Text('ALMACÉN'),
                             ),
-                            const TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Centro Investigación',
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(36.0),
+                                primary: Colors.black,
+                                textStyle: const TextStyle(fontSize: 20),
                               ),
+                              onPressed: () {
+                                setModuloActual(3);
+                              },
+                              child: const Text('CENTRO INVESTIGACIÓN'),
                             ),
                             const TextField(
                               obscureText: true,
@@ -393,16 +474,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Text("Oro en el tesoro: ${oro.toString()}",
-                                        style: const TextStyle(fontSize: 20)),
-                                    Text(
-                                        'Población actual: ${poblacion.toString()}',
-                                        style: const TextStyle(fontSize: 20)),
-                                    Text(
-                                        'Impuestos: ${porcImpuestos.toString()}',
-                                        style: const TextStyle(fontSize: 20)),
-                                  ],
+                                  children: getModuloActual(),
                                 ),
                               ]))),
                 ],
@@ -440,11 +512,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     Future<http.Response> fetchCiudades() {
-      print('fetchCiudades...');
+      return fetchData();
+      /* print('fetchCiudades...');
       var uri = Uri.parse('http://localhost:2710/api/?comando=1');
       print(uri.port);
-      return http.get(uri);
-      /* return http.post(Uri.parse('https://jsonplaceholder.typicode.com/albums')); */
+      return http.get(uri); */
     }
 
     var response = await loadImperio();

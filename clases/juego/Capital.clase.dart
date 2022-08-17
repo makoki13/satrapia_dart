@@ -160,8 +160,8 @@ class Capital extends Localidad {
         'es_capital': esCapital(),
         'granjas': granjas,
         'almacen': almacen,
-        /* 'centroDeInvestigacion': _centroDeInvestigacion,
-        
+        'centroDeInvestigacion': _centroDeInvestigacion.toJson(),
+        /*
         'cuartel': cuartel,
         'mercado': mercado,
         'embajada': embajada,

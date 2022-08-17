@@ -44,6 +44,17 @@ class TipoInvestigacion {
   List<TipoSubInvestigacion> getLista() {
     return this.listaDeSubinvestigaciones;
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': this._id,
+      'nombre': this._nombre,
+      'subinvestigaciones':
+          this.listaDeSubinvestigaciones.map((subinvestigacion) {
+        return subinvestigacion.toJson();
+      }).toList()
+    };
+  }
 }
 
 class TipoSubInvestigacion {
@@ -89,6 +100,16 @@ class TipoSubInvestigacion {
 
   List<TipoItemInvestigacion> getLista() {
     return this.listaDeItems;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': this._id,
+      'nombre': this._nombre,
+      'items': this.listaDeItems.map((item) {
+        return item.toJson();
+      }).toList()
+    };
   }
 }
 
@@ -150,6 +171,18 @@ class TipoItemInvestigacion {
 
   estaSiendoInvestigada() {
     return this._siendoInvestigada;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': this._id,
+      'nombre': this._nombre,
+      'precio': this._precio,
+      'tiempo': this._tiempo,
+      'conseguido': this._conseguido,
+      'subtipo': this._subtipo.getID(),
+      'recurso': this._recurso.getID()
+    };
   }
 }
 
@@ -216,8 +249,8 @@ class CentroDeInvestigacion extends Edificio {
 
     subinvestigacion =
         new TipoSubInvestigacion(6, 'EXTRACCION DE HIERRO', investigacion);
-    itemInvestigacion = new TipoItemInvestigacion(1, 'Mejorar producción un 5%', 50, 5,
-        false, subinvestigacion, TipoEdificio.MINA_DE_HIERRO, HIERRO);
+    itemInvestigacion = new TipoItemInvestigacion(1, 'Mejorar producción un 5%',
+        50, 5, false, subinvestigacion, TipoEdificio.MINA_DE_HIERRO, HIERRO);
     subinvestigacion.addIteminvestigacion(itemInvestigacion);
     investigacion.addSubinvestigacion(subinvestigacion);
 
@@ -523,5 +556,13 @@ class CentroDeInvestigacion extends Edificio {
     return true;
     //TipoItemInvestigacion item = this.getItem(idTipo, idSubtipo, idItem);
     //return item.getConseguido();
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'listaInvestigaciones':
+          this.listaInvestigaciones.map((x) => x.toJson()).toList(),
+    };
+    //return {'id': id, 'nombre': nombre};
   }
 }

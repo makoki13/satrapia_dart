@@ -45,6 +45,8 @@ class Estructura {
         'minasDeOro': minasDeOro.map((m) => m.toJson()).toList(),
         //parametros
         'porc_impuestos': Parametros.porc_impuestos,
+
+        'investigaciones': _capital.toJson(),
       };
 }
 
