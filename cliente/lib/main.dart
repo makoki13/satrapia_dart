@@ -45,7 +45,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final int _selectedIndex = 0;
-  //final List<String> entries = <String>['A', 'B', 'C'];
 
   int poblacion = 0;
   int oro = 0;
@@ -85,12 +84,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(8),
-                itemCount: entries.length,
+                itemCount: investigaciones.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     height: 50,
-                    color: Colors.amber[colorCodes[index]],
-                    child: Center(child: Text(entries[index])),
+                    color: Colors.white,
+                    child: Center(child: Text(investigaciones[index])),
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>
@@ -132,8 +131,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void fillListaInvestigaciones(lista) {
     //Map<String, dynamic> listaJson = json.decode(lista);
     List<dynamic> listaJson = lista['listaInvestigaciones'];
+    investigaciones.length = 0;
     for (var value in listaJson) {
-      print('---> ${value['nombre']}');
+      investigaciones.add(value['nombre']);
+      //print('---> ${value['nombre']}');
     }
   }
 
@@ -673,6 +674,7 @@ class _VerticalDividerDemo extends StatelessWidget {
   }
 }
  */
+final List<String> investigaciones = <String>[];
 final List<String> entries = <String>[];
 final List<int> colorCodes = <int>[500, 128, 128];
 List<List<Widget>> lista = [];
