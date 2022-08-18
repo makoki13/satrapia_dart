@@ -417,12 +417,16 @@ class _MyHomePageState extends State<MyHomePage> {
                               },
                               child: const Text('CENTRO INVESTIGACIÓN'),
                             ),
-                            const TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Cuartel',
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(36.0),
+                                primary: Colors.black,
+                                textStyle: const TextStyle(fontSize: 20),
                               ),
+                              onPressed: () {
+                                setModuloActual(4);
+                              },
+                              child: const Text('CUARTEL'),
                             ),
                             const TextField(
                               obscureText: true,
