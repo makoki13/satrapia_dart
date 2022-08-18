@@ -106,6 +106,14 @@ class _MyHomePageState extends State<MyHomePage> {
           const Text('Asalto', style: TextStyle(fontSize: 20)),
         ];
 
+      case 5:
+        return <Widget>[
+          const Text("Producción actual:", style: TextStyle(fontSize: 20)),
+          const Text('Producción máxima', style: TextStyle(fontSize: 20)),
+          const Text('Enviando:', style: TextStyle(fontSize: 20)),
+          const Text('Tiempo de llegada', style: TextStyle(fontSize: 20)),
+        ];
+
       default:
         return <Widget>[
           Text("Oro en el tesoro: ${oro.toString()}",
@@ -428,14 +436,16 @@ class _MyHomePageState extends State<MyHomePage> {
                               },
                               child: const Text('CUARTEL'),
                             ),
-                            const TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Granjas',
-                                filled: true,
-                                hoverColor: Colors.orange,
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(36.0),
+                                primary: Colors.black,
+                                textStyle: const TextStyle(fontSize: 20),
                               ),
+                              onPressed: () {
+                                setModuloActual(5);
+                              },
+                              child: const Text('GRANJAS'),
                             ),
                             const TextField(
                               obscureText: true,
