@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,6 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int madera = 0;
   int piedra = 0;
   int hierro = 0;
+
+  int impuestos = 0;
   int porcImpuestos = 0;
   int gastoPalacio = 0;
 
@@ -121,8 +124,34 @@ class _MyHomePageState extends State<MyHomePage> {
               style: const TextStyle(fontSize: 20)),
           Text('Población actual: ${poblacion.toString()}',
               style: const TextStyle(fontSize: 20)),
-          Text('Impuestos: ${porcImpuestos.toString()}',
+          Text('Impuestos: ${impuestos.toString()}',
               style: const TextStyle(fontSize: 20)),
+          Row(
+            children: <Widget>[
+              Text('Porc. impuestos: ${porcImpuestos.toString()}',
+                  style: const TextStyle(fontSize: 20)),
+              Expanded(
+                child: TextField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      // for version 2 and greater youcan also use this
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    decoration: const InputDecoration(
+                        labelText: "whatever you want",
+                        hintText: "whatever you want",
+                        icon: Icon(Icons.phone_iphone)),
+                    onSubmitted: (value) {
+                      setState(() {
+                        porcImpuestos = int.parse(value);
+                      });
+                      //print(value);
+                      // or do whatever you want when you are done editing
+                      // call your method/print values etc
+                    }),
+              ),
+            ],
+          ),
           Text('Gasto palacio: ${gastoPalacio.toString()}',
               style: const TextStyle(fontSize: 20)),
         ];
@@ -162,7 +191,8 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await fetchData();
     var data = jsonDecode(response.body);
 
-    //print(data);
+    //print(data['gasto_palacio']);
+    //print(data['porc_impuestos']);
 
     data['ciudades'].forEach((ciudad) {
       if (ciudad['es_capital'] == true) {
@@ -174,7 +204,8 @@ class _MyHomePageState extends State<MyHomePage> {
           madera = ciudad['almacen']['madera'];
           piedra = ciudad['almacen']['piedra'];
           hierro = ciudad['almacen']['hierro'];
-          porcImpuestos = ciudad['palacio']['impuestos'];
+          impuestos = ciudad['palacio']['impuestos'];
+          porcImpuestos = data['porc_impuestos'];
           gastoPalacio = data['gasto_palacio'];
         });
       }

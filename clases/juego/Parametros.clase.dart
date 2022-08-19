@@ -45,7 +45,7 @@ class Parametros {
 
   static int oroInicial = 5000;
   static int poblacion_inicial = 50;
-  static int impuestos = 10;
+  static int impuestos = 1;
   static int gasto_palacio = 100;
 
   static int IDpartida = 0;
