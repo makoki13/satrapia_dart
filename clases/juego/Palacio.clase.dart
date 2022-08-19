@@ -41,9 +41,9 @@ class Palacio extends Edificio {
     this.almacen.addSilo(tesoro);
     this.almacen.getSiloOro().add_cantidad(Parametros.oroInicial);
 
-    this._recaudador = new Extractor(
+    /* this._recaudador = new Extractor(
         this._impuestos, this.almacen.getSiloOro(), cantidadInicial);
-    this._disp.addTareaRepetitiva(recaudaImpuestos, 1);
+    this._disp.addTareaRepetitiva(recaudaImpuestos, 10); */
 
     //esto debería ser incremento
     cantidadInicial = 1;
@@ -64,6 +64,7 @@ class Palacio extends Edificio {
         'nombre': _nombre,
         'oro': this.almacen.getSiloOro().get_cantidad(),
         'poblacion': this.poblacion.get_cantidad(),
+        'impuestos': this.getLiquidoImpuestos()
       };
 
   int get_id() {
@@ -74,14 +75,27 @@ class Palacio extends Edificio {
     return this._nombre;
   }
 
+  int getLiquidoImpuestos() {
+    int poblacion = this.poblacion.get_cantidad();
+    return Parametros.impuestos * poblacion;
+  }
+
   recaudaImpuestos() {
-    int cantidad = this._recaudador.getCantidad();
+    int cantidad = this.getLiquidoImpuestos();
+    /* this._recaudador.setCantidad(cantidad);
+    int cantidad = this._recaudador.getCantidad(); */
     this.almacen.getSiloOro().add_cantidad(cantidad);
+  }
+
+  salda_gastos_palacio() {
+    this.almacen.getSiloOro().resta_cantidad(Parametros.gasto_palacio);
   }
 
   realizaCenso() {
     int cantidad = this._crecimientoDemografico.getCantidad();
     this.poblacion.add_cantidad(cantidad);
+    recaudaImpuestos();
+    salda_gastos_palacio();
   }
 
   int getOroActual() {

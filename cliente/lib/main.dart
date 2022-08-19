@@ -53,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int piedra = 0;
   int hierro = 0;
   int porcImpuestos = 0;
+  int gastoPalacio = 0;
 
   int moduloActual = 1;
 
@@ -122,6 +123,8 @@ class _MyHomePageState extends State<MyHomePage> {
               style: const TextStyle(fontSize: 20)),
           Text('Impuestos: ${porcImpuestos.toString()}',
               style: const TextStyle(fontSize: 20)),
+          Text('Gasto palacio: ${gastoPalacio.toString()}',
+              style: const TextStyle(fontSize: 20)),
         ];
     }
   }
@@ -171,7 +174,8 @@ class _MyHomePageState extends State<MyHomePage> {
           madera = ciudad['almacen']['madera'];
           piedra = ciudad['almacen']['piedra'];
           hierro = ciudad['almacen']['hierro'];
-          porcImpuestos = data['porc_impuestos'];
+          porcImpuestos = ciudad['palacio']['impuestos'];
+          gastoPalacio = data['gasto_palacio'];
         });
       }
     });

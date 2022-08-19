@@ -16,4 +16,8 @@ class Extractor {
     int cantidad = this._cantidad;
     return this._productor.extrae(cantidad);
   }
+
+  setCantidad(int cantidad) {
+    this._cantidad = cantidad;
+  }
 }
