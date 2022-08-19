@@ -72,6 +72,10 @@ class API_PROXY {
         API.creaMinaDeOro(pos_x, pos_y, pos_z);
         break;
 
+      case 7:
+        print('comando 7');
+        int impuestos = int.parse(queryParams['valor']!);
+        API.setImpuestos(impuestos);
     }
 
     return 0;

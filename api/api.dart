@@ -405,6 +405,11 @@ class API {
     Estructura._capital.getCuartel().transfiere(leva, cantidad);
   }
 
+/* PARAMETROS */
+  static void setImpuestos(int impuestos) {
+    Parametros.impuestos = impuestos;
+  }
+
   static Map<String, dynamic> get_json() {
     return Estructura.toJson();
   }

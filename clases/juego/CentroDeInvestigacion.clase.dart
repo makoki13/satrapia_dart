@@ -105,6 +105,7 @@ class TipoSubInvestigacion {
   Map<String, dynamic> toJson() {
     return {
       'id': this._id,
+      //'nombre': this._nombre,
       'nombre': this._nombre,
       'items': this.listaDeItems.map((item) {
         return item.toJson();

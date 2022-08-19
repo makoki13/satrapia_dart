@@ -5,6 +5,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
+import 'package:flutter_tree/flutter_tree.dart';
+
+import './interfaz_investigacion.dart';
 
 void main() {
   runApp(const MyApp());
@@ -60,7 +63,81 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int moduloActual = 1;
 
+  List<TreeNodeData> treeData = [];
+
   _MyHomePageState();
+
+  /* final serverData = [
+    {
+      "checked": true,
+      "children": [
+        {
+          "checked": true,
+          "show": false,
+          "children": [],
+          "id": 11,
+          "pid": 1,
+          "text": "Child title 11",
+        },
+      ],
+      "id": 1,
+      "pid": 0,
+      "show": false,
+      "text": "Parent title 1",
+    },
+    {
+      "checked": true,
+      "show": false,
+      "children": [],
+      "id": 2,
+      "pid": 0,
+      "text": "Parent title 2",
+    },
+    {
+      "checked": true,
+      "children": [],
+      "id": 3,
+      "pid": 0,
+      "show": false,
+      "text": "Parent title 3",
+    },
+  ]; */
+
+  /// Map server data to tree node data
+  TreeNodeData mapServerDataToTreeData(Map data) {
+    return TreeNodeData(
+      extra: data,
+      title: data['text'],
+      expaned: data['show'],
+      checked: data['checked'],
+      children:
+          List.from(data['children'].map((x) => mapServerDataToTreeData(x))),
+    );
+  }
+
+  /* Future<List<TreeNodeData>> _load(TreeNodeData parent) async {
+    await Future.delayed(const Duration(seconds: 1));
+    final data = [
+      TreeNodeData(
+        title: 'Carga node 1',
+        expaned: false,
+        checked: true,
+        children: [],
+        extra: null,
+      ),
+      TreeNodeData(
+        title: 'Carga node 2',
+        expaned: false,
+        checked: false,
+        children: [],
+        extra: null,
+      ),
+    ];
+
+    return data;
+  } */
+
+  /// Generate tree data
 
   List<Widget> getModuloActual() {
     //print('modulo actual $moduloActual');
@@ -80,30 +157,107 @@ class _MyHomePageState extends State<MyHomePage> {
       case 3:
         return <Widget>[
           Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.redAccent,
-              ),
-              child: ListView.separated(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(8),
-                itemCount: investigaciones.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 50,
-                    color: Colors.white,
-                    child: Center(child: Text(investigaciones[index])),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(),
-              )),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.yellow,
+            ),
+            child: TreeView(
+              data: treeData,
+              lazy: true,
+              //load: _load,
+              showActions: true,
+              showCheckBox: true,
+              showFilter: false,
+              append: (parent) {
+                print(parent.extra);
+                return TreeNodeData(
+                  title: 'Appended',
+                  expaned: true,
+                  checked: true,
+                  children: [],
+                );
+              },
+              onLoad: (node) {
+                print('onLoad');
+                print(node);
+              },
+              onAppend: (node, parent) {
+                print('onAppend');
+                print(node);
+              },
+              onCheck: (checked, node) {
+                print('checked');
+                print('onCheck');
+                print(node);
+              },
+              onCollapse: (node) {
+                print('onCollapse');
+                print(node);
+              },
+              onExpand: (node) {
+                print('onExpand');
+                print(node);
+              },
+              onRemove: (node, parent) {
+                print('onRemove');
+                print(node);
+              },
+              onTap: (node) {
+                print('onTap');
+                print(node);
+              },
+            ),
+          ),
         ];
 
       case 4:
         return <Widget>[
-          const Text("Infanteria", style: TextStyle(fontSize: 20)),
+          Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            height: 120,
+            width: double.maxFinite,
+            child: Card(
+                elevation: 5,
+                child: Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        top: BorderSide(width: 2.0, color: Colors.red),
+                      ),
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                        padding: const EdgeInsets.all(7),
+                        child: Stack(children: <Widget>[
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Stack(children: <Widget>[
+                                Padding(
+                                    padding: EdgeInsets.only(left: 10, top: 5),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Row(
+                                          children: const <Widget>[
+                                            Text("Infanteriaxxxxx",
+                                                style: TextStyle(fontSize: 20)),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Spacer(),
+                                            Text("Infanteria III",
+                                                style: TextStyle(fontSize: 20)),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: const <Widget>[
+                                            Text("Infanteria V",
+                                                style: TextStyle(fontSize: 20)),
+                                          ],
+                                        )
+                                      ],
+                                    ))
+                              ])),
+                        ])))),
+          ),
           const Text('Arqueros', style: TextStyle(fontSize: 20)),
           const Text('Lanceros', style: TextStyle(fontSize: 20)),
           const Text('Caballería', style: TextStyle(fontSize: 20)),
@@ -143,6 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.phone_iphone)),
                     onSubmitted: (value) {
                       setState(() {
+                        enviaOrdenSetImpuestos(7, int.parse(value));
                         porcImpuestos = int.parse(value);
                       });
                       //print(value);
@@ -178,13 +333,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void fillListaInvestigaciones(lista) {
-    //Map<String, dynamic> listaJson = json.decode(lista);
+    InterfazInvestigacion.generaData(lista);
+
+    List<Map<String, Object>> serverData = InterfazInvestigacion.getData();
+    treeData = List.generate(
+      serverData.length,
+      (index) => mapServerDataToTreeData(serverData[index]),
+    ).toList();
+
+    /* //Map<String, dynamic> listaJson = json.decode(lista);
     List<dynamic> listaJson = lista['listaInvestigaciones'];
     investigaciones.length = 0;
     for (var value in listaJson) {
       investigaciones.add(value['nombre']);
       //print('---> ${value['nombre']}');
-    }
+    } */
   }
 
   Future getItems() async {
@@ -559,6 +722,25 @@ class _MyHomePageState extends State<MyHomePage> {
             selectedItemColor: Colors.amber[800],
           ));
     }
+  }
+
+  Future<http.Response> enviaOrden(int comando, String params) async {
+    print('enviando comando $comando con parametros $params');
+    var uri = Uri.parse(
+        'http://localhost:2710/api/?comando=$comando&jugador=1$params');
+    print(uri.port);
+    return http.post(uri);
+  }
+
+  Future<http.Response> enviaOrdenSetImpuestos(int comando, int valor) async {
+    String params = "&valor=$valor";
+    return enviaOrden(comando, params);
+    /* print('enviando comando...');
+    var uri =
+        Uri.parse('http://localhost:2710/api/?comando=$comando&jugador=1');
+    print(uri.port);
+    return http.post(uri); */
+    /* return http.post(Uri.parse('https://jsonplaceholder.typicode.com/albums')); */
   }
 
   Future<void> createlist() async {

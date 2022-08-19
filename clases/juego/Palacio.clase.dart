@@ -10,10 +10,10 @@ import './Parametros.clase.dart';
 import './Punto.clase.dart';
 
 class Palacio extends Edificio {
-  late Extractor _recaudador;
+  //late Extractor _recaudador;
   late Extractor _crecimientoDemografico;
 
-  late Productor _impuestos;
+  //late Productor _impuestos;
   late Productor _alojamientos;
 
   late Almacen almacen;
@@ -31,8 +31,8 @@ class Palacio extends Edificio {
 
     //esto debería ser incremento
     int cantidadInicial = 1;
-    this._impuestos =
-        new Productor(new Punto(0, 0, -1), ORO, Parametros.MAX_ENTERO, 1);
+    /* this._impuestos =
+        new Productor(new Punto(0, 0, -1), ORO, Parametros.MAX_ENTERO, 1); */
 
     this.almacen = new Almacen(this._id + 1, 'Almacen del PALACIO oro',
         this._capital.getPosicion(), this._disp);
