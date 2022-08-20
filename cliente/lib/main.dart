@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.red,
@@ -66,42 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<TreeNodeData> treeData = [];
 
   _MyHomePageState();
-
-  /* final serverData = [
-    {
-      "checked": true,
-      "children": [
-        {
-          "checked": true,
-          "show": false,
-          "children": [],
-          "id": 11,
-          "pid": 1,
-          "text": "Child title 11",
-        },
-      ],
-      "id": 1,
-      "pid": 0,
-      "show": false,
-      "text": "Parent title 1",
-    },
-    {
-      "checked": true,
-      "show": false,
-      "children": [],
-      "id": 2,
-      "pid": 0,
-      "text": "Parent title 2",
-    },
-    {
-      "checked": true,
-      "children": [],
-      "id": 3,
-      "pid": 0,
-      "show": false,
-      "text": "Parent title 3",
-    },
-  ]; */
+  
 
   /// Map server data to tree node data
   TreeNodeData mapServerDataToTreeData(Map data) {
@@ -115,27 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  /* Future<List<TreeNodeData>> _load(TreeNodeData parent) async {
-    await Future.delayed(const Duration(seconds: 1));
-    final data = [
-      TreeNodeData(
-        title: 'Carga node 1',
-        expaned: false,
-        checked: true,
-        children: [],
-        extra: null,
-      ),
-      TreeNodeData(
-        title: 'Carga node 2',
-        expaned: false,
-        checked: false,
-        children: [],
-        extra: null,
-      ),
-    ];
-
-    return data;
-  } */
 
   /// Generate tree data
 
@@ -340,14 +285,6 @@ class _MyHomePageState extends State<MyHomePage> {
       serverData.length,
       (index) => mapServerDataToTreeData(serverData[index]),
     ).toList();
-
-    /* //Map<String, dynamic> listaJson = json.decode(lista);
-    List<dynamic> listaJson = lista['listaInvestigaciones'];
-    investigaciones.length = 0;
-    for (var value in listaJson) {
-      investigaciones.add(value['nombre']);
-      //print('---> ${value['nombre']}');
-    } */
   }
 
   Future getItems() async {
@@ -771,149 +708,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-// Copyright 2019 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-/* 
-class _VerticalDividerDemo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.redAccent,
-              ),
-              child: ListView.separated(
-                padding: const EdgeInsets.all(8),
-                itemCount: entries.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 50,
-                    color: Colors.amber[colorCodes[index]],
-                    child: Center(child: Text(entries[index])),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(),
-              ),
-            ),
-          ),
-          const VerticalDivider(
-            color: Colors.grey,
-            thickness: 1,
-            indent: 20,
-            endIndent: 0,
-            width: 10,
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.black12,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.all(36.0),
-                        primary: Colors.black,
-                        textStyle: const TextStyle(fontSize: 20),
-                      ),
-                      onPressed: () {},
-                      child: const Text('PALACIO'),
-                    ),
-                    const TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Almacén',
-                      ),
-                    ),
-                    const TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Centro Investigación',
-                      ),
-                    ),
-                    const TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Cuartel',
-                      ),
-                    ),
-                    const TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Granjas',
-                        filled: true,
-                        hoverColor: Colors.orange,
-                      ),
-                    ),
-                    const TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Serrerias',
-                      ),
-                    ),
-                    const TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Canteras',
-                      ),
-                    ),
-                    const TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Minas de Hierro',
-                      ),
-                    ),
-                    const TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Minas de Oro',
-                      ),
-                    ),
-                  ],
-                )),
-          ),
-          const VerticalDivider(
-            color: Colors.grey,
-            thickness: 1,
-            indent: 20,
-            endIndent: 0,
-            width: 10,
-          ),
-          Expanded(
-              flex: 2,
-              child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.black26,
-                  ),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: getPantalla()))),
-        ],
-      ),
-    );
-  }
-}
- */
 final List<String> investigaciones = <String>[];
 final List<String> entries = <String>[];
 final List<int> colorCodes = <int>[500, 128, 128];
